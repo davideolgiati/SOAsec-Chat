@@ -54,7 +54,7 @@ Secure Service
 	</action>
 </parameter>-->
 
-<!--FULL SECURITY
+<!--FULL SECURITY -->
 <parameter name="InflowSecurity">
 	<action>
 		<items>Timestamp Signature Encrypt</items>
@@ -72,7 +72,7 @@ Secure Service
 		<signaturePropFile>security.properties</signaturePropFile>
 	</action>
 	
-</parameter> -->
+</parameter>
 
 <!-- MIXED 
 <parameter name="InflowSecurity">
