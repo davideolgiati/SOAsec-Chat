@@ -68,7 +68,7 @@
 	</action>
 </parameter>-->
 
-<!-- FULL SECURITY
+<!-- FULL SECURITY -->
 
 <parameter name="OutflowSecurity">
 	<action>
@@ -95,7 +95,7 @@
 		<signatureParts>Body</signatureParts>
 		<optimizeParts>//xenc:EncryptedData/xenc:CipherData/xenc:CipherValue</optimizeParts>
 	</action>
-</parameter> -->
+</parameter>
 
 <!-- MIXED
 <parameter name="OutflowSecurity">
