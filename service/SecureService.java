@@ -86,23 +86,47 @@ public class SecureService {
 	    // lista
 	    code.set(offset, tmp);
 	} else {
+	    // Setto value a "" se vale null, per evitare errori e
+	    // problemi più avanti
 	    value = ""
 	}
 	return value;
     }
 
+    // Metodo per la creazione di una nuova coda di messagi per l'utente
     private boolean CreateQueue(String user){
+	// Come prima cosa controllo che non esista già un offset
+	// associato all'utente
 	if (!offsets.containsKey(User)) {
+	    // Se non c'è nessun offset associato procedo
+
+	    // Come prima cosa creo una nuova coda vuota
 	    Queue<String> newQueue = new Queue<String>();
+	    // Aggiungo la nuova coda alla lista
 	    boolean res = code.add(newQueue);
+	    // Controllo se l'aggiunta della coda alla lista è andata
+	    // a buon fine
 	    if (res) {
+		// In caso non ci siano stati problemi aumento l'indice
+		// di offset
 		ListSize++;
+		// E associo all'username il nuovo offset
 		res &= offsets.add(user, ListSize);
 	    }
+	    // ritorno l'and tra i due risulati
 	    return res;
 	}
+	// se l'sername è già nella mapa degli offest ritorno errore
 	return false;
     }
+
+    /*
+     * TODO
+     * 1) creare il metodo per registare l'utente
+     * 2) creare il metodo per ricevere i messaggi
+     * 3) creare il metodo per il logout
+     * 4) creare il metodo per rimuovere una lista dalla coda
+     */
 
     // API per l'invio di un messaggio
     // Gli argomenti di questo metodo sono di Stringhe, una contenente
