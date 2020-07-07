@@ -74,7 +74,7 @@ public class SecureService {
 
     // Metodo privato per la lettura del primo valore nella coda
     // all'offset specificato
-    private boolean QueuePull(int offset){
+    private String QueuePull(int offset){
 	// Salvo l'elemento da modificare nella variabile tmp
 	Queue<String> tmp = code.get(offset);
 	// dato che il metodo add ritorna un valore booleano, uso
@@ -120,10 +120,19 @@ public class SecureService {
 	return false;
     }
 
+    private boolean registerUser(String user){
+	// metodo per la registarzione dell'utente e per la creazione
+	// della coda (vedi CreateQueue)
+    }
+
+    private boolean deleteUser(String user){
+	// metodo per l'eliminazione dell'utente e della  relativa coda
+	// (vedi DeleteQueue [da creare])
+    }
+
     /*
      * TODO
      * 1) creare il metodo per registare l'utente
-     * 2) creare il metodo per ricevere i messaggi
      * 3) creare il metodo per il logout
      * 4) creare il metodo per rimuovere una lista dalla coda
      */
@@ -148,9 +157,30 @@ public class SecureService {
 	    // quindi dovo fare la conversione ad ogni utilizzo
 	    int offset = offsets.get(User).intValue();
 	    // Aggiorno il contenuto della coda con il nuovo messaggio
-	    // e lo faccio  chiamndo il metodo QueuePush definito in
+	    // e lo faccio chiamndo il metodo QueuePush definito in
 	    // precedenza.
 	    return QueuePush(offset);
+	}
+    }
+
+    public String recive(String user) {
+	// Come prima cosa controllo che l'utente che richiede
+	// il messaggio esista effettivamente
+	if (!offsets.containsKey(User)) {
+	    // Se non esite comunico al client l'errore
+	    return false;
+	} else {
+	    // Se esiste salvo l'offset assciato all'utente in una
+	    // variabile chiamata offset
+
+	    // Utilizzo intValue(); perchè l'offset a noi serve come
+	    // tipo primitivo ma, per qualche motivo non meglio
+	    // specificato, il costruttore di Map accetta solo oggetti
+	    // quindi dovo fare la conversione ad ogni utilizzo
+	    int offset = offsets.get(User).intValue();
+	    // Aggiorno il contenuto della coda e lo faccio chiamndo
+	    //il metodo QueuePull definito in precedenza.
+	    return QueuePull(offset);
 	}
     }
 }
