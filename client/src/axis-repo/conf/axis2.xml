@@ -16,15 +16,14 @@
 	</action>
 </parameter> -->
 
-<!-- SIMPLE AUTHENTICATION 
+<!-- SIMPLE AUTHENTICATION -->
 
 <parameter name="OutflowSecurity">
 	<action>
 		<items>UsernameToken</items>
-		<user>fulvio</user>
-		<passwordCallbackClass>client.PWCallback</passwordCallbackClass>
+		<passwordCallbackClass>client.PWCallbackClient</passwordCallbackClass>
 	</action>
-</parameter> -->
+</parameter>
 
 <!-- SIGNATURE 
 
@@ -68,7 +67,7 @@
 	</action>
 </parameter>-->
 
-<!-- FULL SECURITY -->
+<!-- FULL SECURITY
 
 <parameter name="OutflowSecurity">
 	<action>
@@ -95,7 +94,7 @@
 		<signatureParts>Body</signatureParts>
 		<optimizeParts>//xenc:EncryptedData/xenc:CipherData/xenc:CipherValue</optimizeParts>
 	</action>
-</parameter>
+</parameter> -->
 
 <!-- MIXED
 <parameter name="OutflowSecurity">

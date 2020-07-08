@@ -3,3 +3,4 @@ public class NoUserFoundException extends Exception {
 		super(message);
 	}
 }
+
