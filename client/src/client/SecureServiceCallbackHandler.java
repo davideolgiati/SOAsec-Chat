@@ -45,19 +45,49 @@
 
         
            /**
-            * auto generated Axis2 call back method for add method
-            * override this method for handling normal response from add operation
+            * auto generated Axis2 call back method for recive method
+            * override this method for handling normal response from recive operation
             */
-           public void receiveResultadd(
-                    int result
+           public void receiveResultrecive(
+                    java.lang.String result
                         ) {
            }
 
           /**
            * auto generated Axis2 Error handler
-           * override this method for handling error response from add operation
+           * override this method for handling error response from recive operation
            */
-            public void receiveErroradd(java.lang.Exception e) {
+            public void receiveErrorrecive(java.lang.Exception e) {
+            }
+                
+           /**
+            * auto generated Axis2 call back method for send method
+            * override this method for handling normal response from send operation
+            */
+           public void receiveResultsend(
+                    ) {
+           }
+
+          /**
+           * auto generated Axis2 Error handler
+           * override this method for handling error response from send operation
+           */
+            public void receiveErrorsend(java.lang.Exception e) {
+            }
+                
+           /**
+            * auto generated Axis2 call back method for login method
+            * override this method for handling normal response from login operation
+            */
+           public void receiveResultlogin(
+                    ) {
+           }
+
+          /**
+           * auto generated Axis2 Error handler
+           * override this method for handling error response from login operation
+           */
+            public void receiveErrorlogin(java.lang.Exception e) {
             }
                 
 

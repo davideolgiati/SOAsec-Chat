@@ -92,7 +92,7 @@ Secure Service
 	</action>
 </parameter>-->
 
-<operation name="add">
+<operation name="login">
 <messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver"/>
 </operation>
 </service>

@@ -9,7 +9,7 @@ import org.apache.ws.security.WSPasswordCallback;
 public class PWCallbackService implements CallbackHandler{
    private Map<String, String> passwords = new HashMap<String, String>();
    
-   public KeystorePasswordCallback(){
+   public PWCallbackService(){
       passwords.put("client1", "password1");
       passwords.put("client2", "password2");
    }
@@ -32,4 +32,3 @@ public class PWCallbackService implements CallbackHandler{
       }
    }
 }
-

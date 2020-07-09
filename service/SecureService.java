@@ -1,7 +1,3 @@
-/**
- * Secure Service implementation class
- */
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
@@ -114,6 +110,12 @@ public class SecureService {
     	// se l'sername è già nella mapa degli offest ritorno errore
     	return false;
     }
+    
+    //metodo di login
+    //NON COMPLETO!
+    public void login(String name, String password) {
+    	System.out.println("OK!");
+    }
 
     private boolean registerUser(String user){
 	// metodo per la registarzione dell'utente e per la creazione
@@ -181,4 +183,3 @@ public class SecureService {
     	}
     }
 }
-
