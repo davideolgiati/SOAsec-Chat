@@ -3,22 +3,20 @@
 <!-- Engage the security module -->
 <module ref="rampart"/>
 
-<!-- USERNAME TOKEN AUTH AND TIMESTAMP --> 
+<!-- TIMESTAMP> 
 
 <parameter name="OutflowSecurity">
 	<action>
-		<items>UsernameToken Timestamp</items>
-		<user>fulvio</user>
-		<passwordCallbackClass>client.PWCallbackClient</passwordCallbackClass>
+		<items>Timestamp</items>
 	</action>
 </parameter>
 <parameter name="InflowSecurity">
 	<action>
 		<items>Timestamp</items>
 	</action>
-</parameter>
+</parameter> -->
 
-<!-- SIMPLE AUTHENTICATION
+<!-- SIMPLE AUTHENTICATION -->
 
 <parameter name="OutflowSecurity">
 	<action>
@@ -26,7 +24,7 @@
 		<user>client1</user>
 		<passwordCallbackClass>client.PWCallbackClient</passwordCallbackClass>
 	</action>
-</parameter> -->
+</parameter>
 
 <!-- SIGNATURE 
 

@@ -3,27 +3,26 @@
     Secure Service
   </description>
   <parameter name="ServiceClass" locked="false">SecureService</parameter>
-  <!-- USERNAME TOKEN AUTH AND TIMESTAMP -->
-<parameter name="InflowSecurity">
-	<action>
-		<items>UsernameToken Timestamp</items>
-		<passwordCallbackClass>PWCallbackService</passwordCallbackClass>
-	</action>
-</parameter>
+  <!-- TIMESTAMP
+       <parameter name="InflowSecurity">
+       <action>
+       <items>Timestamp</items>
+       </action>
+       </parameter>
 
 <parameter name="OutflowSecurity">
-	<action>
-		<items>Timestamp</items>
-	</action>
-</parameter>
+<action>
+<items>Timestamp</items>
+</action>
+</parameter> -->
 
-  <!-- SIMPLE AUTHENTICATION
+  <!-- SIMPLE AUTHENTICATION -->
   <parameter name="InflowSecurity">
     <action>
       <items>UsernameToken</items>
       <passwordCallbackClass>PWCallbackService</passwordCallbackClass>
     </action>
-  </parameter> -->
+  </parameter>
 
 
   <!-- SIGNATURE
