@@ -1,3 +1,5 @@
+package client;
+
 import java.io.IOException;
 import javax.security.auth.callback.Callback;
 import javax.security.auth.callback.CallbackHandler;
@@ -14,7 +16,7 @@ public class PWCallbackClient implements CallbackHandler {
 			   pc.setPassword(SecureServiceClient.password);
 		   }
 	   }
-      
+
       /*
        * se si utilizza questa implementazione, l'Identifier della richiesta viene settato nell'xml
        * del client attraverso il tag <user> (come fa a lezione).
@@ -22,16 +24,16 @@ public class PWCallbackClient implements CallbackHandler {
        * in fase di login
        *
       WSPasswordCallback pc = (WSPasswordCallback)callbacks[0];
-      
+
       switch(pc.getIdentifier()) {
-      	case "client1":
-      		pc.setPassword("password1");
-      		break;
-      	case "client2":
-      		pc.setPassword("password2");
-      		break;
-      	default:
-      		pc.setPassword("wrong password");
+	case "client1":
+		pc.setPassword("password1");
+		break;
+	case "client2":
+		pc.setPassword("password2");
+		break;
+	default:
+		pc.setPassword("wrong password");
       }
       */
    }
