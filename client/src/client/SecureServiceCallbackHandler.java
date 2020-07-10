@@ -45,6 +45,22 @@
 
         
            /**
+            * auto generated Axis2 call back method for registerUser method
+            * override this method for handling normal response from registerUser operation
+            */
+           public void receiveResultregisterUser(
+                    boolean result
+                        ) {
+           }
+
+          /**
+           * auto generated Axis2 Error handler
+           * override this method for handling error response from registerUser operation
+           */
+            public void receiveErrorregisterUser(java.lang.Exception e) {
+            }
+                
+           /**
             * auto generated Axis2 call back method for recive method
             * override this method for handling normal response from recive operation
             */
@@ -60,27 +76,15 @@
             public void receiveErrorrecive(java.lang.Exception e) {
             }
                 
-           /**
-            * auto generated Axis2 call back method for send method
-            * override this method for handling normal response from send operation
-            */
-           public void receiveResultsend(
-                    ) {
-           }
-
-          /**
-           * auto generated Axis2 Error handler
-           * override this method for handling error response from send operation
-           */
-            public void receiveErrorsend(java.lang.Exception e) {
-            }
+               // No methods generated for meps other than in-out
                 
            /**
             * auto generated Axis2 call back method for login method
             * override this method for handling normal response from login operation
             */
            public void receiveResultlogin(
-                    ) {
+                    java.lang.String result
+                        ) {
            }
 
           /**

@@ -113,8 +113,8 @@ public class SecureService {
 
     //metodo di login
     //NON COMPLETO!
-    public void login(String name, String password) {
-	System.out.println("OK!");
+    public String login(String name, String password) {
+	return "OK!";
     }
 
     public boolean registerUser(String user){
@@ -140,17 +140,12 @@ public class SecureService {
     // Gli argomenti di questo metodo sono di Stringhe, una contenente
     // il messaggio da inviare e una contenente l'utente a cui inviare
     // il messaggio
-    public void send(String message, String user) throws NoUserFoundException {
-	// Come prima cosa controllo che l'utente a cui voglio inviare
-	// il messaggio esista effettivamente
-	if (!offsets.containsKey(user)) {
-		// Se non esite comunico al client l'errore
-		throw new NoUserFoundException("Utente inesistente");
-	} else {
-		// Se esiste salvo l'offset assciato all'utente in una
-		// variabile chiamata offset
-
-		// Utilizzo intValue(); perchè l'offset a noi serve come
+    public void send(String message, String user) {
+	try {
+		//Salvo l'offset assciato all'utente in una variabile
+		//chiamata offset
+		
+		// Utilizzo intValue(); perche' l'offset a noi serve come
 		// tipo primitivo ma, per qualche motivo non meglio
 		// specificato, il costruttore di Map accetta solo oggetti
 		// quindi dovo fare la conversione ad ogni utilizzo
@@ -159,20 +154,19 @@ public class SecureService {
 		// e lo faccio chiamndo il metodo QueuePush definito in
 		// precedenza.
 		QueuePush(offset, message);
+	} catch (Exception e) {
+		//Nel caso in cui l'offset non contenga l'utente scelto
+		//ossia l'utente non esiste
+		System.out.println("Utente inesistente");
 	}
     }
 
-    public String recive(String user) throws NoUserFoundException {
-	// Come prima cosa controllo che l'utente che richiede
-	// il messaggio esista effettivamente
-	if (!offsets.containsKey(user)) {
-		// Se non esite comunico al client l'errore
-		throw new NoUserFoundException("Utente inesistente");
-	} else {
+    public String recive(String user) {
+	try {
 		// Se esiste salvo l'offset assciato all'utente in una
 		// variabile chiamata offset
 
-		// Utilizzo intValue(); perchè l'offset a noi serve come
+		// Utilizzo intValue(); perche' l'offset a noi serve come
 		// tipo primitivo ma, per qualche motivo non meglio
 		// specificato, il costruttore di Map accetta solo oggetti
 		// quindi dovo fare la conversione ad ogni utilizzo
@@ -180,6 +174,10 @@ public class SecureService {
 		// Aggiorno il contenuto della coda e lo faccio chiamndo
 		//il metodo QueuePull definito in precedenza.
 		return QueuePull(offset);
+	} catch (Exception e) {
+		//Nel caso in cui l'offset non contenga l'utente scelto
+		//ossia l'utente non esiste
+		return "Utente inesistente";
 	}
     }
 }
