@@ -16,7 +16,7 @@ package org.xmlsoap.schemas.soap.encoding;
 public interface Date extends org.apache.xmlbeans.XmlDate
 {
     public static final org.apache.xmlbeans.SchemaType type = (org.apache.xmlbeans.SchemaType)
-        org.apache.xmlbeans.XmlBeans.typeSystemForClassLoader(Date.class.getClassLoader(), "schemaorg_apache_xmlbeans.system.s8A9CFE41EC0DA4D6E43B2274CD5D2863").resolveHandle("dateb634type");
+        org.apache.xmlbeans.XmlBeans.typeSystemForClassLoader(Date.class.getClassLoader(), "schemaorg_apache_xmlbeans.system.s4DE5B7FCE81564BABE01071A60536B13").resolveHandle("dateb634type");
     
     /**
      * Gets the "id" attribute

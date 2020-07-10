@@ -33,7 +33,7 @@ public class SecureServiceClient {
 	    System.out.println("Inserire password:");
 	    password = keyboard.next();
 
-	    stub.registerUser("");
-	    //stub.login(username, password);
+	    //stub.registerUser("");
+	    stub.login(username, password);
 	}
 }

@@ -17,7 +17,7 @@ package org.apache.ws.axis2;
 public interface SecureServiceNoUserFoundExceptionDocument extends org.apache.xmlbeans.XmlObject
 {
     public static final org.apache.xmlbeans.SchemaType type = (org.apache.xmlbeans.SchemaType)
-        org.apache.xmlbeans.XmlBeans.typeSystemForClassLoader(SecureServiceNoUserFoundExceptionDocument.class.getClassLoader(), "schemaorg_apache_xmlbeans.system.s8A9CFE41EC0DA4D6E43B2274CD5D2863").resolveHandle("secureservicenouserfoundexceptionb208doctype");
+        org.apache.xmlbeans.XmlBeans.typeSystemForClassLoader(SecureServiceNoUserFoundExceptionDocument.class.getClassLoader(), "schemaorg_apache_xmlbeans.system.s4DE5B7FCE81564BABE01071A60536B13").resolveHandle("secureservicenouserfoundexceptionb208doctype");
     
     /**
      * Gets the "SecureServiceNoUserFoundException" element
@@ -42,7 +42,7 @@ public interface SecureServiceNoUserFoundExceptionDocument extends org.apache.xm
     public interface SecureServiceNoUserFoundException extends org.apache.xmlbeans.XmlObject
     {
         public static final org.apache.xmlbeans.SchemaType type = (org.apache.xmlbeans.SchemaType)
-            org.apache.xmlbeans.XmlBeans.typeSystemForClassLoader(SecureServiceNoUserFoundException.class.getClassLoader(), "schemaorg_apache_xmlbeans.system.s8A9CFE41EC0DA4D6E43B2274CD5D2863").resolveHandle("secureservicenouserfoundexceptioncfc5elemtype");
+            org.apache.xmlbeans.XmlBeans.typeSystemForClassLoader(SecureServiceNoUserFoundException.class.getClassLoader(), "schemaorg_apache_xmlbeans.system.s4DE5B7FCE81564BABE01071A60536B13").resolveHandle("secureservicenouserfoundexceptioncfc5elemtype");
         
         /**
          * Gets the "NoUserFoundException" element

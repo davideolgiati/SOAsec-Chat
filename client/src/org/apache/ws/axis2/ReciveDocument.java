@@ -17,7 +17,7 @@ package org.apache.ws.axis2;
 public interface ReciveDocument extends org.apache.xmlbeans.XmlObject
 {
     public static final org.apache.xmlbeans.SchemaType type = (org.apache.xmlbeans.SchemaType)
-        org.apache.xmlbeans.XmlBeans.typeSystemForClassLoader(ReciveDocument.class.getClassLoader(), "schemaorg_apache_xmlbeans.system.s8A9CFE41EC0DA4D6E43B2274CD5D2863").resolveHandle("recive2e45doctype");
+        org.apache.xmlbeans.XmlBeans.typeSystemForClassLoader(ReciveDocument.class.getClassLoader(), "schemaorg_apache_xmlbeans.system.s4DE5B7FCE81564BABE01071A60536B13").resolveHandle("recive2e45doctype");
     
     /**
      * Gets the "recive" element
@@ -42,7 +42,7 @@ public interface ReciveDocument extends org.apache.xmlbeans.XmlObject
     public interface Recive extends org.apache.xmlbeans.XmlObject
     {
         public static final org.apache.xmlbeans.SchemaType type = (org.apache.xmlbeans.SchemaType)
-            org.apache.xmlbeans.XmlBeans.typeSystemForClassLoader(Recive.class.getClassLoader(), "schemaorg_apache_xmlbeans.system.s8A9CFE41EC0DA4D6E43B2274CD5D2863").resolveHandle("recive1929elemtype");
+            org.apache.xmlbeans.XmlBeans.typeSystemForClassLoader(Recive.class.getClassLoader(), "schemaorg_apache_xmlbeans.system.s4DE5B7FCE81564BABE01071A60536B13").resolveHandle("recive1929elemtype");
         
         /**
          * Gets the "args0" element

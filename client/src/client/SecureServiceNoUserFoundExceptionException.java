@@ -10,7 +10,7 @@ package client;
 
 public class SecureServiceNoUserFoundExceptionException extends java.lang.Exception{
 
-    private static final long serialVersionUID = 1594367577989L;
+    private static final long serialVersionUID = 1594371963349L;
     
     private client.SecureServiceStub.SecureServiceNoUserFoundException faultMessage;
 
