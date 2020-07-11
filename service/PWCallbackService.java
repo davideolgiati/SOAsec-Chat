@@ -1,24 +1,44 @@
-import org.apache.ws.security.WSPasswordCallback;
+import java.io.IOException;
 import javax.security.auth.callback.Callback;
 import javax.security.auth.callback.CallbackHandler;
 import javax.security.auth.callback.UnsupportedCallbackException;
-import java.io.IOException;
+import org.apache.ws.security.WSPasswordCallback;
+
+import java.util.Map;
+import java.util.HashMap;
 
 public class PWCallbackService implements CallbackHandler {
-	public void handle(Callback[] callbacks)
-		throws IOException, UnsupportedCallbackException {
-			for (int i = 0; i < callbacks.length; i++) {
-			if (callbacks[i] instanceof WSPasswordCallback) {
-				WSPasswordCallback pc=(WSPasswordCallback)callbacks[i];
-				if (pc.getIdentifier().equals("fulvio")) {
-					pc.setPassword("password");
+	private Map<String, String> passwords = new HashMap<String, String>();
+	
+	public PWCallbackService() {
+	      passwords.put("client1", "password1");
+	      passwords.put("client2", "password2");
+	}
+
+	public void handle(Callback[] callbacks) throws IOException, UnsupportedCallbackException {
+
+		for (int i = 0; i < callbacks.length; i++) {
+			WSPasswordCallback pc = (WSPasswordCallback) callbacks[i];
+			if (pc.getUsage() == WSPasswordCallback.USERNAME_TOKEN) {
+
+				// You must set a password for the user, AXIS2 would compare
+				// the password with the password sent by client, if they match
+				// message will be processed. Any mismatch in password will
+				// result in a SOAP Fault.
+
+				if (!passwords.containsKey(pc.getIdentifier())) {
+					throw new UnsupportedCallbackException(callbacks[i], "Utente sconosciuto!");
 				} else {
-					throw new UnsupportedCallbackException(callbacks[i], "Unknown user");
+					switch(pc.getIdentifier()) {
+						case "client1":
+							pc.setPassword(passwords.get("client1"));
+							break;
+						case "client2":
+							pc.setPassword(passwords.get("client2"));
+							break;
+					}
 				}
-			} else {
-				throw new UnsupportedCallbackException(callbacks[i],"Unrecognized Callback");
 			}
 		}
 	}
 }
-

@@ -26,14 +26,14 @@ public class SecureServiceClient {
 	    SecureServiceStub stub = new SecureServiceStub(ctx,"http://localhost:8080/axis2/services/SecureService");
 	    ServiceClient sc = stub._getServiceClient();
 	    sc.engageModule("rampart");
-		/*
+
 	    Scanner keyboard = new Scanner (System.in);
 	    System.out.println("Inserire nome utente:");
 	    username = keyboard.next();
 	    System.out.println("Inserire password:");
 	    password = keyboard.next();
-		*/
+
 	    //stub.registerUser("");
-	    System.out.println(stub.login("username", "password"));
+	    System.out.println(stub.login(username, password));
 	}
 }

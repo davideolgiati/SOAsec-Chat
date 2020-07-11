@@ -8,7 +8,7 @@
 <parameter name="OutflowSecurity">
 	<action>
 		<items>UsernameToken Timestamp</items>
-		<user>fulvio</user>
+		<user>client1</user>
 		<passwordCallbackClass>client.PWCallbackClient</passwordCallbackClass>
 	</action>
 </parameter>
