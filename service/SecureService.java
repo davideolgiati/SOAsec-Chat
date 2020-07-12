@@ -51,7 +51,7 @@ public class SecureService {
 
     // Metodo privato per l'inserimento di un valore nella coda
     // all'offset specificato
-    private void QueuePush(int offset, String value){
+    private bool QueuePush(int offset, String value){
 	// Salvo l'elemento da modificare nella variabile tmp
 	Queue<String> tmp = code.get(offset);
 	// dato che il metodo add ritorna un valore booleano, uso
@@ -59,10 +59,12 @@ public class SecureService {
 	// di aggiornamneto
 	boolean result = tmp.add(value);
 	if (result) {
-		// Solo se l'operazione è andata a buon fine aggiorno la
-		// lista
-		code.set(offset, tmp);
+	    // Solo se l'operazione è andata a buon fine aggiorno la
+	    // lista
+	    ret = code.set(offset, tmp);
+	    result = (ret == tmp);
 	}
+	return result;
     }
 
     // Metodo privato per la lettura del primo valore nella coda
@@ -75,13 +77,13 @@ public class SecureService {
 	// di aggiornamneto
 	String value = tmp.poll();
 	if (value != null) {
-		// Solo se l'operazione è andata a buon fine aggiorno la
-		// lista
-		code.set(offset, tmp);
+	    // Solo se l'operazione è andata a buon fine aggiorno la
+	    // lista
+	    code.set(offset, tmp);
 	} else {
-		// Setto value a "" se vale null, per evitare errori e
-		// problemi più avanti
-		value = "";
+	    // Setto value a "" se vale null, per evitare errori e
+	    // problemi più avanti
+	    value = "";
 	}
 	return value;
     }
@@ -90,94 +92,123 @@ public class SecureService {
     private boolean CreateQueue(String user){
 	// Come prima cosa controllo che non esista già un offset
 	// associato all'utente
+	boolean res = false;
 	if (!offsets.containsKey(user)) {
-		// Se non c'è nessun offset associato procedo
+	    // Se non c'è nessun offset associato procedo
 
-		// Come prima cosa creo una nuova coda vuota
-		Queue<String> newQueue = new LinkedList<String>();
-		// Aggiungo la nuova coda alla lista
-		boolean res = code.add(newQueue);
-		// Controllo se l'aggiunta della coda alla lista è andata
-		// a buon fine
-		if (res) {
-			// In caso non ci siano stati problemi aumento l'indice
-			// di offset
-			ListSize++;
-			// E associo all'username il nuovo offset
-			offsets.put(user, ListSize);
-		}
+	    // Come prima cosa creo una nuova coda vuota
+	    Queue<String> newQueue = new LinkedList<String>();
+	    // Aggiungo la nuova coda alla lista
+	    res = code.add(newQueue);
+	    // Controllo se l'aggiunta della coda alla lista è andata
+	    // a buon fine
+	    if (res) {
+		// In caso non ci siano stati problemi aumento l'indice
+		// di offset
+		ListSize++;
+		// E associo all'username il nuovo offset
+		offsets.put(user, ListSize);
+		res = true;
+	    }
 	}
 	// se l'sername è già nella mapa degli offest ritorno errore
-	return false;
+	return res;
     }
 
-    //metodo di login
-    //NON COMPLETO!
-    public String login(String name, String password) {
-	return "OK!";
+    // Metodo per la rimozione della coda di messagi per l'utente
+    private boolean DeleteQueue(String user){
+	// Come prima cosa controllo che esista un offset
+	// associato all'utente
+	boolean res = false;
+	if (offsets.containsKey(user)) {
+	    // Se non c'è un offset associato procedo
+
+	    // Come prima cosa ricavo l'offset associato all'utente
+	    // dalla HashMap
+	    int offset = offsets.get(user).intValue();
+	    // Rimuovo la coda all'offset specificato
+	    res = code.remove(offset);
+	    // Controllo se l'aggiunta della coda alla lista è andata
+	    // a buon fine
+	    if (res) {
+		// In caso non ci siano stati problemi diminuisco
+		// l'indice di offset
+		ListSize--;
+		// E ggiorno i valori di offset per gli utenti ancora
+		// attivi
+		for (String toTestUser : map.keySet()) {
+		    // per ogni user leggo l'offset associato
+		    tmp = offsets.get(toTestUser).intValue();
+		    // controllo se l'offset è più grande di quello
+		    // associato all'utente che si è scollegato
+		    if (tmp > offset) {
+			// aggiorno l'offset a -1
+			offsets.put(toTestUser, (tmp - 1));
+		    }
+		}
+		res = true;
+	    }
+	}
+	// se l'username è già nella mapa degli offest ritorno errore
+	return res;
     }
 
-    public boolean registerUser(String user){
+    // Li avevo immaginati più complessi ma si sono rivelati una linea
+    // di codice a testa
+    private boolean login(String user){
 	// metodo per la registarzione dell'utente e per la creazione
 	// della coda (vedi CreateQueue)
-	return true;
+	return CreateQueue(user);
     }
 
-    private boolean deleteUser(String user){
+    private boolean logout(String user){
 	// metodo per l'eliminazione dell'utente e della  relativa coda
-	// (vedi DeleteQueue [da creare])
-	return true;
+	// (vedi DeleteQueue)
+	return DeleteQueue(user);
     }
-
-    /*
-     * TODO
-     * 1) creare il metodo per registare l'utente
-     * 3) creare il metodo per il logout
-     * 4) creare il metodo per rimuovere una lista dalla coda
-     */
 
     // API per l'invio di un messaggio
     // Gli argomenti di questo metodo sono di Stringhe, una contenente
     // il messaggio da inviare e una contenente l'utente a cui inviare
     // il messaggio
-    public void send(String message, String user) {
+    public String send(String message, String user) {
 	try {
-		//Salvo l'offset assciato all'utente in una variabile
-		//chiamata offset
-		
-		// Utilizzo intValue(); perche' l'offset a noi serve come
-		// tipo primitivo ma, per qualche motivo non meglio
-		// specificato, il costruttore di Map accetta solo oggetti
-		// quindi dovo fare la conversione ad ogni utilizzo
-		int offset = offsets.get(user).intValue();
-		// Aggiorno il contenuto della coda con il nuovo messaggio
-		// e lo faccio chiamndo il metodo QueuePush definito in
-		// precedenza.
-		QueuePush(offset, message);
+	    //Salvo l'offset assciato all'utente in una variabile
+	    //chiamata offset
+
+	    // Utilizzo intValue(); perche' l'offset a noi serve come
+	    // tipo primitivo ma, per qualche motivo non meglio
+	    // specificato, il costruttore di Map accetta solo oggetti
+	    // quindi dovo fare la conversione ad ogni utilizzo
+	    int offset = offsets.get(user).intValue();
+	    // Aggiorno il contenuto della coda con il nuovo messaggio
+	    // e lo faccio chiamndo il metodo QueuePush definito in
+	    // precedenza.
+	    return QueuePush(offset, message);
 	} catch (Exception e) {
-		//Nel caso in cui l'offset non contenga l'utente scelto
-		//ossia l'utente non esiste
-		System.out.println("Utente inesistente");
+	    //Nel caso in cui l'offset non contenga l'utente scelto
+	    //ossia l'utente non esiste
+	    return false;
 	}
     }
 
     public String recive(String user) {
 	try {
-		// Se esiste salvo l'offset assciato all'utente in una
-		// variabile chiamata offset
+	    // Se esiste salvo l'offset assciato all'utente in una
+	    // variabile chiamata offset
 
-		// Utilizzo intValue(); perche' l'offset a noi serve come
-		// tipo primitivo ma, per qualche motivo non meglio
-		// specificato, il costruttore di Map accetta solo oggetti
-		// quindi dovo fare la conversione ad ogni utilizzo
-		int offset = offsets.get(user).intValue();
-		// Aggiorno il contenuto della coda e lo faccio chiamndo
-		//il metodo QueuePull definito in precedenza.
-		return QueuePull(offset);
+	    // Utilizzo intValue(); perche' l'offset a noi serve come
+	    // tipo primitivo ma, per qualche motivo non meglio
+	    // specificato, il costruttore di Map accetta solo oggetti
+	    // quindi dovo fare la conversione ad ogni utilizzo
+	    int offset = offsets.get(user).intValue();
+	    // Aggiorno il contenuto della coda e lo faccio chiamndo
+	    //il metodo QueuePull definito in precedenza.
+	    return QueuePull(offset);
 	} catch (Exception e) {
-		//Nel caso in cui l'offset non contenga l'utente scelto
-		//ossia l'utente non esiste
-		return "Utente inesistente";
+	    //Nel caso in cui l'offset non contenga l'utente scelto
+	    //ossia l'utente non esiste
+	    return "Utente inesistente";
 	}
     }
 }
