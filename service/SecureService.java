@@ -27,13 +27,13 @@ public class SecureService {
     // la possibilità si assegnare ad una stringa un corrispondente
     // valore numerico username -> offset
 
-    // N.B. QUESTO È IL MODO PIÙ ELEGANTE MA NECESSITA DI UN METODO
-    //      CHE SCALI GLI OFFSET OGNI VOLTA CHE UN UTENTE NON È PIÙ
+    // N.B. QUESTO E' IL MODO PIU' ELEGANTE MA NECESSITA DI UN METODO
+    //      CHE SCALI GLI OFFSET OGNI VOLTA CHE UN UTENTE NON E' PIU'
     //      LOGGATO AL SERVER
 
     private Map<String, Integer> offsets = new HashMap<String, Integer>();
 
-    // Per comodità tengo anche una variabile che mi dice quanti
+    // Per comodita' tengo anche una variabile che mi dice quanti
     // elementi ho nella lista
 
     private int ListSize = 0;
@@ -46,12 +46,12 @@ public class SecureService {
 
     // 1. LEGGO LA CODA
     // 2. MODIFICO
-    // 3. SE LA MODIFICA È COMPLETA VAI A 4. ALTRIMENTI TORNA 2.
+    // 3. SE LA MODIFICA E' COMPLETA VAI A 4. ALTRIMENTI TORNA 2.
     // 4. SCRIVO IL VALORE MODIFICATO NELLA POSIZIONE ORIGINALE
 
     // Metodo privato per l'inserimento di un valore nella coda
     // all'offset specificato
-    private bool QueuePush(int offset, String value){
+    private boolean QueuePush(int offset, String value){
 	// Salvo l'elemento da modificare nella variabile tmp
 	Queue<String> tmp = code.get(offset);
 	// dato che il metodo add ritorna un valore booleano, uso
@@ -59,9 +59,9 @@ public class SecureService {
 	// di aggiornamneto
 	boolean result = tmp.add(value);
 	if (result) {
-	    // Solo se l'operazione è andata a buon fine aggiorno la
+	    // Solo se l'operazione e' andata a buon fine aggiorno la
 	    // lista
-	    ret = code.set(offset, tmp);
+		Queue<String> ret = code.set(offset, tmp);
 	    result = (ret == tmp);
 	}
 	return result;
@@ -111,7 +111,7 @@ public class SecureService {
 		res = true;
 	    }
 	}
-	// se l'sername è già nella mapa degli offest ritorno errore
+	// se l'username e' gia' nella mappa degli offest ritorno errore
 	return res;
     }
 
@@ -121,26 +121,27 @@ public class SecureService {
 	// associato all'utente
 	boolean res = false;
 	if (offsets.containsKey(user)) {
-	    // Se non c'è un offset associato procedo
+	    // Se non c'e' un offset associato procedo
 
 	    // Come prima cosa ricavo l'offset associato all'utente
 	    // dalla HashMap
 	    int offset = offsets.get(user).intValue();
 	    // Rimuovo la coda all'offset specificato
-	    res = code.remove(offset);
-	    // Controllo se l'aggiunta della coda alla lista è andata
+	    Queue<String> origin = code.get(offset);
+	    res = code.remove(offset) == origin;
+	    // Controllo se l'aggiunta della coda alla lista e' andata
 	    // a buon fine
 	    if (res) {
 		// In caso non ci siano stati problemi diminuisco
 		// l'indice di offset
 		ListSize--;
-		// E ggiorno i valori di offset per gli utenti ancora
+		// E aggiorno i valori di offset per gli utenti ancora
 		// attivi
-		for (String toTestUser : map.keySet()) {
+		for (String toTestUser : offsets.keySet()) {
 		    // per ogni user leggo l'offset associato
-		    tmp = offsets.get(toTestUser).intValue();
-		    // controllo se l'offset è più grande di quello
-		    // associato all'utente che si è scollegato
+		    int tmp = offsets.get(toTestUser).intValue();
+		    // controllo se l'offset e' piu' grande di quello
+		    // associato all'utente che si e' scollegato
 		    if (tmp > offset) {
 			// aggiorno l'offset a -1
 			offsets.put(toTestUser, (tmp - 1));
@@ -149,19 +150,19 @@ public class SecureService {
 		res = true;
 	    }
 	}
-	// se l'username è già nella mapa degli offest ritorno errore
+	// se l'username e' gia' nella mappa degli offset ritorno errore
 	return res;
     }
 
-    // Li avevo immaginati più complessi ma si sono rivelati una linea
+    // Li avevo immaginati piu' complessi ma si sono rivelati una linea
     // di codice a testa
-    private boolean login(String user){
+    public boolean login(String user){
 	// metodo per la registarzione dell'utente e per la creazione
 	// della coda (vedi CreateQueue)
 	return CreateQueue(user);
     }
 
-    private boolean logout(String user){
+    public boolean logout(String user){
 	// metodo per l'eliminazione dell'utente e della  relativa coda
 	// (vedi DeleteQueue)
 	return DeleteQueue(user);
@@ -171,7 +172,7 @@ public class SecureService {
     // Gli argomenti di questo metodo sono di Stringhe, una contenente
     // il messaggio da inviare e una contenente l'utente a cui inviare
     // il messaggio
-    public String send(String message, String user) {
+    public boolean send(String message, String user) {
 	try {
 	    //Salvo l'offset assciato all'utente in una variabile
 	    //chiamata offset

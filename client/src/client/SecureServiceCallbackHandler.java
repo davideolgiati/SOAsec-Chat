@@ -45,19 +45,19 @@
 
         
            /**
-            * auto generated Axis2 call back method for registerUser method
-            * override this method for handling normal response from registerUser operation
+            * auto generated Axis2 call back method for logout method
+            * override this method for handling normal response from logout operation
             */
-           public void receiveResultregisterUser(
+           public void receiveResultlogout(
                     boolean result
                         ) {
            }
 
           /**
            * auto generated Axis2 Error handler
-           * override this method for handling error response from registerUser operation
+           * override this method for handling error response from logout operation
            */
-            public void receiveErrorregisterUser(java.lang.Exception e) {
+            public void receiveErrorlogout(java.lang.Exception e) {
             }
                 
            /**
@@ -76,14 +76,28 @@
             public void receiveErrorrecive(java.lang.Exception e) {
             }
                 
-               // No methods generated for meps other than in-out
+           /**
+            * auto generated Axis2 call back method for send method
+            * override this method for handling normal response from send operation
+            */
+           public void receiveResultsend(
+                    boolean result
+                        ) {
+           }
+
+          /**
+           * auto generated Axis2 Error handler
+           * override this method for handling error response from send operation
+           */
+            public void receiveErrorsend(java.lang.Exception e) {
+            }
                 
            /**
             * auto generated Axis2 call back method for login method
             * override this method for handling normal response from login operation
             */
            public void receiveResultlogin(
-                    java.lang.String result
+                    boolean result
                         ) {
            }
 

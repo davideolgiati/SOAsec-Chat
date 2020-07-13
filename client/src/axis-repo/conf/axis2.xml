@@ -3,30 +3,15 @@
 <!-- Engage the security module -->
 <module ref="rampart"/>
 
-<!-- USERNAME TOKEN AUTH AND TIMESTAMP --> 
-
-<parameter name="OutflowSecurity">
-	<action>
-		<items>UsernameToken Timestamp</items>
-		<user>client1</user>
-		<passwordCallbackClass>client.PWCallbackClient</passwordCallbackClass>
-	</action>
-</parameter>
-<parameter name="InflowSecurity">
-	<action>
-		<items>Timestamp</items>
-	</action>
-</parameter>
-
-<!-- SIMPLE AUTHENTICATION
+<!-- SIMPLE AUTHENTICATION -->
 
 <parameter name="OutflowSecurity">
 	<action>
 		<items>UsernameToken</items>
-		<user>client1</user>
+		<user>tmpValue</user>	<!-- Il valore viene sovrascritto nella classe di Callback  -->
 		<passwordCallbackClass>client.PWCallbackClient</passwordCallbackClass>
 	</action>
-</parameter> -->
+</parameter>
 
 <!-- SIGNATURE 
 
