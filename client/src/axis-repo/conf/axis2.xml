@@ -13,23 +13,24 @@
 	</action>
 </parameter>
 
-<!-- SIGNATURE 
+<!-- SIGNATURE -->
 
 <parameter name="OutflowSecurity">
 	<action>
 		<items>Signature</items>
-		<user>fulvio</user>
-		<passwordCallbackClass>client.PWCallback</passwordCallbackClass>
+		<user>client1</user>
+		<passwordCallbackClass>client.PWCallbackClient</passwordCallbackClass>
 		<signaturePropFile>axis-repo/conf/security.properties</signaturePropFile>
-		<encryptionUser>fulvio</encryptionUser>
+		<encryptionUser>client1</encryptionUser>
 		<signatureParts>Body</signatureParts>
 	</action>
 </parameter>
+
 <parameter name="InflowSecurity">
 	<action>
 		<items>Signature</items>
-		<user>fulvio</user>
-		<passwordCallbackClass>client.PWCallback</passwordCallbackClass>
+		<user>service</user>
+		<passwordCallbackClass>client.PWCallbackClient</passwordCallbackClass>
 		<signaturePropFile>axis-repo/conf/security.properties</signaturePropFile>
 		<signatureParts>Body</signatureParts>
 	</action>

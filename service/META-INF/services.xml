@@ -4,32 +4,32 @@
   </description>
   <parameter name="ServiceClass" locked="false">SecureService</parameter>
 
-  <!-- SIMPLE AUTHENTICATION -->
-  <parameter name="InflowSecurity">
-    <action>
-      <items>UsernameToken</items>
-      <passwordCallbackClass>PWCallbackService</passwordCallbackClass>
-    </action>
-  </parameter>
+<!-- SIMPLE AUTHENTICATION -->
+<parameter name="InflowSecurity">
+	<action>
+		<items>UsernameToken</items>
+		<passwordCallbackClass>PWCallbackService</passwordCallbackClass>
+	</action>
+</parameter>
 
-  <!-- SIGNATURE
-       <parameter name="InflowSecurity">
-       <action>
-       <items>Signature</items>
-       <user>fulvio</user>
-       <passwordCallbackClass>PWCallback</passwordCallbackClass>
-       <signaturePropFile>security.properties</signaturePropFile>
-       </action>
-       </parameter>
+<!-- SIGNATURE -->
+<parameter name="InflowSecurity">
+	<action>
+		<items>Signature</items>
+		<user>tmpValue</user>
+		<passwordCallbackClass>PWCallbackService</passwordCallbackClass>
+		<signaturePropFile>security.properties</signaturePropFile>
+		</action>
+</parameter>
 
 <parameter name="OutflowSecurity">
-<action>
-<items>Signature</items>
-<user>fulvio</user>
-<passwordCallbackClass>PWCallback</passwordCallbackClass>
-<signaturePropFile>security.properties</signaturePropFile>
-</action>
-</parameter>-->
+	<action>
+		<items>Signature</items>
+		<user>service</user>
+		<passwordCallbackClass>PWCallbackService</passwordCallbackClass>
+		<signaturePropFile>security.properties</signaturePropFile>
+	</action>
+</parameter>
 
   <!-- DOUBLE SIGNATURE
        <parameter name="InflowSecurity">
