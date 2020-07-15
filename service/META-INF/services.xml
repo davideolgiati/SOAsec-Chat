@@ -16,10 +16,10 @@
 <parameter name="InflowSecurity">
 	<action>
 		<items>Signature</items>
-		<user>client1</user>
+		<user>tmpValue</user> <!-- Valore dinamico per via della classe di Callback -->
 		<passwordCallbackClass>PWCallbackService</passwordCallbackClass>
 		<signaturePropFile>security.properties</signaturePropFile>
-		</action>
+	</action>
 </parameter>
 
 <parameter name="OutflowSecurity">
