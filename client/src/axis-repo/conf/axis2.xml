@@ -1,4 +1,3 @@
-
 <axisconfig name="AxisJava2.0">
 <!-- Engage the security module -->
 <module ref="rampart"/>

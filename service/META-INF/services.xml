@@ -16,7 +16,7 @@
 <parameter name="InflowSecurity">
 	<action>
 		<items>Signature</items>
-		<user>tmpValue</user>
+		<user>client1</user>
 		<passwordCallbackClass>PWCallbackService</passwordCallbackClass>
 		<signaturePropFile>security.properties</signaturePropFile>
 		</action>

@@ -19,6 +19,7 @@ public class PWCallbackService implements CallbackHandler {
 
 		for (int i = 0; i < callbacks.length; i++) {
 			WSPasswordCallback pc = (WSPasswordCallback) callbacks[i];
+			//UsernameToken auth
 			if (pc.getUsage() == WSPasswordCallback.USERNAME_TOKEN) {
 
 				// You must set a password for the user, AXIS2 would compare
@@ -37,6 +38,13 @@ public class PWCallbackService implements CallbackHandler {
 							pc.setPassword(passwords.get("client2"));
 							break;
 					}
+				}
+			}
+			//Signature/Encryption
+			if (pc.getUsage() == WSPasswordCallback.DECRYPT || pc.getUsage() == WSPasswordCallback.SIGNATURE) {
+				// used to retrieve password for private key
+				if ("service".equals(pc.getIdentifier())) {
+					pc.setPassword("password");
 				}
 			}
 		}
