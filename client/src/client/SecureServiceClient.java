@@ -27,7 +27,7 @@ public class SecureServiceClient {
     password = "password1";
 
     stub.login(username);
-    stub.send(": listUsers", username);
-    System.out.println(stub.recive(username));
+    stub.sendMsg(": listUsers", username);
+    System.out.println(stub.reciveMsg(username));
   }
 }

@@ -199,7 +199,7 @@ public class SecureService {
   // Gli argomenti di questo metodo sono di Stringhe, una contenente
   // il messaggio da inviare e una contenente l'utente a cui inviare
   // il messaggio
-  public boolean send(String message, String user) {
+  public boolean sendMsg(String message, String user) {
     try {
       if (parse(message, user)) {
 	// Salvo l'offset assciato all'utente in una variabile
@@ -224,7 +224,7 @@ public class SecureService {
     }
   }
 
-  public String recive(String user) {
+  public String reciveMsg(String user) {
     try {
       // Se esiste salvo l'offset assciato all'utente in una
       // variabile chiamata offset

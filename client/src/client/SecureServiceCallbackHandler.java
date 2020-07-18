@@ -61,35 +61,35 @@
             }
                 
            /**
-            * auto generated Axis2 call back method for recive method
-            * override this method for handling normal response from recive operation
+            * auto generated Axis2 call back method for sendMsg method
+            * override this method for handling normal response from sendMsg operation
             */
-           public void receiveResultrecive(
-                    java.lang.String result
-                        ) {
-           }
-
-          /**
-           * auto generated Axis2 Error handler
-           * override this method for handling error response from recive operation
-           */
-            public void receiveErrorrecive(java.lang.Exception e) {
-            }
-                
-           /**
-            * auto generated Axis2 call back method for send method
-            * override this method for handling normal response from send operation
-            */
-           public void receiveResultsend(
+           public void receiveResultsendMsg(
                     boolean result
                         ) {
            }
 
           /**
            * auto generated Axis2 Error handler
-           * override this method for handling error response from send operation
+           * override this method for handling error response from sendMsg operation
            */
-            public void receiveErrorsend(java.lang.Exception e) {
+            public void receiveErrorsendMsg(java.lang.Exception e) {
+            }
+                
+           /**
+            * auto generated Axis2 call back method for reciveMsg method
+            * override this method for handling normal response from reciveMsg operation
+            */
+           public void receiveResultreciveMsg(
+                    java.lang.String result
+                        ) {
+           }
+
+          /**
+           * auto generated Axis2 Error handler
+           * override this method for handling error response from reciveMsg operation
+           */
+            public void receiveErrorreciveMsg(java.lang.Exception e) {
             }
                 
            /**
@@ -97,7 +97,7 @@
             * override this method for handling normal response from login operation
             */
            public void receiveResultlogin(
-                    boolean result
+                    java.lang.Object result
                         ) {
            }
 

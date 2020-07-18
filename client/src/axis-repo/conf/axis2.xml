@@ -33,7 +33,7 @@
 		<signaturePropFile>axis-repo/conf/security.properties</signaturePropFile>
 		<signatureParts>Body</signatureParts>
 	</action>
-</parameter>-->
+</parameter>
 
 <!-- DOUBLE SIGNATURE 
 <parameter name="OutflowSecurity">
@@ -131,10 +131,8 @@ to here, so that you can refer from-->
 <!--Note : You can ovride this for particular service by
 adding the same element with your requirement-->
 <messageReceivers>
-<messageReceiver mep="http://www.w3.org/2004/08/wsdl/in-only"
-class="org.apache.axis2.receivers.RawXMLINOnlyMessageReceiver"/>
-<messageReceiver mep="http://www.w3.org/2004/08/wsdl/in-out"
-class="org.apache.axis2.receivers.RawXMLINOutMessageReceiver"/>
+	<messageReceiver mep="http://www.w3.org/ns/wsdl/in-only" class="org.apache.axis2.rpc.receivers.RPCInOnlyMessageReceiver"/>
+	<messageReceiver mep="http://www.w3.org/ns/wsdl/in-out" class="org.apache.axis2.rpc.receivers.RPCMessageReceiver"/>
 </messageReceivers>
 <!-- ================================================= -->
 <!-- Transport Ins -->
