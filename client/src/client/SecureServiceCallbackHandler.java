@@ -45,19 +45,35 @@
 
         
            /**
-            * auto generated Axis2 call back method for logout method
-            * override this method for handling normal response from logout operation
+            * auto generated Axis2 call back method for chatLogin method
+            * override this method for handling normal response from chatLogin operation
             */
-           public void receiveResultlogout(
+           public void receiveResultchatLogin(
                     boolean result
                         ) {
            }
 
           /**
            * auto generated Axis2 Error handler
-           * override this method for handling error response from logout operation
+           * override this method for handling error response from chatLogin operation
            */
-            public void receiveErrorlogout(java.lang.Exception e) {
+            public void receiveErrorchatLogin(java.lang.Exception e) {
+            }
+                
+           /**
+            * auto generated Axis2 call back method for chatLogout method
+            * override this method for handling normal response from chatLogout operation
+            */
+           public void receiveResultchatLogout(
+                    boolean result
+                        ) {
+           }
+
+          /**
+           * auto generated Axis2 Error handler
+           * override this method for handling error response from chatLogout operation
+           */
+            public void receiveErrorchatLogout(java.lang.Exception e) {
             }
                 
            /**
@@ -65,7 +81,7 @@
             * override this method for handling normal response from sendMsg operation
             */
            public void receiveResultsendMsg(
-                    boolean result
+                    java.lang.String result
                         ) {
            }
 
@@ -90,22 +106,6 @@
            * override this method for handling error response from reciveMsg operation
            */
             public void receiveErrorreciveMsg(java.lang.Exception e) {
-            }
-                
-           /**
-            * auto generated Axis2 call back method for login method
-            * override this method for handling normal response from login operation
-            */
-           public void receiveResultlogin(
-                    java.lang.Object result
-                        ) {
-           }
-
-          /**
-           * auto generated Axis2 Error handler
-           * override this method for handling error response from login operation
-           */
-            public void receiveErrorlogin(java.lang.Exception e) {
             }
                 
 

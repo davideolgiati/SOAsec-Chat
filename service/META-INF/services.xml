@@ -78,7 +78,16 @@
        </action>
        </parameter>-->
 
-  <operation name="login">
+  <operation name="chatLogin">
+    <messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver"/>
+  </operation>
+    <operation name="chatLogout">
+    <messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver"/>
+  </operation>
+  <operation name="sendMsg">
+    <messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver"/>
+  </operation>
+  <operation name="reciveMsg">
     <messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver"/>
   </operation>
 </service>

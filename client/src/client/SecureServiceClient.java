@@ -1,9 +1,18 @@
 package client;
 
-import java.util.Scanner;
+import java.util.Properties;
+
 import org.apache.axis2.client.ServiceClient;
 import org.apache.axis2.context.ConfigurationContext;
 import org.apache.axis2.context.ConfigurationContextFactory;
+import org.apache.axis2.description.PolicyInclude;
+import org.apache.neethi.Policy;
+import org.apache.rampart.policy.model.CryptoConfig;
+import org.apache.rampart.policy.model.RampartConfig;
+
+import org.apache.axiom.om.OMElement;
+
+import java.util.Scanner;
 
 public class SecureServiceClient {
   // -uri http://localhost:8080/axis2/services/SecureService?wsdl -p tutorial.rampart.client -uw
@@ -26,8 +35,8 @@ public class SecureServiceClient {
     username = "client1";
     password = "password1";
 
-    stub.login(username);
-    stub.sendMsg(": listUsers", username);
+    System.out.println(stub.chatLogin(username));
+    System.out.println(stub.sendMsg(": listUsers", username));
     System.out.println(stub.reciveMsg(username));
   }
 }

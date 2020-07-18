@@ -118,7 +118,7 @@ public class SecureService {
 
   // Li avevo immaginati piu' complessi ma si sono rivelati una linea
   // di codice a testa
-  public boolean login(String user) {
+  public boolean chatLogin(String user) {
     // metodo per la registarzione dell'utente e per la creazione
     // della coda (vedi create)
     boolean ret = code.create();
@@ -129,7 +129,7 @@ public class SecureService {
     return ret;
   }
 
-  public boolean logout(String user) {
+  public boolean chatLogout(String user) {
     // metodo per l'eliminazione dell'utente e della  relativa coda
     // (vedi delete)
     int offset = offsets.get(user).intValue();
@@ -161,9 +161,9 @@ public class SecureService {
     boolean ret = false;
     if (message.startsWith(": ")) { // controllo se è un messaggio di
       // controllo
-      String FullCommand = message.substring(2); // rimuovo i caratteri
+      String FullCommand = message.substring(2, message.length() - 1); // rimuovo i caratteri
       // inutili
-      int cmdLength = FullCommand.length();
+      int cmdLength = FullCommand.length() - 1;
       while (FullCommand.startsWith(" ")) {
 	FullCommand = FullCommand.substring(1); // semplice trim degli
 	// spazi
@@ -173,7 +173,7 @@ public class SecureService {
 	FullCommand = FullCommand.substring(0, cmdLength);
       }
       String[] cmd = FullCommand.split(" ", -1);
-      if (cmds.containsKey(cmd[0]) && cmds.get(cmd[0]) == (cmd.length - 1)) {
+      if (cmds.containsKey(cmd[0]) && cmds.get(cmd[0]) == (cmd.length - 2)) {
 	switch (cmd[0]) {
 	  case "listUsers":
 	    String msg = "";
@@ -183,7 +183,11 @@ public class SecureService {
 		sb.append(key).append("\n");
 	      }
 	    }
-	    msg = sb.deleteCharAt(sb.length() - 1).toString();
+
+	    msg = sb.toString();
+	    if (msg.length() > 1) {
+	      msg = msg.substring(0, msg.length() - 1);
+	    }
 	    int offset = offsets.get(user).intValue();
 	    ret = code.push(offset, msg);
 	    break;
@@ -199,48 +203,50 @@ public class SecureService {
   // Gli argomenti di questo metodo sono di Stringhe, una contenente
   // il messaggio da inviare e una contenente l'utente a cui inviare
   // il messaggio
-  public boolean sendMsg(String message, String user) {
-    try {
-      if (parse(message, user)) {
-	// Salvo l'offset assciato all'utente in una variabile
-	// chiamata offset
-
-	// Utilizzo intValue(); perche' l'offset a noi serve come
-	// tipo primitivo ma, per qualche motivo non meglio
-	// specificato, il costruttore di Map accetta solo oggetti
-	// quindi dovo fare la conversione ad ogni utilizzo
-	int offset = offsets.get(user).intValue();
-	// Aggiorno il contenuto della coda con il nuovo messaggio
-	// e lo faccio chiamndo il metodo QueuePush definito in
-	// precedenza.
-	return code.push(offset, message);
-      } else {
-	return true;
-      }
-    } catch (Exception e) {
-      // Nel caso in cui l'offset non contenga l'utente scelto
-      // ossia l'utente non esiste
-      return false;
-    }
-  }
-
-  public String reciveMsg(String user) {
-    try {
-      // Se esiste salvo l'offset assciato all'utente in una
-      // variabile chiamata offset
+  public String sendMsg(String message, String user) {
+    // try {
+    if (parse(message, user)) {
+      // Salvo l'offset assciato all'utente in una variabile
+      // chiamata offset
 
       // Utilizzo intValue(); perche' l'offset a noi serve come
       // tipo primitivo ma, per qualche motivo non meglio
       // specificato, il costruttore di Map accetta solo oggetti
       // quindi dovo fare la conversione ad ogni utilizzo
       int offset = offsets.get(user).intValue();
-      // Aggiorno il contenuto della coda e lo faccio chiamndo
-      // il metodo QueuePull definito in precedenza.
-      return code.poll(offset);
-    } catch (Exception e) {
-      // Nel caso in cui l'offset non contenga l'utente scelto
-      // ossia l'utente non esiste
-      return "Utente inesistente";
+      // Aggiorno il contenuto della coda con il nuovo messaggio
+      // e lo faccio chiamndo il metodo QueuePush definito in
+      // precedenza.
+      code.push(offset, message);
+      return "ok";
+    } else {
+      return "speciale";
     }
+    // } catch (Exception e) {
+    // Nel caso in cui l'offset non contenga l'utente scelto
+    // ossia l'utente non esiste
+    // return false;
+    // return e.toString();
+    // }
+  }
+
+  public String reciveMsg(String user) {
+    // try {
+    // Se esiste salvo l'offset assciato all'utente in una
+    // variabile chiamata offset
+
+    // Utilizzo intValue(); perche' l'offset a noi serve come
+    // tipo primitivo ma, per qualche motivo non meglio
+    // specificato, il costruttore di Map accetta solo oggetti
+    // quindi dovo fare la conversione ad ogni utilizzo
+    int offset = offsets.get(user).intValue();
+    // Aggiorno il contenuto della coda e lo faccio chiamndo
+    // il metodo QueuePull definito in precedenza.
+    return code.poll(0);
+    /*} catch (Exception e) {
+    // Nel caso in cui l'offset non contenga l'utente scelto
+    // ossia l'utente non esiste
+    return "Utente inesistente";
+    }*/
   }
 }
