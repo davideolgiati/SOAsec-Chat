@@ -175,7 +175,7 @@
 
                     
 
-                            public  boolean chatLogin(
+                            public  java.lang.String chatLogin(
 
                             java.lang.String args07)
                         
@@ -2264,7 +2264,7 @@
                         */
 
                         
-                                    protected boolean local_return ;
+                                    protected java.lang.String local_return ;
                                 
                            /*  This tracker boolean wil be used to detect whether the user called the set method
                           *   for this attribute. It will be used to determine whether to include this field
@@ -2280,9 +2280,9 @@
 
                            /**
                            * Auto generated getter method
-                           * @return boolean
+                           * @return java.lang.String
                            */
-                           public  boolean get_return(){
+                           public  java.lang.String get_return(){
                                return local_return;
                            }
 
@@ -2292,11 +2292,8 @@
                                * Auto generated setter method
                                * @param param _return
                                */
-                               public void set_return(boolean param){
-                            
-                                       // setting primitive attribute tracker to true
-                                       local_returnTracker =
-                                       true;
+                               public void set_return(java.lang.String param){
+                            local_returnTracker = true;
                                    
                                             this.local_return=param;
                                     
@@ -2366,13 +2363,18 @@
                                     namespace = "http://ws.apache.org/axis2";
                                     writeStartElement(null, namespace, "return", xmlWriter);
                              
-                                               if (false) {
-                                           
-                                                         throw new org.apache.axis2.databinding.ADBException("return cannot be null!!");
-                                                      
-                                               } else {
-                                                    xmlWriter.writeCharacters(org.apache.axis2.databinding.utils.ConverterUtil.convertToString(local_return));
-                                               }
+
+                                          if (local_return==null){
+                                              // write the nil attribute
+                                              
+                                                     writeAttribute("xsi","http://www.w3.org/2001/XMLSchema-instance","nil","1",xmlWriter);
+                                                  
+                                          }else{
+
+                                        
+                                                   xmlWriter.writeCharacters(local_return);
+                                            
+                                          }
                                     
                                    xmlWriter.writeEndElement();
                              }
@@ -2564,9 +2566,9 @@
                                       elementList.add(new javax.xml.namespace.QName("http://ws.apache.org/axis2",
                                                                       "return"));
                                  
-                                elementList.add(
-                                   org.apache.axis2.databinding.utils.ConverterUtil.convertToString(local_return));
-                            }
+                                         elementList.add(local_return==null?null:
+                                         org.apache.axis2.databinding.utils.ConverterUtil.convertToString(local_return));
+                                    }
 
                 return new org.apache.axis2.databinding.utils.reader.ADBXMLStreamReaderImpl(qName, elementList.toArray(), attribList.toArray());
             
@@ -2647,17 +2649,21 @@
                                 
                                     if (reader.isStartElement() && new javax.xml.namespace.QName("http://ws.apache.org/axis2","return").equals(reader.getName())){
                                 
-                                    nillableValue = reader.getAttributeValue("http://www.w3.org/2001/XMLSchema-instance","nil");
-                                    if ("true".equals(nillableValue) || "1".equals(nillableValue)){
-                                        throw new org.apache.axis2.databinding.ADBException("The element: "+"return" +"  cannot be null");
-                                    }
+                                       nillableValue = reader.getAttributeValue("http://www.w3.org/2001/XMLSchema-instance","nil");
+                                       if (!"true".equals(nillableValue) && !"1".equals(nillableValue)){
                                     
 
                                     java.lang.String content = reader.getElementText();
                                     
                                               object.set_return(
-                                                    org.apache.axis2.databinding.utils.ConverterUtil.convertToBoolean(content));
-                                              
+                                                    org.apache.axis2.databinding.utils.ConverterUtil.convertToString(content));
+                                            
+                                       } else {
+                                           
+                                           
+                                           reader.getElementText(); // throw away text nodes if any.
+                                       }
+                                      
                                         reader.next();
                                     
                               }  // End of if for expected property start element
@@ -5082,7 +5088,7 @@
                              
 
                                 
-                                private boolean getChatLoginResponse_return(
+                                private java.lang.String getChatLoginResponse_return(
                                 client.SecureServiceStub.ChatLoginResponse wrappedType){
                                 
                                         return wrappedType.get_return();

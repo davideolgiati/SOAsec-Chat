@@ -49,7 +49,7 @@
             * override this method for handling normal response from chatLogin operation
             */
            public void receiveResultchatLogin(
-                    boolean result
+                    java.lang.String result
                         ) {
            }
 
