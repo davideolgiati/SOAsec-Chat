@@ -3,19 +3,19 @@
     Secure Service
   </description>
   <parameter name="ServiceClass" locked="false">SecureService</parameter>
-<!-- SIMPLE AUTHENTICATION -->
+<!-- SIMPLE AUTHENTICATION
 <parameter name="InflowSecurity">
 	<action>
 		<items>UsernameToken</items>
 		<passwordCallbackClass>PWCallbackService</passwordCallbackClass>
 	</action>
 </parameter>
-
-<!-- SIGNATURE -->
+-->
+<!-- SIGNATURE
 <parameter name="InflowSecurity">
 	<action>
 		<items>Signature</items>
-		<user>tmpValue</user> <!-- Valore dinamico per via della classe di Callback -->
+		<user>tmpValue</user>  Valore dinamico per via della classe di Callback
 		<passwordCallbackClass>PWCallbackService</passwordCallbackClass>
 		<signaturePropFile>security.properties</signaturePropFile>
 	</action>
@@ -29,6 +29,7 @@
 		<signaturePropFile>security.properties</signaturePropFile>
 	</action>
 </parameter>
+-->
   <!-- DOUBLE SIGNATURE
        <parameter name="InflowSecurity">
        <action>
