@@ -5,179 +5,161 @@ import java.util.Map;
 import java.util.Queue;
 
 public class SecureService {
-  // Definisco la struttura principale per la gestione dei messaggi
-  // Scelgo di utilizzare un ArrayList di Queue.
-  // Utilizzo ArrayList perchè voglio una struttura che mi tenga
-  // traccia delle code di messagio per ogni utente. In assenza dei
-  // puntatori ArrayList e LinkedList dono le uniche due scelte
-  // possibili. Scelgo ArrayList per la possibilità di accedere
-  // tramite offset.
-  // Un array normale non sarebbe bastato perchè la dimensione deve
-  // essere dinamica
+  private class UsersDataStorage implements Serializable {
+    private static final long serialVersionUID = 21072020L;
+    // Definisco la struttura principale per la gestione dei messaggi
+    // Scelgo di utilizzare un ArrayList di Queue.
+    // Utilizzo ArrayList perchè voglio una struttura che mi tenga
+    // traccia delle code di messagio per ogni utente. In assenza dei
+    // puntatori ArrayList e LinkedList dono le uniche due scelte
+    // possibili. Scelgo ArrayList per la possibilità di accedere
+    // tramite offset.
+    // Un array normale non sarebbe bastato perchè la dimensione deve
+    // essere dinamica
 
-  // L'utilizzo di Queue è abbastanza autoesplicativo. Voglio che
-  // ogni utente possa leggere i messaggi secondo l'ordine d'invio
+    // L'utilizzo di Queue è abbastanza autoesplicativo. Voglio che
+    // ogni utente possa leggere i messaggi secondo l'ordine d'invio
 
-  private Map<Integer, Queue<String>> code = new HashMap<Integer, Queue<String>>();
+    private Map<String, Queue<String>> code = new HashMap<String, Queue<String>>();
 
-  // Per aggiornare lo stato delle code (sia push che pop) dobbiamo
-  // salvare le code originali in una variabile temporanea, aggiornare
-  // e poi riscrivere i valori finali
+    // Per aggiornare lo stato delle code (sia push che pop) dobbiamo
+    // salvare le code originali in una variabile temporanea, aggiornare
+    // e poi riscrivere i valori finali
 
-  // STEP
+    // STEP
 
-  // 1. LEGGO LA CODA
-  // 2. MODIFICO
-  // 3. SE LA MODIFICA E' COMPLETA VAI A 4. ALTRIMENTI TORNA 2.
-  // 4. SCRIVO IL VALORE MODIFICATO NELLA POSIZIONE ORIGINALE
+    // 1. LEGGO LA CODA
+    // 2. MODIFICO
+    // 3. SE LA MODIFICA E' COMPLETA VAI A 4. ALTRIMENTI TORNA 2.
+    // 4. SCRIVO IL VALORE MODIFICATO NELLA POSIZIONE ORIGINALE
 
-  // Metodo privato per l'inserimento di un valore nella coda
-  // all'offset specificato
-  private boolean push(Integer offset, String value) {
-    return code.get(offset).add(value);
-  }
-
-  // Metodo privato per la lettura del primo valore nella coda
-  // all'offset specificato
-  private String poll(Integer offset) {
-    String value = code.get(offset).poll();
-    if (value == null) {
-      // Setto value a "" se vale null, per evitare errori e
-      // problemi più avanti
-      value = "";
+    // Metodo privato per l'inserimento di un valore nella coda
+    // all'offset specificato
+    public boolean push(String user, String value) {
+      return code.get(user).add(value);
     }
-    return value;
+
+    // Metodo privato per la lettura del primo valore nella coda
+    // all'offset specificato
+    public String poll(String user) {
+      String value = code.get(user).poll();
+      if (value == null) {
+	// Setto value a "" se vale null, per evitare errori e
+	// problemi più avanti
+	value = "";
+      }
+      return value;
+    }
+
+    // Metodo per la creazione di una nuova coda di messagi per l'utente
+    public boolean create(String user) {
+      // Aggiungo la nuova coda alla lista
+      Queue<String> newQueue = new LinkedList<String>();
+      return (code.put(user, newQueue) == newQueue);
+    }
+
+    // Metodo per la rimozione della coda di messagi per l'utente
+    public boolean delete(String user) {
+      // Rimuovo la coda all'offset specificato
+      Queue<String> origin = code.get(user);
+      boolean res = (code.remove(user) == origin);
+      return res;
+    }
+
+    public String listUsers(String user) {
+      StringBuilder listBuilder = new StringBuilder();
+      for (String _user : code.keySet()) {
+	if (_user != user) {
+	  listBuilder.append(_user);
+	  listBuilder.append(", ");
+	}
+      }
+      String res = listBuilder.toString();
+      if (res.length() > 2) {
+	res = res.substring(0, res.length() - 2);
+      }
+      return res;
+    }
   }
 
-  // Metodo per la creazione di una nuova coda di messagi per l'utente
-  private void create(Integer offset) {
-    // Aggiungo la nuova coda alla lista
-    code.put(offset, new LinkedList<String>());
+  private UsersDataStorage data = null;
+
+  SecureService() {
+    super();
+    File file = new File("usersdata.ser");
+    boolean exists = file.exists();
+    if (file.exists() && file.isFile()) {
+      try {
+	FileInputStream fileIn = new FileInputStream("usersdata.ser");
+	ObjectInputStream in = new ObjectInputStream(fileIn);
+	data = (UsersDataStorage) in.readObject();
+	in.close();
+	fileIn.close();
+      } catch (Exception e) {
+	data = new UsersDataStorage();
+      }
+    } else {
+      data = new UsersDataStorage();
+    }
   }
 
-  // Metodo per la rimozione della coda di messagi per l'utente
-  private boolean delete(Integer offset) {
-    // Rimuovo la coda all'offset specificato
-    Queue<String> origin = code.get(offset);
-    boolean res = (code.remove(offset) == origin);
-    return res;
+  protected void finalize() {
+    try {
+      if (data != null) {
+	FileOutputStream fileOut = new FileOutputStream("usersdata.ser");
+	ObjectOutputStream out = new ObjectOutputStream(fileOut);
+	out.writeObject(data);
+	out.close();
+	fileOut.close();
+      }
+    } catch (IOException i) {
+      i.printStackTrace();
+    }
   }
-
-  // Oltre alle code ci serve anche una struttura che tenga traccia
-  // degli offset delle code dei singoli utenti.
-  // La mia scelta si orienta qui verso l'utilizzo di una Map per
-  // la possibilità si assegnare ad una stringa un corrispondente
-  // valore numerico username -> offset
-
-  // N.B. QUESTO E' IL MODO PIU' ELEGANTE MA NECESSITA DI UN METODO
-  //      CHE SCALI GLI OFFSET OGNI VOLTA CHE UN UTENTE NON E' PIU'
-  //      LOGGATO AL SERVER
-
-  private Map<String, Integer> offsets = new HashMap<String, Integer>();
-
-  // Per comodita' tengo anche una variabile che mi dice quanti
-  // elementi ho nella lista
-
-  private int ListSize = 0;
 
   // Comandi, WIP
-  private static Map<String, Integer> cmds;
-
-  static {
-    cmds = new HashMap<String, Integer>();
-    cmds.put("listUsers", 0);
-  };
+  private Map<String, Integer> cmds = new HashMap<String, Integer>();
 
   // Li avevo immaginati piu' complessi ma si sono rivelati una linea
   // di codice a testa
   public String chatLogin(String user) {
     // metodo per la registarzione dell'utente e per la creazione
     // della coda (vedi create)
-    create(ListSize);
-    offsets.put(user, new Integer(ListSize));
-    ListSize++;
-    StringBuilder sb = new StringBuilder();
-    for (String key : offsets.keySet()) {
-      if (key != user) {
-	sb.append(key).append("\n");
-      }
+    try {
+      return String.valueOf(data.create(user));
+    } catch (Exception e) {
+      // Nel caso in cui l'offset non contenga l'utente scelto
+      // ossia l'utente non esiste
+      StringWriter sw = new StringWriter();
+      PrintWriter pw = new PrintWriter(sw);
+      e.printStackTrace(pw);
+      return sw.toString();
     }
-
-    return sb.toString();
   }
 
   public boolean chatLogout(String user) {
     // metodo per l'eliminazione dell'utente e della  relativa coda
     // (vedi delete)
-    int offset = offsets.get(user).intValue();
-    boolean ret = delete(offset);
-
-    if (ret) {
-      offsets.remove(user);
-      // In caso non ci siano stati problemi diminuisco
-      // l'indice di offset
-      ListSize--;
-      // E aggiorno i valori di offset per gli utenti ancora
-      // attivi
-      for (String toTestUser : offsets.keySet()) {
-	// per ogni user leggo l'offset associato
-	int tmp = offsets.get(toTestUser).intValue();
-	// controllo se l'offset e' piu' grande di quello
-	// associato all'utente che si e' scollegato
-	if (tmp > offset) {
-	  // aggiorno l'offset a -1
-	  offsets.put(toTestUser, (tmp - 1));
-	}
-      }
-    }
-    return ret;
+    return data.delete(user);
   }
 
   // API Per la gestione dei comandi
-  private int parse(String message, String user) {
+  private int parseMsg(String message, String user) {
     int ret = 0;
-    if (message.startsWith(": ")) { // controllo se è un messaggio di
-      // controllo
-      String FullCommand = message.substring(2); // rimuovo i caratteri
-      System.out.println(FullCommand);
-      // inutili
+    if (message.startsWith(": ")) {
+      String FullCommand = message.substring(2);
       int cmdLength = FullCommand.length() - 1;
-      /*while (FullCommand.startsWith(" ")) {
-	FullCommand = FullCommand.substring(1); // semplice trim degli
-	// spazi
-      }
-      while (FullCommand.endsWith(" ")) {
-	cmdLength -= 1;
-	FullCommand = FullCommand.substring(0, cmdLength);
-	}*/
       String[] cmd = FullCommand.split(" ", -1);
-
-      if (cmds.containsKey(cmd[0])) { // } && cmds.get(cmd[0]) == (cmd.length - 2)) {
-	switch (cmd[0]) {
-	  case "listUsers":
-	    String msg = "";
-	    StringBuilder sb = new StringBuilder();
-	    for (String key : offsets.keySet()) {
-	      if (key != user) {
-		sb.append(key).append("\n");
-	      }
-	    }
-
-	    msg = sb.toString();
-	    /*if (msg.length() > 1) {
-	    msg = msg.substring(0, msg.length() - 1);
-	    }*/
-	    int offset = offsets.get(user).intValue();
-	    ret += (push(offset, msg)) ? 1 : 0;
-	    break;
-	  default:
-	    ret -= 1;
-	}
-      } else {
-	ret -= 3;
+      switch (cmd[0]) {
+	case "listUsers":
+	  String msg = data.listUsers(user);
+	  ret = (data.push(user, msg)) ? 0 : 1;
+	  break;
+	default:
+	  ret = -1;
       }
     } else {
-      ret -= 2;
+      ret = 1;
     }
     return ret;
   }
@@ -212,7 +194,7 @@ public class SecureService {
     // return e.toString();
     // }*/
     try {
-      return String.valueOf(parse(message, user));
+      return String.valueOf(parseMsg(message, user));
     } catch (Exception e) {
       // Nel caso in cui l'offset non contenga l'utente scelto
       // ossia l'utente non esiste
@@ -225,17 +207,9 @@ public class SecureService {
 
   public String reciveMsg(String user) {
     try {
-      // Se esiste salvo l'offset assciato all'utente in una
-      // variabile chiamata offset
-
-      // Utilizzo intValue(); perche' l'offset a noi serve come
-      // tipo primitivo ma, per qualche motivo non meglio
-      // specificato, il costruttore di Map accetta solo oggetti
-      // quindi dovo fare la conversione ad ogni utilizzo
-      int offset = offsets.get(user).intValue();
       // Aggiorno il contenuto della coda e lo faccio chiamndo
       // il metodo QueuePull definito in precedenza.
-      return poll(0);
+      return data.poll(user);
     } catch (Exception e) {
       // Nel caso in cui l'offset non contenga l'utente scelto
       // ossia l'utente non esiste

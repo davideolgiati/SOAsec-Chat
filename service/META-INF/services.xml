@@ -3,7 +3,6 @@
     Secure Service
   </description>
   <parameter name="ServiceClass" locked="false">SecureService</parameter>
-
 <!-- SIMPLE AUTHENTICATION -->
 <parameter name="InflowSecurity">
 	<action>
@@ -30,7 +29,6 @@
 		<signaturePropFile>security.properties</signaturePropFile>
 	</action>
 </parameter>
-
   <!-- DOUBLE SIGNATURE
        <parameter name="InflowSecurity">
        <action>
