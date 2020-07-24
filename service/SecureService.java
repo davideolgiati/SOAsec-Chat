@@ -4,7 +4,8 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
 
-public class SecureService {
+public class SecureService implements Serializable {
+  private static final long serialVersionUID = 22072020L;
   private class UsersDataStorage implements Serializable {
     private static final long serialVersionUID = 21072020L;
     // Definisco la struttura principale per la gestione dei messaggi
@@ -20,7 +21,7 @@ public class SecureService {
     // L'utilizzo di Queue è abbastanza autoesplicativo. Voglio che
     // ogni utente possa leggere i messaggi secondo l'ordine d'invio
 
-    private Map<String, Queue<String>> code = new HashMap<String, Queue<String>>();
+    private Map<String, Queue<String>> code = new HashMap<>();
 
     // Per aggiornare lo stato delle code (sia push che pop) dobbiamo
     // salvare le code originali in una variabile temporanea, aggiornare
@@ -36,7 +37,8 @@ public class SecureService {
     // Metodo privato per l'inserimento di un valore nella coda
     // all'offset specificato
     public boolean push(String user, String value) {
-      return code.get(user).add(value);
+      Queue<String> coda = code.get(user);
+      return coda.add(value);
     }
 
     // Metodo privato per la lettura del primo valore nella coda
@@ -54,8 +56,7 @@ public class SecureService {
     // Metodo per la creazione di una nuova coda di messagi per l'utente
     public boolean create(String user) {
       // Aggiungo la nuova coda alla lista
-      Queue<String> newQueue = new LinkedList<String>();
-      return (code.put(user, newQueue) == newQueue);
+      return (code.put(user, new LinkedList<String>()) == null);
     }
 
     // Metodo per la rimozione della coda di messagi per l'utente
@@ -84,52 +85,54 @@ public class SecureService {
 
   private UsersDataStorage data = null;
 
-  SecureService() {
-    super();
-    File file = new File("usersdata.ser");
-    boolean exists = file.exists();
-    if (file.exists() && file.isFile()) {
+  private void _before() {
       try {
-	FileInputStream fileIn = new FileInputStream("usersdata.ser");
-	ObjectInputStream in = new ObjectInputStream(fileIn);
-	data = (UsersDataStorage) in.readObject();
-	in.close();
-	fileIn.close();
+	  File file = new File(System.getProperty("java.io.tmpdir") + "/usersdata.ser");
+	  boolean exists = file.exists();
+	  if (file.exists() && file.isFile()) {
+	      FileInputStream fileIn = new FileInputStream(System.getProperty("java.io.tmpdir") + "/usersdata.ser");
+	      ObjectInputStream in = new ObjectInputStream(fileIn);
+	      data = (UsersDataStorage) in.readObject();
+	      in.close();
+	      fileIn.close();
+	  } else {
+	      file.createNewFile();
+	      data = new UsersDataStorage();
+	  }
       } catch (Exception e) {
-	data = new UsersDataStorage();
+	  data = new UsersDataStorage();
       }
-    } else {
-      data = new UsersDataStorage();
-    }
   }
 
-  protected void finalize() {
+  private void _after() {
     try {
-      if (data != null) {
-	FileOutputStream fileOut = new FileOutputStream("usersdata.ser");
-	ObjectOutputStream out = new ObjectOutputStream(fileOut);
-	out.writeObject(data);
-	out.close();
-	fileOut.close();
-      }
+      FileOutputStream fileOut = new FileOutputStream(System.getProperty("java.io.tmpdir") + "/usersdata.ser");
+      ObjectOutputStream out = new ObjectOutputStream(fileOut);
+      out.writeObject(data);
+      out.close();
+      fileOut.close();
     } catch (IOException i) {
       i.printStackTrace();
     }
   }
 
-  // Comandi, WIP
-  private Map<String, Integer> cmds = new HashMap<String, Integer>();
-
   // Li avevo immaginati piu' complessi ma si sono rivelati una linea
   // di codice a testa
   public String chatLogin(String user) {
+    _before();
     // metodo per la registarzione dell'utente e per la creazione
     // della coda (vedi create)
     try {
-      return String.valueOf(data.create(user));
+	String res = "false";
+	if (data.create(user)) {
+	  res = data.listUsers(user);
+	}
+	_after();
+	return res;
     } catch (Exception e) {
       // Nel caso in cui l'offset non contenga l'utente scelto
       // ossia l'utente non esiste
+      _after();
       StringWriter sw = new StringWriter();
       PrintWriter pw = new PrintWriter(sw);
       e.printStackTrace(pw);
@@ -169,35 +172,15 @@ public class SecureService {
   // il messaggio da inviare e una contenente l'utente a cui inviare
   // il messaggio
   public String sendMsg(String message, String user) {
-    // try {
-    /* if (parse(message, user)) {
-      // Salvo l'offset assciato all'utente in una variabile
-      // chiamata offset
-
-      // Utilizzo intValue(); perche' l'offset a noi serve come
-      // tipo primitivo ma, per qualche motivo non meglio
-      // specificato, il costruttore di Map accetta solo oggetti
-      // quindi dovo fare la conversione ad ogni utilizzo
-      int offset = offsets.get(user).intValue();
-      // Aggiorno il contenuto della coda con il nuovo messaggio
-      // e lo faccio chiamndo il metodo QueuePush definito in
-      // precedenza.
-      code.push(offset, message);
-      return "ok";
-    } else {
-      return "speciale";
-    }
-    // } catch (Exception e) {
-    // Nel caso in cui l'offset non contenga l'utente scelto
-    // ossia l'utente non esiste
-    // return false;
-    // return e.toString();
-    // }*/
+    _before();
     try {
-      return String.valueOf(parseMsg(message, user));
+      String res = String.valueOf(parseMsg(message, user));
+      _after();
+      return res;
     } catch (Exception e) {
       // Nel caso in cui l'offset non contenga l'utente scelto
       // ossia l'utente non esiste
+      _after();
       StringWriter sw = new StringWriter();
       PrintWriter pw = new PrintWriter(sw);
       e.printStackTrace(pw);

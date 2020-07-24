@@ -31,14 +31,11 @@ public class SecureServiceClient {
     ServiceClient sc = stub._getServiceClient();
     sc.engageModule("rampart");
 
-    Scanner keyboard = new Scanner(System.in);
     username = "client1";
     password = "password1";
 
-    System.out.println(stub.chatLogin(username));
     System.out.println(stub.chatLogin("davide"));
     System.out.println(stub.chatLogin("andrea"));
-    System.out.println(stub.sendMsg(": listUsers", username));
-    System.out.println(stub.reciveMsg(username));
+    System.out.println(stub.chatLogin("pippo"));
   }
 }
