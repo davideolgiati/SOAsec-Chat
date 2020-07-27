@@ -84,11 +84,18 @@ public class SecureService implements Serializable {
   }
 
   private UsersDataStorage data = null;
+  private Map<String, Command> cmds;
+  
+  public SecureService() {
+	  cmds.put(":listUsers", new ListUsers());
+	  cmds.put(":openConversation", new OpenConversation());
+	  cmds.put(":closeConversation", new CloseConversation());
+	  cmds.put(":chatLogout", new ChatLogout()) ;
+  }
 
   private void _before() {
       try {
 	  File file = new File(System.getProperty("java.io.tmpdir") + "/usersdata.ser");
-	  boolean exists = file.exists();
 	  if (file.exists() && file.isFile()) {
 	      FileInputStream fileIn = new FileInputStream(System.getProperty("java.io.tmpdir") + "/usersdata.ser");
 	      ObjectInputStream in = new ObjectInputStream(fileIn);
@@ -147,7 +154,8 @@ public class SecureService implements Serializable {
   }
 
   // API Per la gestione dei comandi
-  private int parseMsg(String message, String user) {
+  private String parseMsg(String message, String user) {
+	  /*
     int ret = 0;
     if (message.startsWith(": ")) {
       String FullCommand = message.substring(2);
@@ -165,6 +173,34 @@ public class SecureService implements Serializable {
       ret = 1;
     }
     return ret;
+      */
+	  
+	  //variabile contenente tutte le parole del messaggio
+	  String[] stringList = new String[0];
+	  String result = null;
+	  
+	  if(message == null || message.equals("")) {
+		  //questo e' il caso in cui l'utente ha premuto invio
+		  //senza aver scritto niente e quindi il programma
+		  //non dovra' fare niente
+	  } else {
+		  stringList = message.split(" ");
+		  if(message.charAt(0) != ':') {
+			  //se il messaggio non contiene un comando
+			  //allora...
+		  } else {
+			  //esecuzione del comando
+			  String command = stringList[0].toLowerCase();
+			  if(cmds.containsKey(command)) {
+				  Command cmd = cmds.get(command);
+				  cmd.execute(user);
+			  } else {
+				  result = "Comando sconosciuto!";
+			  }
+	  		}
+	  }
+	  return result;
+
   }
 
   // API per l'invio di un messaggio
