@@ -34,8 +34,10 @@ public class SecureServiceClient {
     username = "client1";
     password = "password1";
 
-    System.out.println(stub.chatLogin("davide"));
-    System.out.println(stub.chatLogin("andrea"));
-    System.out.println(stub.chatLogin("pippo"));
+    stub.sendMsg(": chatLogin", "davide");
+    stub.sendMsg(": chatLogin", "andrea");
+    stub.sendMsg(": chatLogin", "pippo");
+    stub.sendMsg(": listUsers", "pippo");
+    System.out.println(stub.reciveMsg("pippo"));
   }
 }

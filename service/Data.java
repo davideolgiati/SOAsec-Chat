@@ -67,7 +67,7 @@ class Data implements Serializable {
 	return res;
     }
 
-    public String listUsers(String user) {
+    public String usersToString(String user) {
 	StringBuilder listBuilder = new StringBuilder();
 	for (String _user : code.keySet()) {
 	    if (_user != user) {
