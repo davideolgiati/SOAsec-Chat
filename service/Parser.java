@@ -1,11 +1,10 @@
-package rpc.secure.chat;
+package chatUtils;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.io.*;
 
-
-class Parser implements Serializable {
+public class Parser implements Serializable {
     private static final long serialVersionUID = 22072020L;
     private Data data = null;
     private String tmpfile = System.getProperty("java.io.tmpdir") + "/usersdata.ser";
@@ -14,37 +13,37 @@ class Parser implements Serializable {
 	public void execute(String user);
     }
 
-    public class CloseConversation implements Command {
+    private class CloseConversation implements Command {
 	public void execute(String user) {
 	    //todo
 	}
     }
 
-    public class ChatLogout implements Command {
+    private class ChatLogout implements Command {
 	public void execute(String user) {
 	    data.delete(user);
 	}
     }
 
-    public class ChatLogin implements Command {
+    private class ChatLogin implements Command {
 	public void execute(String user) {
 	    data.create(user);
 	}
     }
 
-    public class ListUsers implements Command {
+    private class ListUsers implements Command {
 	public void execute(String user) {
 	    data.push(data.usersToString(user), user);
 	}
     }
 
-    public class OpenConversation implements Command {
+    private class OpenConversation implements Command {
 	public void execute(String user) {
-		//todo
+	    //todo
 	}
     }
 
-    private Map<String, Command> cmds;
+    private Map<String, Command> cmds = new HashMap<>();
 
     public Parser() {
 	try {
@@ -62,6 +61,7 @@ class Parser implements Serializable {
 	} catch (Exception e) {
 	    data = new Data();
 	}
+
 	cmds.put(":listUsers", new ListUsers());
 	cmds.put(":openConversation", new OpenConversation());
 	cmds.put(":closeConversation", new CloseConversation());

@@ -1,4 +1,4 @@
-package rpc.secure.chat;
+package chatUtils;
 
 import java.util.HashMap;
 import java.util.LinkedList;

@@ -1,6 +1,5 @@
-package rpc.secure.chat;
-
 import java.io.*;
+import chatUtils.Parser;
 
 public class SecureService {
 
