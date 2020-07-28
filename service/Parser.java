@@ -33,7 +33,7 @@ public class Parser implements Serializable {
 
     private class ListUsers implements Command {
 	public void execute(String user) {
-	    data.push(data.usersToString(user), user);
+	    parse(data.usersToString(""), user);
 	}
     }
 
@@ -85,32 +85,41 @@ public class Parser implements Serializable {
 	//variabile contenente tutte le parole del messaggio
 	String[] stringList = new String[0];
 	String result = "";
-
+	System.out.println("[INFO] inizio metodo chatUtils.Parser.parse");
 	if(message == null || message.equals("")) {
+	    System.out.println("[INFO] rilevata stringa vuota");
 	    //questo e' il caso in cui l'utente ha premuto invio
 	    //senza aver scritto niente e quindi il programma
 	    //non dovra' fare niente
 	} else {
 	    stringList = message.split(" ");
 	    if(message.charAt(0) != ':') {
+		System.out.println("[INFO] messaggio non contenete comandi");
 		//se il messaggio non contiene un comando
 		//allora...
 		data.push(user, message);
 	    } else {
+		System.out.println("[INFO] possibile comando rilevato");
 		//esecuzione del comando
-		String command = stringList[0].toLowerCase();
+		String command = stringList[0];//.toLowerCase();
 		if(cmds.containsKey(command)) {
+		    System.out.println("[INFO] Comando " + command + " riconosciuto");
 		    Command cmd = cmds.get(command);
+		    System.out.println("[INFO] Inizio esecuzione comando");
 		    cmd.execute(user);
 		} else {
+		    System.out.println("[INFO] Comando " + command + " non riconosciuto");
 		    result = "Comando sconosciuto!";
 		}
 	    }
 	}
+	dump();
 	return result;
     }
 
     public String getFor(String user){
-	return data.poll(user);
+	String res = data.poll(user);
+	dump();
+	return res;
     }
 }

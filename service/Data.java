@@ -44,9 +44,10 @@ class Data implements Serializable {
     // Metodo privato per la lettura del primo valore nella coda
     // all'offset specificato
     public String poll(String user) {
-	String value = code.get(user).poll();
+	Queue<String> coda = code.get(user);
+	String value = coda.poll();
 	if (value == null) {
-	    // Setto value a "" se vale null, per evitare errori e
+	    // Setto value a "" se vagit commit --amendle null, per evitare errori e
 	    // problemi più avanti
 	    value = "";
 	}
@@ -56,7 +57,8 @@ class Data implements Serializable {
     // Metodo per la creazione di una nuova coda di messagi per l'utente
     public boolean create(String user) {
 	// Aggiungo la nuova coda alla lista
-	return (code.put(user, new LinkedList<String>()) == null);
+	code.put(user, new LinkedList<String>());
+	return true; //tofix
     }
 
     // Metodo per la rimozione della coda di messagi per l'utente
