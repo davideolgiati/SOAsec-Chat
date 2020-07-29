@@ -11,7 +11,7 @@
 	</action>
 </parameter>
 -->
-<!-- SIGNATURE
+<!-- SIGNATURE -->
 <parameter name="InflowSecurity">
 	<action>
 		<items>Signature</items>
@@ -29,7 +29,7 @@
 		<signaturePropFile>security.properties</signaturePropFile>
 	</action>
 </parameter>
--->
+
   <!-- DOUBLE SIGNATURE
        <parameter name="InflowSecurity">
        <action>
@@ -77,12 +77,6 @@
        </action>
        </parameter>-->
 
-  <operation name="chatLogin">
-    <messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver"/>
-  </operation>
-    <operation name="chatLogout">
-    <messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver"/>
-  </operation>
   <operation name="sendMsg">
     <messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver"/>
   </operation>

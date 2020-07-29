@@ -30,6 +30,9 @@ public class SecureServiceClient {
 	new SecureServiceStub(ctx, "http://localhost:8080/axis2/services/SecureService");
     ServiceClient sc = stub._getServiceClient();
     sc.engageModule("rampart");
+	RampartConfig rampartConfig = new RampartConfig();
+	rampartConfig.setUser("client1");
+	rampartConfig.setEncryptionUser("client1");
 
     username = "client1";
     password = "password1";
