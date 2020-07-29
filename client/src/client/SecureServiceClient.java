@@ -12,7 +12,7 @@ import org.apache.rampart.policy.model.RampartConfig;
 
 import org.apache.axiom.om.OMElement;
 
-import java.util.Scanner;
+import org.apache.axis2.client.Options;
 
 public class SecureServiceClient {
   // -uri http://localhost:8080/axis2/services/SecureService?wsdl -p tutorial.rampart.client -uw
@@ -29,10 +29,14 @@ public class SecureServiceClient {
     SecureServiceStub stub =
 	new SecureServiceStub(ctx, "http://localhost:8080/axis2/services/SecureService");
     ServiceClient sc = stub._getServiceClient();
-    sc.engageModule("rampart");
-	RampartConfig rampartConfig = new RampartConfig();
-	rampartConfig.setUser("client1");
-	rampartConfig.setEncryptionUser("client1");
+	/*
+	NON TOCCARE!!!
+	Options options = sc.getOptions();
+    	options.setProperty(RampartMessageData.KEY_RAMPART_POLICY, loadPolicy("policy.xml"));
+    	options.setUserName("client1");
+    	options.setPassword("password1");
+	*/
+	sc.engageModule("rampart");
 
     username = "client1";
     password = "password1";
