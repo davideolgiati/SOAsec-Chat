@@ -45,6 +45,21 @@
 
         
            /**
+            * auto generated Axis2 call back method for chatLogin method
+            * override this method for handling normal response from chatLogin operation
+            */
+           public void receiveResultchatLogin(
+                    ) {
+           }
+
+          /**
+           * auto generated Axis2 Error handler
+           * override this method for handling error response from chatLogin operation
+           */
+            public void receiveErrorchatLogin(java.lang.Exception e) {
+            }
+                
+           /**
             * auto generated Axis2 call back method for sendMsg method
             * override this method for handling normal response from sendMsg operation
             */

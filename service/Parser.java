@@ -25,12 +25,6 @@ public class Parser implements Serializable {
 	}
     }
 
-    private class ChatLogin implements Command {
-	public void execute(String user) {
-	    data.create(user);
-	}
-    }
-
     private class ListUsers implements Command {
 	public void execute(String user) {
 	    parse(data.usersToString(""), user);
@@ -66,7 +60,6 @@ public class Parser implements Serializable {
 	cmds.put(":openConversation", new OpenConversation());
 	cmds.put(":closeConversation", new CloseConversation());
 	cmds.put(":chatLogout", new ChatLogout());
-	cmds.put(":chatLogin", new ChatLogin());
     }
 
     private void dump() {

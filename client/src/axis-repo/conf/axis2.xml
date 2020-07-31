@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <axisconfig name="AxisJava2.0">
 <!-- Engage the security module -->
 <module ref="rampart"/>
@@ -13,14 +14,14 @@
 </parameter>
 -->
 <!-- SIGNATURE -->
-
+<!--
 <parameter name="OutflowSecurity">
 	<action>
 		<items>Signature</items>
-		<user>efijeifj</user>  <!-- Valore statico -->
+		<user>client1</user>   Valore statico
 		<passwordCallbackClass>client.PWCallbackClient</passwordCallbackClass>
 		<signaturePropFile>axis-repo/conf/security.properties</signaturePropFile>
-		<encryptionUser>tmpValue</encryptionUser>  <!-- Valore dinamico -->
+		<encryptionUser>tmpValue</encryptionUser>   Valore dinamico
 		<signatureParts>Body</signatureParts>
 	</action>
 </parameter>
@@ -34,7 +35,7 @@
 		<signatureParts>Body</signatureParts>
 	</action>
 </parameter>
-
+-->
 <!-- DOUBLE SIGNATURE 
 <parameter name="OutflowSecurity">
 	<action>
@@ -111,15 +112,14 @@
 <!-- ================================================= -->
 <!-- Parameters -->
 <!-- ================================================= -->
-<parameter name="hotdeployment"
-locked="false">true</parameter>
-<parameter name="hotupdate" locked="false">true</parameter>
-<parameter name="enableMTOM" locked="false">true</parameter>
+<parameter locked="false" name="hotdeployment">true</parameter>
+<parameter locked="false" name="hotupdate">true</parameter>
+<parameter locked="false" name="enableMTOM">true</parameter>
 <!-- Uncomment this to enable REST support -->
 <!-- <parameter name="enableREST"
-locked="false">true</parameter>-->
-<parameter name="userName" locked="false">admin</parameter>
-<parameter name="password" locked="false">axis2</parameter>
+locked="false">true</parameter> -->
+<parameter locked="false" name="userName">admin</parameter>
+<parameter locked="false" name="password">axis2</parameter>
 <!-- ================================================= -->
 <!-- Message Receivers -->
 <!-- ================================================= -->
@@ -131,24 +131,22 @@ to here, so that you can refer from-->
 <!--Note : You can ovride this for particular service by
 adding the same element with your requirement-->
 <messageReceivers>
-	<messageReceiver mep="http://www.w3.org/ns/wsdl/in-only" class="org.apache.axis2.rpc.receivers.RPCInOnlyMessageReceiver"/>
-	<messageReceiver mep="http://www.w3.org/ns/wsdl/in-out" class="org.apache.axis2.rpc.receivers.RPCMessageReceiver"/>
+	<messageReceiver class="org.apache.axis2.rpc.receivers.RPCInOnlyMessageReceiver" mep="http://www.w3.org/ns/wsdl/in-only"/>
+	<messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver" mep="http://www.w3.org/ns/wsdl/in-out"/>
 </messageReceivers>
 <!-- ================================================= -->
 <!-- Transport Ins -->
 <!-- ================================================= -->
-<transportReceiver name="http"
-class="org.apache.axis2.transport.http.SimpleHTTPServer">
-<parameter name="port" locked="false">6060</parameter>
+<transportReceiver class="org.apache.axis2.transport.http.SimpleHTTPServer" name="http">
+<parameter locked="false" name="port">6060</parameter>
 <!--If you want to give your own host address for EPR
 generation-->
 <!--uncommet following paramter , and set as you required.-->
 <!--<parameter name="hostname"
 locked="false">http://myApp.com/ws</parameter>-->
 </transportReceiver>
-<transportReceiver name="tcp"
-class="org.apache.axis2.transport.tcp.TCPServer">
-<parameter name="port" locked="false">6061</parameter>
+<transportReceiver class="org.apache.axis2.transport.tcp.TCPServer" name="tcp">
+<parameter locked="false" name="port">6061</parameter>
 <!--If you want to give your own host address for EPR
 generation-->
 <!--uncommet following paramter , and set as you required.-->
@@ -158,25 +156,17 @@ locked="false">tcp://myApp.com/ws</parameter>-->
 <!-- ================================================= -->
 <!-- Transport Outs -->
 <!-- ================================================= -->
-<transportSender name="tcp"
-class="org.apache.axis2.transport.tcp.TCPTransportSender"/>
-<transportSender name="local"
-class="org.apache.axis2.transport.local.LocalTransportSender"/>
+<transportSender class="org.apache.axis2.transport.tcp.TCPTransportSender" name="tcp"/>
+<transportSender class="org.apache.axis2.transport.local.LocalTransportSender" name="local"/>
 <!--<transportSender name="jms"
 class="org.apache.axis2.transport.jms.JMSSender"/>-->
-<transportSender name="http"
-class="org.apache.axis2.transport.http.CommonsHTTPTransportSender">
-<parameter name="PROTOCOL"
-locked="false">HTTP/1.1</parameter>
-<parameter name="Transfer-Encoding"
-locked="false">chunked</parameter>
+<transportSender class="org.apache.axis2.transport.http.CommonsHTTPTransportSender" name="http">
+<parameter locked="false" name="PROTOCOL">HTTP/1.1</parameter>
+<parameter locked="false" name="Transfer-Encoding">chunked</parameter>
 </transportSender>
-<transportSender name="https"
-class="org.apache.axis2.transport.http.CommonsHTTPTransportSender">
-<parameter name="PROTOCOL"
-locked="false">HTTP/1.1</parameter>
-<parameter name="Transfer-Encoding"
-locked="false">chunked</parameter>
+<transportSender class="org.apache.axis2.transport.http.CommonsHTTPTransportSender" name="https">
+<parameter locked="false" name="PROTOCOL">HTTP/1.1</parameter>
+<parameter locked="false" name="Transfer-Encoding">chunked</parameter>
 </transportSender>
 <!-- ================================================= -->
 <!-- Phases -->
@@ -184,31 +174,26 @@ locked="false">chunked</parameter>
 <phaseOrder type="InFlow">
         <!--   Global phases    -->
          <phase name="Transport">
-            <handler name="RequestURIBasedDispatcher"
-                     class="org.apache.axis2.dispatchers.RequestURIBasedDispatcher">
+            <handler class="org.apache.axis2.dispatchers.RequestURIBasedDispatcher" name="RequestURIBasedDispatcher">
                 <order phase="Transport"/>
             </handler>
 
-            <handler name="SOAPActionBasedDispatcher"
-                     class="org.apache.axis2.dispatchers.SOAPActionBasedDispatcher">
+            <handler class="org.apache.axis2.dispatchers.SOAPActionBasedDispatcher" name="SOAPActionBasedDispatcher">
                 <order phase="Transport"/>
             </handler>
         </phase>
         <phase name="Security"/>
         <phase name="PreDispatch"/>
-        <phase name="Dispatch" class="org.apache.axis2.engine.DispatchPhase">
-            <handler name="AddressingBasedDispatcher"
-                     class="org.apache.axis2.dispatchers.AddressingBasedDispatcher">
+        <phase class="org.apache.axis2.engine.DispatchPhase" name="Dispatch">
+            <handler class="org.apache.axis2.dispatchers.AddressingBasedDispatcher" name="AddressingBasedDispatcher">
                 <order phase="Dispatch"/>
             </handler>
 
-            <handler name="SOAPMessageBodyBasedDispatcher"
-                     class="org.apache.axis2.dispatchers.SOAPMessageBodyBasedDispatcher">
+            <handler class="org.apache.axis2.dispatchers.SOAPMessageBodyBasedDispatcher" name="SOAPMessageBodyBasedDispatcher">
                 <order phase="Dispatch"/>
             </handler>
 
-            <handler name="InstanceDispatcher"
-                     class="org.apache.axis2.engine.InstanceDispatcher">
+            <handler class="org.apache.axis2.engine.InstanceDispatcher" name="InstanceDispatcher">
                 <order phase="Dispatch"/>
             </handler>
         </phase>
@@ -227,38 +212,33 @@ locked="false">chunked</parameter>
     </phaseOrder>
     <phaseOrder type="InFaultFlow">
         <phase name="PreDispatch"/>
-        <phase name="Dispatch" class="org.apache.axis2.engine.DispatchPhase">
-            <handler name="RequestURIBasedDispatcher"
-                     class="org.apache.axis2.dispatchers.RequestURIBasedDispatcher">
+        <phase class="org.apache.axis2.engine.DispatchPhase" name="Dispatch">
+            <handler class="org.apache.axis2.dispatchers.RequestURIBasedDispatcher" name="RequestURIBasedDispatcher">
                 <order phase="Dispatch"/>
             </handler>
 
-            <handler name="SOAPActionBasedDispatcher"
-                     class="org.apache.axis2.dispatchers.SOAPActionBasedDispatcher">
+            <handler class="org.apache.axis2.dispatchers.SOAPActionBasedDispatcher" name="SOAPActionBasedDispatcher">
                 <order phase="Dispatch"/>
             </handler>
 
-            <handler name="AddressingBasedDispatcher"
-                     class="org.apache.axis2.dispatchers.AddressingBasedDispatcher">
+            <handler class="org.apache.axis2.dispatchers.AddressingBasedDispatcher" name="AddressingBasedDispatcher">
                 <order phase="Dispatch"/>
             </handler>
-    <handler name="SecurityInHandler" class="org.apache.rampart.handler.WSDoAllReceiver">
+    <handler class="org.apache.rampart.handler.WSDoAllReceiver" name="SecurityInHandler">
         <order phase="Security"/>
     </handler>
-            <handler name="SOAPMessageBodyBasedDispatcher"
-                     class="org.apache.axis2.dispatchers.SOAPMessageBodyBasedDispatcher">
+            <handler class="org.apache.axis2.dispatchers.SOAPMessageBodyBasedDispatcher" name="SOAPMessageBodyBasedDispatcher">
                 <order phase="Dispatch"/>
             </handler>
-            <handler name="InstanceDispatcher"
-                     class="org.apache.axis2.engine.InstanceDispatcher">
+            <handler class="org.apache.axis2.engine.InstanceDispatcher" name="InstanceDispatcher">
                 <order phase="Dispatch"/>
             </handler>
-			<handler name="SecurityInHandler" class="org.apache.rampart.handler.WSDoAllReceiver"> 
+			<handler class="org.apache.rampart.handler.WSDoAllReceiver" name="SecurityInHandler"> 
 					<order phase="Security"/>
 			</handler>
 		</phase>
 		<phase name="Security">
-			<handler name="SecurityInHandler" class="org.apache.rampart.handler.WSDoAllReceiver"> 
+			<handler class="org.apache.rampart.handler.WSDoAllReceiver" name="SecurityInHandler"> 
 				<order phase="Security"/>
 			</handler>
 		</phase>
