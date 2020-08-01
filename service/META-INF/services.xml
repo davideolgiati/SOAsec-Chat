@@ -3,14 +3,18 @@
     Secure Service
   </description>
   <parameter name="ServiceClass" locked="false">SecureService</parameter>
-<!-- SIMPLE AUTHENTICATION
+<!-- SIMPLE AUTHENTICATION -->
 <parameter name="InflowSecurity">
 	<action>
 		<items>UsernameToken</items>
 		<passwordCallbackClass>PWCallbackService</passwordCallbackClass>
 	</action>
 </parameter>
--->
+
+  <operation name="chatLogin">
+    <messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver"/>
+  </operation>
+
 <!-- SIGNATURE -->
 
 <parameter name="InflowSecurity">
@@ -78,9 +82,6 @@
        </action>
        </parameter>-->
 
-  <operation name="chatLogin">
-    <messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver"/>
-  </operation>
   <operation name="sendMsg">
     <messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver"/>
   </operation>

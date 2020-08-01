@@ -52,8 +52,11 @@ public class SecureServiceClient {
 
 	//Changing the parameters
 	XPath xPath = XPathFactory.newInstance().newXPath();
-	Node userNode = (Node) xPath.compile("/axisconfig/parameter/action/user").evaluate(doc, XPathConstants.NODE);
-	userNode.setTextContent(username);
+	NodeList userNode = (NodeList) xPath.compile("/axisconfig/parameter/action/user").evaluate(doc, XPathConstants.NODESET);
+	for (int i = 0; i < userNode.getLength() - 1; i++) {
+	    Node currentItem = userNode.item(i);
+	    currentItem.setTextContent(username);
+	}
 	
 	//Setting write options
 	Transformer tf = TransformerFactory.newInstance().newTransformer();

@@ -4,21 +4,21 @@
 <module ref="rampart"/>
 
 <!-- SIMPLE AUTHENTICATION -->
-<!--
+
 <parameter name="OutflowSecurity">
 	<action>
 		<items>UsernameToken</items>
-		<user>tmpValue</user>	 Il valore viene sovrascritto nella classe di Callback
+		<user>client1</user>	<!--  Il valore viene sovrascritto nella classe di Callback -->
 		<passwordCallbackClass>client.PWCallbackClient</passwordCallbackClass>
 	</action>
 </parameter>
--->
+
 <!-- SIGNATURE -->
 
 <parameter name="OutflowSecurity">
 	<action>
 		<items>Signature</items>
-		<user>client2</user> <!--  Valore statico -->
+		<user>client1</user> <!--  Valore statico -->
 		<passwordCallbackClass>client.PWCallbackClient</passwordCallbackClass>
 		<signaturePropFile>axis-repo/conf/security.properties</signaturePropFile>
 		<encryptionUser>tmpValue</encryptionUser> <!--  Valore dinamico -->
