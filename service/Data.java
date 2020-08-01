@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.Queue;
 import java.io.*;
 
-public class Data implements Serializable {
+class Data implements Serializable {
     private static final long serialVersionUID = 21072020L;
     // Definisco la struttura principale per la gestione dei messaggi
     // Scelgo di utilizzare un ArrayList di Queue.

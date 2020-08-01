@@ -1,15 +1,13 @@
 import java.io.*;
 import chatUtils.Parser;
-import chatUtils.Data;
 
 public class SecureService {
 
     private Parser parser = new Parser();
-    private Data data = new Data();
     
     //Login method
     public void chatLogin(String user) {
-    	data.create(user);
+    	parser.pLogin(user);
     }
 
     // API per l'invio di un messaggio

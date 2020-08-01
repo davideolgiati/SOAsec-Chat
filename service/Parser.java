@@ -115,4 +115,9 @@ public class Parser implements Serializable {
 	dump();
 	return res;
     }
+    
+    public void pLogin(String user) {
+    	data.create(user);
+	dump();
+    }
 }

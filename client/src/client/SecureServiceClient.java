@@ -76,8 +76,7 @@ public class SecureServiceClient {
 	sc.engageModule("rampart");
 
     stub.chatLogin(username);
-    stub.chatLogin(username);
-    stub.sendMsg(":listUsers", username);
+    //stub.sendMsg(":listUsers", username);
     //System.out.println(stub.reciveMsg("pippo"));
   }
 }
