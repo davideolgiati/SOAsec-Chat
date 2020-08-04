@@ -81,7 +81,13 @@ public class SecureServiceClient {
 	sc.engageModule("rampart");
 
     stub.chatLogin(username);
-    //stub.sendMsg(":listUsers", username);
+    //String check = stub.reciveMsg(username);
+    //String[] partials = message.split(" ");
+    //if (partials[0] == "<request>") {
+    //	stub.sendMsg(":match " + partials[1]);
+    //} else {
+    //	stub.sendMsg(":openConversation " + userToChatWith, username);
+    //}
     //System.out.println(stub.reciveMsg("pippo"));
   }
 }
