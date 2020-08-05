@@ -16,7 +16,9 @@ public class Parser implements Serializable {
 
   private class CloseConversation implements Command {
     public void execute(String[] user) {
-      // todo
+      String msg = "<release> " + user[0];
+      parse(msg, user[1]);
+      match.keySet().removeIf(key -> key == user[0] || key == user[1]);
     }
   }
 
@@ -41,8 +43,12 @@ public class Parser implements Serializable {
 
   private class OpenConversation implements Command {
     public void execute(String[] user) {
-      String msg = "<request> " + user[0];
-      parse(msg, user[1]);
+      if (!(match.containsKey(user[0]) || match.containsKey(user[1]))) {
+	String msg = "<request> " + user[0];
+	parse(msg, user[1]);
+      } else {
+	throw new IllegalArgumentException("user busy");
+      }
     }
   }
 
