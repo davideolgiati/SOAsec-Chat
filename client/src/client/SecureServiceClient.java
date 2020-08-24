@@ -8,7 +8,7 @@ public class SecureServiceClient {
 
   private Thread listener;
 
-  private void startListener(final ChatAPI chat) {
+  private static void startListener(final ChatAPI chat) {
     // Lambda Runnable
     Runnable msgPrinter =
 	() -> {
@@ -22,7 +22,7 @@ public class SecureServiceClient {
 	  }
 	};
     // start the thread
-    listener = new Thread(task2(chat));
+    listener = new Thread(msgPrinter());
     listener.start();
   }
 
