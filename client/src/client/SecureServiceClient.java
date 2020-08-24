@@ -6,7 +6,7 @@ public class SecureServiceClient {
   protected static String username = "";
   protected static String password = "";
 
-  private Thread listener;
+  private static Thread listener;
 
   private static void startListener(final ChatAPI chat) {
     // Lambda Runnable
@@ -22,7 +22,7 @@ public class SecureServiceClient {
 	  }
 	};
     // start the thread
-    listener = new Thread(msgPrinter());
+    listener = new Thread(msgPrinter);
     listener.start();
   }
 
