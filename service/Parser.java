@@ -10,30 +10,30 @@ public class Parser implements Serializable {
     private String tmpfile = System.getProperty("java.io.tmpdir") + "/usersdata.ser";
 
     private interface Command {
-	public void execute(String user);
+	public void execute(String[] user);
     }
 
     private class CloseConversation implements Command {
-	public void execute(String user) {
+	public void execute(String[] user) {
 	    //todo
 	}
     }
 
     private class ChatLogout implements Command {
-	public void execute(String user) {
-	    data.delete(user);
+	public void execute(String[] user) {
+	    data.delete(user[0]);
 	}
     }
 
     private class ListUsers implements Command {
-	public void execute(String user) {
-	    parse(data.usersToString(""), user);
+	public void execute(String[] user) {
+	    parse(data.usersToString(""), user[0]);
 	}
     }
 
     private class OpenConversation implements Command {
-	public void execute(String user) {
-	    //todo
+	public void execute(String[] user) {
+
 	}
     }
 
@@ -94,12 +94,16 @@ public class Parser implements Serializable {
 	    } else {
 		System.out.println("[INFO] possibile comando rilevato");
 		//esecuzione del comando
-		String command = stringList[0];//.toLowerCase();
+		String command = stringList[0];
 		if(cmds.containsKey(command)) {
 		    System.out.println("[INFO] Comando " + command + " riconosciuto");
 		    Command cmd = cmds.get(command);
 		    System.out.println("[INFO] Inizio esecuzione comando");
-		    cmd.execute(user);
+		    if (stringList.length > 1) {
+			cmd.execute(new String[] {user, stringList[1]});
+		    } else {
+			cmd.execute(new String[] {user});
+		    }
 		} else {
 		    System.out.println("[INFO] Comando " + command + " non riconosciuto");
 		    result = "Comando sconosciuto!";
@@ -115,9 +119,9 @@ public class Parser implements Serializable {
 	dump();
 	return res;
     }
-    
+
     public void pLogin(String user) {
-    	data.create(user);
+	data.create(user);
 	dump();
     }
 }
