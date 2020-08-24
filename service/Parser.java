@@ -10,7 +10,7 @@ public class Parser implements Serializable {
   private String tmpfile = System.getProperty("java.io.tmpdir") + "/usersdata.ser";
   private Map<String, Boolean> match = new HashMap<>();
 
-  prrivate interface Command {
+  private interface Command {
     public void execute(String[] user);
   }
 
@@ -28,15 +28,9 @@ public class Parser implements Serializable {
     }
   }
 
- private class ListUsers implements Command {
+  private class ListUsers implements Command {
     public void execute(String[] user) {
-       parse(data.usersToString(""), user[0]);
-   }
-
- private class Match implements Command {
-    public void execute(String[] user) {
-      match.put(user[0], True);
-      match.put(user[1], True);
+      parse(data.usersToString(""), user[0]);
     }
   }
 
@@ -74,7 +68,6 @@ public class Parser implements Serializable {
     cmds.put(":openConversation", new OpenConversation());
     cmds.put(":closeConversation", new CloseConversation());
     cmds.put(":chatLogout", new ChatLogout());
-    cmds.put(":match", new Match());
   }
 
   private void dump() {
@@ -121,31 +114,6 @@ public class Parser implements Serializable {
 	    users = new String[] {user};
 	  }
 	  cmd.execute(users);
-	} else {
-	    stringList = message.split(" ");
-	    if(message.charAt(0) != ':') {
-		System.out.println("[INFO] messaggio non contenete comandi");
-		//se il messaggio non contiene un comando
-		//allora...
-		data.push(user, message);
-	    } else {
-		System.out.println("[INFO] possibile comando rilevato");
-		//esecuzione del comando
-		String command = stringList[0];
-		if(cmds.containsKey(command)) {
-		    System.out.println("[INFO] Comando " + command + " riconosciuto");
-		    Command cmd = cmds.get(command);
-		    System.out.println("[INFO] Inizio esecuzione comando");
-		    if (stringList.length > 1) {
-			cmd.execute(new String[] {user, stringList[1]});
-		    } else {
-			cmd.execute(new String[] {user});
-		    }
-		} else {
-		    System.out.println("[INFO] Comando " + command + " non riconosciuto");
-		    result = "Comando sconosciuto!";
-		}
-	    }
 	}
       }
     }
@@ -153,14 +121,14 @@ public class Parser implements Serializable {
     return result;
   }
 
-    public String getFor(String user){
-	String res = data.poll(user);
-	dump();
-	return res;
-    }
+  public String getFor(String user) {
+    String res = data.poll(user);
+    dump();
+    return res;
+  }
 
-    public void pLogin(String user) {
-	data.create(user);
-	dump();
-    }
+  public void pLogin(String user) {
+    data.create(user);
+    dump();
+  }
 }
