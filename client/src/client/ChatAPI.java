@@ -115,7 +115,7 @@ public class ChatAPI {
       while ("".equals(res)){
 	res = ricevi();
       }
-      info = res.split(" ");
+      String[] info = res.split(" ");
       if (info[0] == "<open>"){
 	// apri convo
 	if (info[1] == utente) {
