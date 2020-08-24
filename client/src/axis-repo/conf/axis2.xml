@@ -8,7 +8,7 @@
 <parameter name="OutflowSecurity">
 	<action>
 		<items>UsernameToken</items>
-		<user>client1</user>	<!--  Il valore viene sovrascritto nella classe di Callback -->
+		<user>client2</user>	<!--  Il valore viene sovrascritto nella classe di Callback -->
 		<passwordCallbackClass>client.PWCallbackClient</passwordCallbackClass>
 	</action>
 </parameter>
@@ -18,10 +18,10 @@
 <parameter name="OutflowSecurity">
 	<action>
 		<items>Signature</items>
-		<user>client1</user> <!--  Valore statico -->
+		<user>client2</user> <!--  Valore statico -->
 		<passwordCallbackClass>client.PWCallbackClient</passwordCallbackClass>
 		<signaturePropFile>axis-repo/conf/security.properties</signaturePropFile>
-		<encryptionUser>tmpValue</encryptionUser> <!--  Valore dinamico -->
+		<encryptionUser>client2</encryptionUser> <!--  Valore dinamico -->
 		<signatureParts>Body</signatureParts>
 	</action>
 </parameter>
