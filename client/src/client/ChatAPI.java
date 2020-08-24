@@ -47,42 +47,51 @@ public class ChatAPI {
   private String peer;
 
   ChatAPI(String user){
-    // ATTENZIONE TUTTI I PERCORSI SONO STATICI, SU UN'ALTRA MACCHINA NON GIRA!!!
-    // Reading the xml configuration file
-    DocumentBuilderFactory f = DocumentBuilderFactory.newInstance();
-    DocumentBuilder b = f.newDocumentBuilder();
-    Document doc = b.parse(new File(cfg));
+    try {
+      // ATTENZIONE TUTTI I PERCORSI SONO STATICI, SU UN'ALTRA MACCHINA NON GIRA!!!
+      // Reading the xml configuration file
+      DocumentBuilderFactory f = DocumentBuilderFactory.newInstance();
+      DocumentBuilder b = f.newDocumentBuilder();
+      Document doc = b.parse(new File(cfg));
 
-    //Changing the parameters
-    XPath xPath = XPathFactory.newInstance().newXPath();
-    NodeList userNode = (NodeList) xPath.compile("/axisconfig/parameter/action/user").evaluate(doc, XPathConstants.NODESET);
-    for (int i = 0; i < userNode.getLength() - 1; i++) {
-      Node currentItem = userNode.item(i);
-      currentItem.setTextContent(username);
+      //Changing the parameters
+      XPath xPath = XPathFactory.newInstance().newXPath();
+      NodeList userNode = (NodeList) xPath.compile("/axisconfig/parameter/action/user").evaluate(doc, XPathConstants.NODESET);
+      for (int i = 0; i < userNode.getLength() - 1; i++) {
+	Node currentItem = userNode.item(i);
+	currentItem.setTextContent(username);
+      }
+
+      //Setting write options
+      Transformer tf = TransformerFactory.newInstance().newTransformer();
+      tf.setOutputProperty(OutputKeys.INDENT, "yes");
+      tf.setOutputProperty(OutputKeys.METHOD, "xml");
+      tf.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
+
+      //Writing changes to the document
+      DOMSource domSource = new DOMSource(doc);
+      StreamResult sr = new StreamResult(new File(cfg));
+      tf.transform(domSource, sr);
+
+      // To be able to load the client configuration from axis2.xml
+      ConfigurationContext ctx = ConfigurationContextFactory.createConfigurationContextFromFileSystem("axis-repo", cfg);
+      stub = new SecureServiceStub(ctx, "http://localhost:8080/axis2/services/SecureService");
+      ServiceClient sc = stub._getServiceClient();
+      sc.engageModule("rampart");
+      stub.chatLogin(user);
+      username = user;
+    } catch (Exception e) {
+      System.out.println("E' successo qualcosa, non lo so");
     }
-
-    //Setting write options
-    Transformer tf = TransformerFactory.newInstance().newTransformer();
-    tf.setOutputProperty(OutputKeys.INDENT, "yes");
-    tf.setOutputProperty(OutputKeys.METHOD, "xml");
-    tf.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
-
-    //Writing changes to the document
-    DOMSource domSource = new DOMSource(doc);
-    StreamResult sr = new StreamResult(new File(cfg));
-    tf.transform(domSource, sr);
-
-    // To be able to load the client configuration from axis2.xml
-    ConfigurationContext ctx = ConfigurationContextFactory.createConfigurationContextFromFileSystem("axis-repo", cfg);
-    stub = new SecureServiceStub(ctx, "http://localhost:8080/axis2/services/SecureService");
-    ServiceClient sc = stub._getServiceClient();
-    sc.engageModule("rampart");
-    stub.chatLogin(user);
-    username = user;
   }
 
   private String toMe(String msg) {
-    return stub.sendMsg(msg, username);
+    try {
+      return stub.sendMsg(msg, username);
+    } catch (Exception e) {
+      System.out.println("toMe(String msg) error");
+      return "error";
+    }
   }
 
   public String getPeer(){
@@ -90,11 +99,21 @@ public class ChatAPI {
   }
 
   public String invia(String msg) {
-    return stub.sendMsg(msg, peer);
+    try {
+      return stub.sendMsg(msg, peer);
+    } catch (Exception e) {
+      System.out.println("invia(String msg) error");
+      return "error";
+    }
   }
 
   public String ricevi() {
-    return stub.reciveMsg(username);
+    try {
+      return stub.reciveMsg(username);
+    } catch (Exception e) {
+      System.out.println("ricevi() error");
+      return "error";
+    }
   }
 
   public String listaUtenti() {
@@ -103,6 +122,7 @@ public class ChatAPI {
   }
 
   public boolean connectTo(String utente) {
+    try {
     peer = utente;
     toMe(":openConversation " + utente);
     System.out.println("Mi sto connettendo a " + utente + " ...");
@@ -166,5 +186,8 @@ public class ChatAPI {
       }
     }
     return ret;
+    } catch (Exception e) {
+      return false;
+    }
   }
 }
