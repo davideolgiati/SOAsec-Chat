@@ -48,6 +48,7 @@ public class ChatAPI {
 
   ChatAPI(String user){
     try {
+	  username = user;
       // ATTENZIONE TUTTI I PERCORSI SONO STATICI, SU UN'ALTRA MACCHINA NON GIRA!!!
       // Reading the xml configuration file
       DocumentBuilderFactory f = DocumentBuilderFactory.newInstance();
@@ -56,11 +57,13 @@ public class ChatAPI {
 
       //Changing the parameters
       XPath xPath = XPathFactory.newInstance().newXPath();
-      NodeList userNode = (NodeList) xPath.compile("/axisconfig/parameter/action/user").evaluate(doc, XPathConstants.NODESET);
-      for (int i = 0; i < userNode.getLength() - 1; i++) {
-	Node currentItem = userNode.item(i);
-	currentItem.setTextContent(username);
-      }
+	  String expr1 = "/axisconfig/parameter[@name='OutflowSecurity']/action/user";
+	  String expr2 = "/axisconfig/parameter[@name='OutflowSecurity']/action/encryptionUser";
+	  NodeList userNode = (NodeList) xPath.compile(expr1 + " | " + expr2).evaluate(doc, XPathConstants.NODESET);
+	  for (int i = 0; i < userNode.getLength(); i++) {
+		  Node currentItem = userNode.item(i);
+		  currentItem.setTextContent(username);
+	}
 
       //Setting write options
       Transformer tf = TransformerFactory.newInstance().newTransformer();
@@ -78,8 +81,7 @@ public class ChatAPI {
       stub = new SecureServiceStub(ctx, "http://localhost:8080/axis2/services/SecureService");
       ServiceClient sc = stub._getServiceClient();
       sc.engageModule("rampart");
-      stub.chatLogin(user);
-      username = user;
+      stub.chatLogin(username);
     } catch (Exception e) {
       System.out.println("E' successo qualcosa, non lo so");
     }
