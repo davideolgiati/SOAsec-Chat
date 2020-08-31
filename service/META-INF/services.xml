@@ -3,24 +3,19 @@
     Secure Service
   </description>
   <parameter name="ServiceClass" locked="false">SecureService</parameter>
-<!-- SIMPLE AUTHENTICATION -->
+<!-- SIMPLE AUTHENTICATION
 <parameter name="InflowSecurity">
 	<action>
 		<items>UsernameToken</items>
 		<passwordCallbackClass>PWCallbackService</passwordCallbackClass>
 	</action>
 </parameter>
-
-  <operation name="chatLogin">
-    <messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver"/>
-  </operation>
-
-<!-- SIGNATURE -->
-
+-->
+<!-- SIGNATURE
 <parameter name="InflowSecurity">
 	<action>
 		<items>Signature</items>
-		<user>tmpValue</user>  <!-- Valore dinamico per via della classe di Callback -->
+		<user>tmpValue</user>   Valore dinamico per via della classe di Callback
 		<passwordCallbackClass>PWCallbackService</passwordCallbackClass>
 		<signaturePropFile>security.properties</signaturePropFile>
 	</action>
@@ -34,54 +29,34 @@
 		<signaturePropFile>security.properties</signaturePropFile>
 	</action>
 </parameter>
+-->
+<!-- FULL SECURITY
+<parameter name="InflowSecurity">
+	<action>
+		<items>Signature Encrypt</items>
+		<user>client1</user>
+		<passwordCallbackClass>PWCallbackService</passwordCallbackClass>
+		<signaturePropFile>security.properties</signaturePropFile>
 
-  <!-- DOUBLE SIGNATURE
-       <parameter name="InflowSecurity">
-       <action>
-       <items>Timestamp Signature Signature</items>
-       <passwordCallbackClass>PWCallback</passwordCallbackClass>
-       <signaturePropFile>security.properties</signaturePropFile>
-       </action>
-       </parameter>-->
-
-  <!--FULL SECURITY
-      <parameter name="InflowSecurity">
-      <action>
-      <items>Timestamp Signature Encrypt</items>
-      <user>fulvio</user>
-      <passwordCallbackClass>PWCallback</passwordCallbackClass>
-      <signaturePropFile>security.properties</signaturePropFile>
-      </action>
-      </parameter>
+		<!- <decryptionPropFile>security.properties</decryptionPropFile> ->
+	</action>
+</parameter>
 
 <parameter name="OutflowSecurity">
-<action>
-<items>Timestamp Signature Encrypt</items>
-<user>fulvio</user>
-<passwordCallbackClass>PWCallback</passwordCallbackClass>
-<signaturePropFile>security.properties</signaturePropFile>
-</action>
+	<action>
+		<items>Signature Encrypt</items>
+		<user>service</user>
+		<passwordCallbackClass>PWCallbackService</passwordCallbackClass>
+		<signaturePropFile>security.properties</signaturePropFile>
 
-</parameter> -->
-
-  <!-- MIXED
-       <parameter name="InflowSecurity">
-       <action>
-       <items>Timestamp Signature Encrypt</items>
-       <user>fulvio</user>
-       <passwordCallbackClass>PWCallback</passwordCallbackClass>
-       <signaturePropFile>security.properties</signaturePropFile>
-       </action>
-       </parameter>
-       <parameter name="OutflowSecurity">
-       <action>
-       <items>Signature</items>
-       <user>fulvio</user>
-       <passwordCallbackClass>PWCallback</passwordCallbackClass>
-       <signaturePropFile>security.properties</signaturePropFile>
-       </action>
-       </parameter>-->
-
+		<!- <encryptionUser>service</encryptionUser>
+		<encryptionPropFile>security.properties</encryptionPropFile> ->
+	</action>
+</parameter>
+-->
+  <operation name="chatLogin">
+    <messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver"/>
+  </operation>
   <operation name="sendMsg">
     <messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver"/>
   </operation>

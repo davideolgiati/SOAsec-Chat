@@ -84,6 +84,7 @@ public class ChatAPI {
       stub.chatLogin(username);
     } catch (Exception e) {
       System.out.println("E' successo qualcosa, non lo so");
+	e.printStackTrace();
     }
   }
 
