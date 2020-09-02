@@ -57,13 +57,9 @@ public class ChatAPI {
 
       //Changing the parameters
       XPath xPath = XPathFactory.newInstance().newXPath();
-	  String expr1 = "/axisconfig/parameter[@name='OutflowSecurity']/action/user";
-	  String expr2 = "/axisconfig/parameter[@name='OutflowSecurity']/action/encryptionUser";
-	  NodeList userNode = (NodeList) xPath.compile(expr1 + " | " + expr2).evaluate(doc, XPathConstants.NODESET);
-	  for (int i = 0; i < userNode.getLength(); i++) {
-		  Node currentItem = userNode.item(i);
-		  currentItem.setTextContent(username);
-	}
+      String expr = "/axisconfig/parameter[@name='OutflowSecurity']/action/user";
+      Node userNode = (Node) xPath.compile(expr).evaluate(doc, XPathConstants.NODE);
+      userNode.setTextContent(username);
 
       //Setting write options
       Transformer tf = TransformerFactory.newInstance().newTransformer();

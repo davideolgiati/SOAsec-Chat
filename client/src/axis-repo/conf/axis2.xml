@@ -3,70 +3,28 @@
 <!-- Engage the security module -->
 <module ref="rampart"/>
 
-<!-- SIMPLE AUTHENTICATION
+<!-- FULL SECURITY -->
 <parameter name="OutflowSecurity">
 	<action>
-		<items>UsernameToken</items>
-		<user>client1</user>	Il valore viene sovrascritto nella classe di Callback
-		<passwordCallbackClass>client.PWCallbackClient</passwordCallbackClass>
-	</action>
-</parameter>
--->
-<!-- SIGNATURE
-<parameter name="OutflowSecurity">
-	<action>
-		<items>Signature</items>
-		<user>client1</user> Valore statico
+		<items>UsernameToken Signature Encrypt</items>
+		<user>client2</user>
 		<passwordCallbackClass>client.PWCallbackClient</passwordCallbackClass>
 		<signaturePropFile>axis-repo/conf/security.properties</signaturePropFile>
-		<encryptionUser>client1</encryptionUser> Valore dinamico
-		<signatureParts>Body</signatureParts>
-	</action>
-</parameter>
-
-<parameter name="InflowSecurity">
-	<action>
-		<items>Signature</items>
-		<user>service</user>
-		<passwordCallbackClass>client.PWCallbackClient</passwordCallbackClass>
-		<signaturePropFile>axis-repo/conf/security.properties</signaturePropFile>
-		<signatureParts>Body</signatureParts>
-	</action>
-</parameter>
--->
-<!-- FULL SECURITY
-<parameter name="OutflowSecurity">
-	<action>
-		<items>Signature Encrypt</items>
-		<user>client1</user>
-		<passwordCallbackClass>client.PWCallbackClient</passwordCallbackClass>
-		<signaturePropFile>axis-repo/conf/security.properties</signaturePropFile>
-		<signatureKeyIdentifier>SKIKeyIdentifier</signatureKeyIdentifier>
-		<encryptionKeyIdentifier>SKIKeyIdentifier</encryptionKeyIdentifier>
-		<encryptionUser>client1</encryptionUser>
-		<signatureParts>Body</signatureParts>
-		<optimizeParts>//xenc:EncryptedData/xenc:CipherData/xenc:CipherValue</optimizeParts>
-
-		<!- <encryptionPropFile>axis-repo/conf/security.properties</encryptionPropFile> ->
-	</action>
-</parameter>
-
-<parameter name="InflowSecurity">
-	<action>
-		<items>Signature Encrypt</items>
-		<user>service</user>
-		<passwordCallbackClass>client.PWCallbackClient</passwordCallbackClass>
-		<signaturePropFile>axis-repo/conf/security.properties</signaturePropFile>
-		<signatureKeyIdentifier>SKIKeyIdentifier</signatureKeyIdentifier>
+		<signatureKeyIdentifier>DirectReference</signatureKeyIdentifier>
 		<encryptionKeyIdentifier>SKIKeyIdentifier</encryptionKeyIdentifier>
 		<encryptionUser>service</encryptionUser>
-		<signatureParts>Body</signatureParts>
 		<optimizeParts>//xenc:EncryptedData/xenc:CipherData/xenc:CipherValue</optimizeParts>
-
-		<!- <decryptionPropFile>axis-repo/conf/security.properties</decryptionPropFile> ->
 	</action>
 </parameter>
--->
+
+<parameter name="InflowSecurity">
+	<action>
+		<items>Signature Encrypt</items>
+		<passwordCallbackClass>client.PWCallbackClient</passwordCallbackClass>
+		<signaturePropFile>axis-repo/conf/security.properties</signaturePropFile>
+	</action>
+</parameter>
+
 <!-- ================================================= -->
 <!-- Parameters -->
 <!-- ================================================= -->

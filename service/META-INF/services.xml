@@ -1,66 +1,38 @@
 <service name="SecureService">
-  <description>
-    Secure Service
-  </description>
-  <parameter name="ServiceClass" locked="false">SecureService</parameter>
-<!-- SIMPLE AUTHENTICATION
-<parameter name="InflowSecurity">
-	<action>
-		<items>UsernameToken</items>
-		<passwordCallbackClass>PWCallbackService</passwordCallbackClass>
-	</action>
-</parameter>
--->
-<!-- SIGNATURE
-<parameter name="InflowSecurity">
-	<action>
-		<items>Signature</items>
-		<user>tmpValue</user>   Valore dinamico per via della classe di Callback
-		<passwordCallbackClass>PWCallbackService</passwordCallbackClass>
-		<signaturePropFile>security.properties</signaturePropFile>
-	</action>
-</parameter>
+	<description>
+		Secure Service
+	</description>
+	
+	<parameter name="ServiceClass" locked="false">SecureService</parameter>
 
-<parameter name="OutflowSecurity">
-	<action>
-		<items>Signature</items>
-		<user>service</user>
-		<passwordCallbackClass>PWCallbackService</passwordCallbackClass>
-		<signaturePropFile>security.properties</signaturePropFile>
-	</action>
-</parameter>
--->
-<!-- FULL SECURITY
-<parameter name="InflowSecurity">
-	<action>
-		<items>Signature Encrypt</items>
-		<user>client1</user>
-		<passwordCallbackClass>PWCallbackService</passwordCallbackClass>
-		<signaturePropFile>security.properties</signaturePropFile>
+	<!-- FULL SECURITY -->
+	<parameter name="InflowSecurity">
+		<action>
+			<items>UsernameToken Signature Encrypt</items>
+			<passwordCallbackClass>PWCallbackService</passwordCallbackClass>
+			<signaturePropFile>security.properties</signaturePropFile>
+		</action>
+	</parameter>
 
-		<!- <decryptionPropFile>security.properties</decryptionPropFile> ->
-	</action>
-</parameter>
+	<parameter name="OutflowSecurity">
+		<action>
+			<items>Signature Encrypt</items>
+			<user>service</user>
+			<passwordCallbackClass>PWCallbackService</passwordCallbackClass>
+			<signaturePropFile>security.properties</signaturePropFile>
+			<signatureKeyIdentifier>DirectReference</signatureKeyIdentifier>
+			<encryptionKeyIdentifier>SKIKeyIdentifier</encryptionKeyIdentifier>
+			<encryptionUser>useReqSigCert</encryptionUser>
+		</action>
+	</parameter>
 
-<parameter name="OutflowSecurity">
-	<action>
-		<items>Signature Encrypt</items>
-		<user>service</user>
-		<passwordCallbackClass>PWCallbackService</passwordCallbackClass>
-		<signaturePropFile>security.properties</signaturePropFile>
-
-		<!- <encryptionUser>service</encryptionUser>
-		<encryptionPropFile>security.properties</encryptionPropFile> ->
-	</action>
-</parameter>
--->
-  <operation name="chatLogin">
-    <messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver"/>
-  </operation>
-  <operation name="sendMsg">
-    <messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver"/>
-  </operation>
-  <operation name="reciveMsg">
-    <messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver"/>
-  </operation>
+	<operation name="chatLogin">
+		<messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver"/>
+	</operation>
+	<operation name="sendMsg">
+		<messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver"/>
+	</operation>
+	<operation name="reciveMsg">
+		<messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver"/>
+	</operation>
 </service>
