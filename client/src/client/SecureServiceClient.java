@@ -5,8 +5,12 @@ import java.util.*;
 public class SecureServiceClient {
   protected static String username = "";
   protected static String password = "";
-
   private static Thread listener;
+  private static Boolean stop = false;
+
+  private static Keyboard.Cond = () -> {
+    return stop;
+  };
 
   private static void startListener(final ChatAPI chat) {
     // Lambda Runnable
@@ -17,6 +21,7 @@ public class SecureServiceClient {
 	  while (true) {
 	    msg = chat.ricevi();
 	    if (!("".equals(msg) || msg == null)) {
+	      stop = true;
 	      System.out.println(peer + " : " + msg);
 	    }
 	  }
@@ -28,7 +33,7 @@ public class SecureServiceClient {
 
   public static void main(String[] args) throws Exception {
     // Input
-    Scanner keyboard = new Scanner(System.in);
+    Keyboard keyboard = new Keyboad(System.in);
 
     // Username
     System.out.println("Inserisci il tuo nome utente:");
@@ -56,7 +61,11 @@ public class SecureServiceClient {
       startListener(chat);
       String msg = "";
       while (!":quit".equals(msg)) {
+	stop = false;
 	msg = keyboard.next();
+	if (stop) {
+	  msg = "";
+	}
 	if (!("".equals(msg) || ":quit".equals(msg))) {
 	  chat.invia(msg);
 	}
