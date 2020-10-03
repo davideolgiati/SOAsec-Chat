@@ -48,7 +48,7 @@ public class ChatAPI {
 
   ChatAPI(String user){
     try {
-	  username = user;
+      username = user;
       // ATTENZIONE TUTTI I PERCORSI SONO STATICI, SU UN'ALTRA MACCHINA NON GIRA!!!
       // Reading the xml configuration file
       DocumentBuilderFactory f = DocumentBuilderFactory.newInstance();
@@ -95,6 +95,15 @@ public class ChatAPI {
 
   public String getPeer(){
     return peer;
+  }
+
+  public String invia(String msg, String peer) {
+    try {
+      return stub.sendMsg(msg, peer);
+    } catch (Exception e) {
+      System.out.println("invia(String msg) error");
+      return "error";
+    }
   }
 
   public String invia(String msg) {
@@ -151,7 +160,7 @@ public class ChatAPI {
 	  Scanner keyboard = new Scanner(System.in);
 	  String answer = keyboard.next();
 	  answer = answer.toLowerCase();
-	  while ((!"a".equals(answer)) || (!"b".equals(answer))) {
+	  while ((!"a".equals(answer.charAt(0))) || (!"b".equals(answer.charAt(0)))) {
 	    text = "Scegliere tra le due opzioni [A / B]\n";
 	    text += "[ A ] " + utente + "\n";
 	    text += "[ B ] " + info[1] + "\n";
@@ -159,7 +168,7 @@ public class ChatAPI {
 	    answer = keyboard.next();
 	    answer = answer.toLowerCase();
 	  }
-	  if ("b".equals(answer)) {
+	  if ("b".equals(answer.charAt(0))) {
 	    keep = false;
 	    invia("<close> " + username);
 	    peer = info[1];
