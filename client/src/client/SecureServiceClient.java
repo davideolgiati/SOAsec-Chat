@@ -7,6 +7,24 @@ public class SecureServiceClient {
   protected static String password = "";
   private static Thread listener;
   private static Boolean stop = false;
+  private static Boolean stopped = false;
+  private static String newUser = "";
+
+  private static Boolean getStopped(){
+	return stopped;
+  }
+
+  private static Boolean getStop(){
+	return stop;
+  }
+
+  private static void setStopped(Boolean val) {
+	stopped = val;
+  }
+
+  private static void setNewUser(String val) {
+	newUser = val;
+  }
 
   private static void startListener(final ChatAPI chat) {
     // Lambda Runnable
@@ -29,43 +47,45 @@ public class SecureServiceClient {
 
   public static void main(String[] args) throws Exception {
     // Input
-    Keyboard keyboard = new Keyboad();
+    Scanner jkeyboard = new Scanner(System.in);
 
     // Username
     System.out.println("Inserisci il tuo nome utente:");
-    username = keyboard.next();
+    username = jkeyboard.next();
 
     // Password
     System.out.println("Inserisci la tua password:");
-    password = keyboard.next();
+    password = jkeyboard.next();
 
+    Keyboard keyboard = new Keyboard();
     ChatAPI chat = new ChatAPI(username);
     String users = chat.listaUtenti();
-    Boolean stopped = false;
-    String newUser = "";
     String peer = "";
 
     Keyboard.Cond userStop =
 	() -> {
-	  String tmp = chat.ricevi().split(" ");
+	  setStopped(false);
+	  String[] tmp = chat.ricevi().split(" ");
 	  if (tmp[0] == "<open>") {
-	    stopped = true;
-	    newUser = tmp[1];
+	    setStopped(true);
+	    setNewUser(tmp[1]);
 	  }
-	  return stopped;
+	  return getStopped();
 	};
 
     Keyboard.Cond msgStop =
 	() -> {
-	  return stop;
+	  return getStop();
 	};
-    while (!users.contains(peer) && !stopped) {
+
+    while (!stopped) {
       System.out.println("Con quale utente vuoi chattare?");
+      System.out.println(stopped);
       peer = keyboard.next(userStop);
       if (stopped) {
 	System.out.println("L'utente " + newUser + " vuole chattare con te!");
 	System.out.println("Accettare l'invito? [S/n]");
-	String ask = keyboard.next().toLowerCase.charAt(0);
+	char ask = keyboard.next().toLowerCase().charAt(0);
 	if (ask == 's') {
 	  chat.invia("<open> " + newUser, newUser);
 	} else {
@@ -74,12 +94,15 @@ public class SecureServiceClient {
 	  stopped = false;
 	}
       } else {
-	if (!user.contains(peer)) {
+	if (!users.contains(peer)) {
 	  System.out.println("L'utente " + peer + " non esiste!");
 	  System.out.println("Inserire un utente valido!");
+	  stopped = false;
+	  peer = "";
 	} else {
 	  chat.connectTo(peer);
-	}
+	  stopped = true;
+       }
       }
     }
 

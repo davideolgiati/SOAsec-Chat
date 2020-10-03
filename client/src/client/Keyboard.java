@@ -1,3 +1,5 @@
+package client;
+
 import java.io.*;
 import java.util.*;
 
@@ -45,6 +47,18 @@ public class Keyboard {
     return msg;
   }
 
+    private String logica(Runnable logic, Cond cond) throws Exception {
+    threadLettura = new Thread(logic);
+    threadLettura.start();
+
+    while (!killSwitch) {
+      if (cond.run() && threadLettura != null) {
+	killSwitch = true;
+      }
+    }
+    return msg;
+  }
+
   public String next() {
     try {
       return logica(main);
@@ -53,9 +67,9 @@ public class Keyboard {
     }
   }
 
-  public String next(Runnable logic) throws Exception {
+  public String next(Cond cond) throws Exception {
     try {
-      return logica(logic);
+	return logica(main, cond);
     } catch (Exception e) {
       return "";
     }
