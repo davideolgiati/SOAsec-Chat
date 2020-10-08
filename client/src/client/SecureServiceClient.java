@@ -3,121 +3,69 @@ package client;
 import java.util.*;
 
 public class SecureServiceClient {
+  // VARIABILI GLOBALI
+  // username per axis2
   protected static String username = "";
+  // password axis2
   protected static String password = "";
+
+  // thread la ricezione dei nuovi messaggi
   private static Thread listener;
-  private static Boolean stop = false;
-  private static Boolean stopped = false;
-  private static String newUser = "";
 
-  private static Boolean getStopped(){
-	return stopped;
-  }
-
-  private static Boolean getStop(){
-	return stop;
-  }
-
-  private static void setStopped(Boolean val) {
-	stopped = val;
-  }
-
-  private static void setNewUser(String val) {
-	newUser = val;
-  }
-
+  // funzione per l'avvio del thread sopra
   private static void startListener(final ChatAPI chat) {
-    // Lambda Runnable
+    // Funzione Labda per la lettura continua dei messaggi
     Runnable msgPrinter =
-	() -> {
-	  String msg = "";
-	  String peer = chat.getPeer();
-	  while (true) {
-	    msg = chat.ricevi();
-	    if (!("".equals(msg) || msg == null)) {
-	      stop = true;
-	      System.out.println(peer + " : " + msg);
-	    }
-	  }
-	};
-    // start the thread
+    	() -> {
+        // messaggio letto
+        String msg = "";
+        // utente con cui chattiamo
+        String peer = chat.getPeer();
+        // ciclo infinito per la lettura dei messaggi
+	      while (true) {
+          // ricezione del messaggio
+          msg = chat.ricevi();
+          // se il messaggio non è vuoto o nullo lo stampo
+	        if (!("".equals(msg) || msg == null)) {
+	          System.out.println(peer + " : " + msg);
+	        }
+	      }
+      };
+    // assegno la lambda al thread
     listener = new Thread(msgPrinter);
+    // e lo avvio
     listener.start();
   }
 
   public static void main(String[] args) throws Exception {
-    // Input
-    Scanner jkeyboard = new Scanner(System.in);
+    // Tastiera
+    Scanner keyboard = new Scanner(System.in);
 
-    // Username
+    // Lettura username
     System.out.println("Inserisci il tuo nome utente:");
-    username = jkeyboard.next();
+    username = keyboard.next();
 
-    // Password
+    // Lettura password
     System.out.println("Inserisci la tua password:");
-    password = jkeyboard.next();
+    password = keyboard.next();
 
-    Keyboard keyboard = new Keyboard();
     ChatAPI chat = new ChatAPI(username);
-    String users = chat.listaUtenti();
     String peer = "";
 
-    Keyboard.Cond userStop =
-	() -> {
-	  setStopped(false);
-	  String[] tmp = chat.ricevi().split(" ");
-	  if (tmp[0] == "<open>") {
-	    setStopped(true);
-	    setNewUser(tmp[1]);
-	  }
-	  return getStopped();
-	};
+    System.out.println("Con quale utente vuoi chattare?");
+    peer = keyboard.next();
 
-    Keyboard.Cond msgStop =
-	() -> {
-	  return getStop();
-	};
-
-    while (!stopped) {
-      System.out.println("Con quale utente vuoi chattare?");
-      System.out.println(stopped);
-      peer = keyboard.next(userStop);
-      if (stopped) {
-	System.out.println("L'utente " + newUser + " vuole chattare con te!");
-	System.out.println("Accettare l'invito? [S/n]");
-	char ask = keyboard.next().toLowerCase().charAt(0);
-	if (ask == 's') {
-	  chat.invia("<open> " + newUser, newUser);
-	} else {
-	  System.out.println("Scarto richiesta da " + newUser + " ...");
-	  chat.invia("<close> " + newUser, newUser);
-	  stopped = false;
-	}
-      } else {
-	if (!users.contains(peer)) {
-	  System.out.println("L'utente " + peer + " non esiste!");
-	  System.out.println("Inserire un utente valido!");
-	  stopped = false;
-	  peer = "";
-	} else {
-	  chat.connectTo(peer);
-	  stopped = true;
-       }
-      }
-    }
+    chat.connectTo(peer);
 
     startListener(chat);
     String msg = "";
     while (!":quit".equals(msg)) {
-      stop = false;
-      msg = keyboard.next(msgStop);
-      if (stop) {
-	msg = "";
-      }
+      msg = keyboard.next();
       if (!("".equals(msg) || ":quit".equals(msg))) {
-	chat.invia(msg);
+	      chat.invia(msg);
       }
     }
     // to be continued
+    keyboard.close();
   }
 }
