@@ -8,10 +8,10 @@ if [ $? -eq 0 ]; then
     ./2-compileService.sh && ./3-deployAAR.sh
     if [ $? -eq 0 ]; then
         echo "Server Creato!"
-        echo "Riavvio Tomcat ..."
-        ./7-shutdownTomcat.sh && ./1-startTomcat.sh
-        if [ $? -eq 0 ]; then
-            echo "Tomcat Riavviato!"
+        #echo "Riavvio Tomcat ..."
+        #./7-shutdownTomcat.sh && ./1-startTomcat.sh
+        #if [ $? -eq 0 ]; then
+        #    echo "Tomcat Riavviato!"
             echo "Creo Client ..."
             ./4-createStub.sh && ./5-compileClient.sh
             if [ $? -eq 0 ]; then
@@ -21,9 +21,9 @@ if [ $? -eq 0 ]; then
             else
                 echo "Errore"
             fi
-        else
-            echo "Errore"
-        fi
+        #else
+        #    echo "Errore"
+        #fi
     else
         echo "Errore"
     fi
