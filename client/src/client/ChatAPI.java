@@ -88,7 +88,7 @@ public class ChatAPI {
     try {
       return stub.sendMsg(msg, username);
     } catch (Exception e) {
-      System.out.println("toMe(String msg) error");
+      System.out.println("toMe(String msg) error\n" + e.toString());
       return "error";
     }
   }
@@ -126,7 +126,11 @@ public class ChatAPI {
 
   public String listaUtenti() {
     toMe(":listUser");
-    return ricevi();
+    String res = ricevi();
+    if ("".equals(res)){
+      res = "Ancora nessun utente connesso ...";
+    }
+    return res;
   }
 
   public boolean connectTo(String utente) {

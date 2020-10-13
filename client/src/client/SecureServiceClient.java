@@ -11,6 +11,9 @@ public class SecureServiceClient {
 
   // thread la ricezione dei nuovi messaggi
   private static Thread listener;
+  private static int millis;
+  // inizializzo la tastiera
+  private static Scanner keyboard = new Scanner(System.in);
 
   // funzione per l'avvio del thread sopra
   private static void startListener(final ChatAPI chat) {
@@ -40,20 +43,18 @@ public class SecureServiceClient {
   // funzione help
   private static String help() {
     // compongo il banner
-    String text = "Benvenuto in SOAsec-Chat!\n";
-    text += "Eccoti le azioni possibili:"; 
+    String text = "\n\nBenvenuto in SOAsec-Chat!\n";
+    text += "Eccoti le azioni possibili :\n"; 
     text += "(digitare il codice corrisponente all'azione)\n\n";
     text += "CODICE\tAZIONE\n";
     text += ":h\tmostra questo banner\n";
     text += ":c\tinizia a chattare\n";
-    text += ":e\tesci\n\n\n>";
+    text += ":e\tesci\n\n>\t";
 
-    // inizializzo la tastiera
-    Scanner keyboard = new Scanner(System.in);
+    System.out.print(text);
+
     // leggo la risposta
     String res = keyboard.next();
-    // chiudo la tastiera
-    keyboard.close();
     // ritorno la risposta
     return res;
   }
@@ -82,8 +83,6 @@ public class SecureServiceClient {
   }
 
   public static void main(String[] args) throws Exception {
-    // Tastiera
-    Scanner keyboard = new Scanner(System.in);
 
     // Lettura username
     System.out.println("Inserisci il tuo nome utente:");
@@ -103,11 +102,22 @@ public class SecureServiceClient {
       parse = decode(res);
       if (parse == 2) {
         parse = 0;
-        break;
       }
     }
 
     if (parse == 1) {
+      String lista = "";
+      
+      do {
+        lista = chat.listaUtenti();
+        System.out.println(lista);
+        if ("Ancora nessun utente connesso ...".equals(lista)) {
+          System.out.println("Retry in 20s ...");
+          millis = 20 * 1000;
+          Thread.sleep(millis);
+        }
+      } while ("Ancora nessun utente connesso ...".equals(lista));
+
       System.out.println("Con quale utente vuoi chattare?");
       peer = keyboard.next();
 
