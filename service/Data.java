@@ -37,50 +37,50 @@ class Data implements Serializable {
     // Metodo privato per l'inserimento di un valore nella coda
     // all'offset specificato
     public boolean push(String user, String value) {
-	Queue<String> coda = code.get(user);
-	return coda.add(value);
+        Queue<String> coda = code.get(user);
+        return coda.add(value);
     }
 
     // Metodo privato per la lettura del primo valore nella coda
     // all'offset specificato
     public String poll(String user) {
-	Queue<String> coda = code.get(user);
-	String value = coda.poll();
-	if (value == null) {
-	    // Setto value a "" se vagit commit --amendle null, per evitare errori e
-	    // problemi più avanti
-	    value = "";
-	}
-	return value;
+        Queue<String> coda = code.get(user);
+        String value = coda.poll();
+        if (value == null) {
+            // Setto value a "" se vagit commit --amendle null, per evitare errori e
+            // problemi più avanti
+            value = "";
+        }
+        return value;
     }
 
     // Metodo per la creazione di una nuova coda di messagi per l'utente
     public boolean create(String user) {
-	// Aggiungo la nuova coda alla lista
-	code.put(user, new LinkedList<String>());
-	return true; //tofix
+        // Aggiungo la nuova coda alla lista
+        code.put(user, new LinkedList<String>());
+        return true; // tofix
     }
 
     // Metodo per la rimozione della coda di messagi per l'utente
     public boolean delete(String user) {
-	// Rimuovo la coda all'offset specificato
-	Queue<String> origin = code.get(user);
-	boolean res = (code.remove(user) == origin);
-	return res;
+        // Rimuovo la coda all'offset specificato
+        Queue<String> origin = code.get(user);
+        boolean res = (code.remove(user) == origin);
+        return res;
     }
 
     public String usersToString(String user) {
-	StringBuilder listBuilder = new StringBuilder();
-	for (String _user : code.keySet()) {
-	    if (_user != user) {
-		listBuilder.append(_user);
-		listBuilder.append(", ");
-	    }
-	}
-	String res = listBuilder.toString();
-	if (res.length() > 2) {
-	    res = res.substring(0, res.length() - 2);
-	}
-	return res;
+        StringBuilder listBuilder = new StringBuilder();
+        for (String _user : code.keySet()) {
+            if (_user != user) {
+                listBuilder.append(_user);
+                listBuilder.append(", ");
+            }
+        }
+        String res = listBuilder.toString();
+        if (res.length() > 2) {
+            res = res.substring(0, res.length() - 2);
+        }
+        return res;
     }
 }
