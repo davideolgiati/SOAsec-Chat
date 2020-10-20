@@ -1,97 +1,98 @@
+
 <service name="SecureService">
-  <description>
-    Secure Service
-  </description>
-  <parameter name="ServiceClass" locked="false">SecureService</parameter>
-  <!-- TIMESTAMP
-       <parameter name="InflowSecurity">
-       <action>
-       <items>Timestamp</items>
-       </action>
-       </parameter>
+<description>
+Secure Service
+</description>
+<parameter name="ServiceClass" locked="false">SecureService</parameter>
+<!-- TIMESTAMP  
+<parameter name="InflowSecurity">
+	<action>
+		<items>Timestamp</items>
+	</action>
+</parameter>
 
 <parameter name="OutflowSecurity">
-<action>
-<items>Timestamp</items>
-</action>
+	<action>
+		<items>Timestamp</items>
+	</action>
 </parameter> -->
 
-  <!-- SIMPLE AUTHENTICATION -->
-  <parameter name="InflowSecurity">
-    <action>
-      <items>UsernameToken</items>
-      <passwordCallbackClass>PWCallbackService</passwordCallbackClass>
-    </action>
-  </parameter>
+<!-- SIMPLE AUTHENTICATION -->
+<parameter name="InflowSecurity">
+	<action>
+		<items>UsernameToken</items>
+		<passwordCallbackClass>PWCallbackService</passwordCallbackClass>
+	</action>
+</parameter>
 
 
-  <!-- SIGNATURE
-       <parameter name="InflowSecurity">
-       <action>
-       <items>Signature</items>
-       <user>fulvio</user>
-       <passwordCallbackClass>PWCallback</passwordCallbackClass>
-       <signaturePropFile>security.properties</signaturePropFile>
-       </action>
-       </parameter>
+<!-- SIGNATURE
+<parameter name="InflowSecurity">
+	<action>
+		<items>Signature</items>
+		<user>fulvio</user>
+		<passwordCallbackClass>PWCallback</passwordCallbackClass>
+		<signaturePropFile>security.properties</signaturePropFile>
+	</action>
+</parameter>
 
 <parameter name="OutflowSecurity">
-<action>
-<items>Signature</items>
-<user>fulvio</user>
-<passwordCallbackClass>PWCallback</passwordCallbackClass>
-<signaturePropFile>security.properties</signaturePropFile>
-</action>
+	<action>
+		<items>Signature</items>
+		<user>fulvio</user>
+		<passwordCallbackClass>PWCallback</passwordCallbackClass>
+		<signaturePropFile>security.properties</signaturePropFile>
+	</action>
 </parameter>-->
 
-  <!-- DOUBLE SIGNATURE
-       <parameter name="InflowSecurity">
-       <action>
-       <items>Timestamp Signature Signature</items>
-       <passwordCallbackClass>PWCallback</passwordCallbackClass>
-       <signaturePropFile>security.properties</signaturePropFile>
-       </action>
-       </parameter>-->
+<!-- DOUBLE SIGNATURE 
+<parameter name="InflowSecurity">
+	<action>
+		<items>Timestamp Signature Signature</items>
+		<passwordCallbackClass>PWCallback</passwordCallbackClass>
+		<signaturePropFile>security.properties</signaturePropFile>
+	</action>
+</parameter>-->
 
-  <!--FULL SECURITY
-      <parameter name="InflowSecurity">
-      <action>
-      <items>Timestamp Signature Encrypt</items>
-      <user>fulvio</user>
-      <passwordCallbackClass>PWCallback</passwordCallbackClass>
-      <signaturePropFile>security.properties</signaturePropFile>
-      </action>
-      </parameter>
+<!--FULL SECURITY
+<parameter name="InflowSecurity">
+	<action>
+		<items>Timestamp Signature Encrypt</items>
+		<user>fulvio</user>
+		<passwordCallbackClass>PWCallback</passwordCallbackClass>
+		<signaturePropFile>security.properties</signaturePropFile>
+	</action>
+</parameter>
 
 <parameter name="OutflowSecurity">
-<action>
-<items>Timestamp Signature Encrypt</items>
-<user>fulvio</user>
-<passwordCallbackClass>PWCallback</passwordCallbackClass>
-<signaturePropFile>security.properties</signaturePropFile>
-</action>
-
+	<action>
+		<items>Timestamp Signature Encrypt</items>
+		<user>fulvio</user>
+		<passwordCallbackClass>PWCallback</passwordCallbackClass>
+		<signaturePropFile>security.properties</signaturePropFile>
+	</action>
+	
 </parameter> -->
 
-  <!-- MIXED
-       <parameter name="InflowSecurity">
-       <action>
-       <items>Timestamp Signature Encrypt</items>
-       <user>fulvio</user>
-       <passwordCallbackClass>PWCallback</passwordCallbackClass>
-       <signaturePropFile>security.properties</signaturePropFile>
-       </action>
-       </parameter>
-       <parameter name="OutflowSecurity">
-       <action>
-       <items>Signature</items>
-       <user>fulvio</user>
-       <passwordCallbackClass>PWCallback</passwordCallbackClass>
-       <signaturePropFile>security.properties</signaturePropFile>
-       </action>
-       </parameter>-->
+<!-- MIXED 
+<parameter name="InflowSecurity">
+	<action>
+		<items>Timestamp Signature Encrypt</items>
+		<user>fulvio</user>
+		<passwordCallbackClass>PWCallback</passwordCallbackClass>
+		<signaturePropFile>security.properties</signaturePropFile>
+	</action>
+</parameter>
+<parameter name="OutflowSecurity">
+	<action>
+		<items>Signature</items>
+		<user>fulvio</user>
+		<passwordCallbackClass>PWCallback</passwordCallbackClass>
+		<signaturePropFile>security.properties</signaturePropFile>
+	</action>
+</parameter>-->
 
-  <operation name="login">
-    <messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver"/>
-  </operation>
+<operation name="chatLogin">
+<messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver"/>
+</operation>
 </service>
