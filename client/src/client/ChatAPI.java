@@ -50,6 +50,7 @@ public class ChatAPI {
     try {
       username = user;
       // ATTENZIONE TUTTI I PERCORSI SONO STATICI, SU UN'ALTRA MACCHINA NON GIRA!!!
+	/*
       // Reading the xml configuration file
       DocumentBuilderFactory f = DocumentBuilderFactory.newInstance();
       DocumentBuilder b = f.newDocumentBuilder();
@@ -71,7 +72,7 @@ public class ChatAPI {
       DOMSource domSource = new DOMSource(doc);
       StreamResult sr = new StreamResult(new File(cfg));
       tf.transform(domSource, sr);
-
+	*/
       // To be able to load the client configuration from axis2.xml
       ConfigurationContext ctx = ConfigurationContextFactory.createConfigurationContextFromFileSystem("axis-repo", cfg);
       stub = new SecureServiceStub(ctx, "http://localhost:8080/axis2/services/SecureService");
