@@ -74,7 +74,7 @@ public class ChatAPI {
 
       // To be able to load the client configuration from axis2.xml
       ConfigurationContext ctx = ConfigurationContextFactory.createConfigurationContextFromFileSystem("axis-repo", cfg);
-      stub = new SecureServiceStub(ctx, "http://localhost:8080/axis2/services/SecureService");
+      stub = new SecureServiceStub(ctx, "https://localhost:8443/axis2/services/SecureService");
       ServiceClient sc = stub._getServiceClient();
       sc.engageModule("rampart");
       stub.chatLogin(username);

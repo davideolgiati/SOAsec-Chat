@@ -130,7 +130,7 @@
      */
     public SecureServiceStub(org.apache.axis2.context.ConfigurationContext configurationContext) throws org.apache.axis2.AxisFault {
         
-                    this(configurationContext,"http://localhost:8080/axis2/services/SecureService.SecureServiceHttpSoap12Endpoint/" );
+                    this(configurationContext,"https://localhost:8443/axis2/services/SecureService.SecureServiceHttpsSoap12Endpoint/" );
                 
     }
 
@@ -139,7 +139,7 @@
      */
     public SecureServiceStub() throws org.apache.axis2.AxisFault {
         
-                    this("http://localhost:8080/axis2/services/SecureService.SecureServiceHttpSoap12Endpoint/" );
+                    this("https://localhost:8443/axis2/services/SecureService.SecureServiceHttpsSoap12Endpoint/" );
                 
     }
 
@@ -893,7 +893,7 @@
         }
         return false;
     }
-     //http://localhost:8080/axis2/services/SecureService.SecureServiceHttpSoap12Endpoint/
+     //https://localhost:8443/axis2/services/SecureService.SecureServiceHttpsSoap12Endpoint/
         public static class SendMsg
         implements org.apache.axis2.databinding.ADBBean{
         
