@@ -3,7 +3,7 @@
 <!-- Engage the security module -->
 <module ref="rampart"/>
 
-<!-- FULL SECURITY -->
+<!-- FULL SECURITY
 <parameter name="OutflowSecurity">
 	<action>
 		<items>UsernameToken Signature Encrypt</items>
@@ -24,7 +24,7 @@
 		<signaturePropFile>axis-repo/conf/security.properties</signaturePropFile>
 	</action>
 </parameter>
-
+-->
 <!-- ================================================= -->
 <!-- Parameters -->
 <!-- ================================================= -->

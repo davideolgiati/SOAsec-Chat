@@ -4,8 +4,10 @@
 	</description>
 	
 	<parameter name="ServiceClass" locked="false">SecureService</parameter>
+	<!-- Engaging rampart -->
+	<module ref="rampart"/>
 
-	<!-- FULL SECURITY -->
+	<!-- FULL SECURITY
 	<parameter name="InflowSecurity">
 		<action>
 			<items>UsernameToken Signature Encrypt</items>
@@ -25,7 +27,7 @@
 			<encryptionUser>useReqSigCert</encryptionUser>
 		</action>
 	</parameter>
-
+	-->
 	<operation name="chatLogin">
 		<messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver"/>
 	</operation>
@@ -35,4 +37,30 @@
 	<operation name="reciveMsg">
 		<messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver"/>
 	</operation>
+	
+	<!-- Policy Https -->
+	<wsp:Policy xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" >
+		<sp:TransportBinding>
+			<wsp:Policy>
+				<sp:AlgorithmSuite>
+					<wsp:Policy>
+						<wsp:ExactlyOne>
+							<sp:Basic256Rsa15 />
+							<sp:TripleDesRsa15 />
+						</wsp:ExactlyOne>
+					</wsp:Policy>
+				</sp:AlgorithmSuite>
+				<sp:TransportToken>
+					<wsp:Policy>
+						<sp:HttpsToken RequireClientCertificate="false" />
+					</wsp:Policy>
+				</sp:TransportToken>
+			</wsp:Policy>
+		</sp:TransportBinding>
+
+		<ramp:RampartConfig xmlns:ramp="http://ws.apache.org/rampart/policy">
+			<ramp:passwordCallbackClass>PWCallbackService</ramp:passwordCallbackClass>
+		</ramp:RampartConfig>
+
+	</wsp:Policy>
 </service>

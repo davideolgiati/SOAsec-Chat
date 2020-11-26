@@ -10,15 +10,20 @@ import org.apache.axis2.context.ConfigurationContext;
 import org.apache.axis2.context.ConfigurationContextFactory;
 import org.apache.axis2.description.PolicyInclude;
 import org.apache.neethi.Policy;
+import org.apache.neethi.PolicyEngine;
 import org.apache.rampart.policy.model.CryptoConfig;
 import org.apache.rampart.policy.model.RampartConfig;
 import org.apache.axiom.om.OMElement;
+import org.apache.axiom.om.impl.builder.StAXOMBuilder;
+import org.apache.axis2.client.Options;
+import org.apache.rampart.RampartMessageData;
 
 // IO
 import java.io.File;
 import java.io.InputStream;
 
 // XML
+import javax.xml.stream.XMLStreamException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -50,6 +55,7 @@ public class ChatAPI {
     try {
       username = user;
       // ATTENZIONE TUTTI I PERCORSI SONO STATICI, SU UN'ALTRA MACCHINA NON GIRA!!!
+	/*
       // Reading the xml configuration file
       DocumentBuilderFactory f = DocumentBuilderFactory.newInstance();
       DocumentBuilder b = f.newDocumentBuilder();
@@ -71,17 +77,32 @@ public class ChatAPI {
       DOMSource domSource = new DOMSource(doc);
       StreamResult sr = new StreamResult(new File(cfg));
       tf.transform(domSource, sr);
+	*/
 
       // To be able to load the client configuration from axis2.xml
       ConfigurationContext ctx = ConfigurationContextFactory.createConfigurationContextFromFileSystem("axis-repo", cfg);
       stub = new SecureServiceStub(ctx, "https://localhost:8443/axis2/services/SecureService");
       ServiceClient sc = stub._getServiceClient();
+
+      Options options = sc.getOptions();
+      options.setProperty(RampartMessageData.KEY_RAMPART_POLICY, loadPolicy("policy.xml"));
+      //options.setUserName("client1");
+      //options.setPassword("password1");
+
+
       sc.engageModule("rampart");
       stub.chatLogin(username);
     } catch (Exception e) {
       System.out.println("E' successo qualcosa, non lo so");
 	    e.printStackTrace();
     }
+  }
+
+  // Load policy file from classpath.
+  private static Policy loadPolicy(String name) throws XMLStreamException {
+    InputStream resource = ChatAPI.class.getResourceAsStream(name);
+    StAXOMBuilder builder = new StAXOMBuilder(resource);
+    return PolicyEngine.getPolicy(builder.getDocumentElement());
   }
 
   private String toMe(String msg) {
