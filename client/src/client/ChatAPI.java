@@ -55,7 +55,7 @@ public class ChatAPI {
     try {
       username = user;
       // ATTENZIONE TUTTI I PERCORSI SONO STATICI, SU UN'ALTRA MACCHINA NON GIRA!!!
-	/*
+
       // Reading the xml configuration file
       DocumentBuilderFactory f = DocumentBuilderFactory.newInstance();
       DocumentBuilder b = f.newDocumentBuilder();
@@ -77,20 +77,19 @@ public class ChatAPI {
       DOMSource domSource = new DOMSource(doc);
       StreamResult sr = new StreamResult(new File(cfg));
       tf.transform(domSource, sr);
-	*/
 
       // To be able to load the client configuration from axis2.xml
       ConfigurationContext ctx = ConfigurationContextFactory.createConfigurationContextFromFileSystem("axis-repo", cfg);
       stub = new SecureServiceStub(ctx, "https://localhost:8443/axis2/services/SecureService");
       ServiceClient sc = stub._getServiceClient();
 
+      //Loading policy
       Options options = sc.getOptions();
       options.setProperty(RampartMessageData.KEY_RAMPART_POLICY, loadPolicy("policy.xml"));
-      //options.setUserName("client1");
-      //options.setPassword("password1");
 
-
+      //Engaging Rampart
       sc.engageModule("rampart");
+
       stub.chatLogin(username);
     } catch (Exception e) {
       System.out.println("E' successo qualcosa, non lo so");

@@ -3,16 +3,17 @@
 <!-- Engage the security module -->
 <module ref="rampart"/>
 
-<!-- FULL SECURITY
+<!-- FULL SECURITY -->
 <parameter name="OutflowSecurity">
 	<action>
 		<items>UsernameToken Signature Encrypt</items>
-		<user>client1</user>
+		<user>client2</user>
 		<passwordCallbackClass>client.PWCallbackClient</passwordCallbackClass>
-		<signaturePropFile>axis-repo/conf/security.properties</signaturePropFile>
+		<signaturePropFile>axis-repo/conf/keystore.properties</signaturePropFile>
 		<signatureKeyIdentifier>DirectReference</signatureKeyIdentifier>
 		<encryptionKeyIdentifier>SKIKeyIdentifier</encryptionKeyIdentifier>
 		<encryptionUser>service</encryptionUser>
+        <encryptionPropFile>axis-repo/conf/truststore.properties</encryptionPropFile>
 		<optimizeParts>//xenc:EncryptedData/xenc:CipherData/xenc:CipherValue</optimizeParts>
 	</action>
 </parameter>
@@ -21,10 +22,10 @@
 	<action>
 		<items>Signature Encrypt</items>
 		<passwordCallbackClass>client.PWCallbackClient</passwordCallbackClass>
-		<signaturePropFile>axis-repo/conf/security.properties</signaturePropFile>
+		<signaturePropFile>axis-repo/conf/truststore.properties</signaturePropFile>
+        <decryptionPropFile>axis-repo/conf/keystore.properties</decryptionPropFile>
 	</action>
 </parameter>
--->
 <!-- ================================================= -->
 <!-- Parameters -->
 <!-- ================================================= -->

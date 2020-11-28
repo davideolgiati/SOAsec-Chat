@@ -7,12 +7,13 @@
 	<!-- Engaging rampart -->
 	<module ref="rampart"/>
 
-	<!-- FULL SECURITY
+	<!-- FULL SECURITY -->
 	<parameter name="InflowSecurity">
 		<action>
 			<items>UsernameToken Signature Encrypt</items>
 			<passwordCallbackClass>PWCallbackService</passwordCallbackClass>
-			<signaturePropFile>security.properties</signaturePropFile>
+			<signaturePropFile>truststore.properties</signaturePropFile>
+			<decryptionPropFile>keystore.properties</decryptionPropFile>
 		</action>
 	</parameter>
 
@@ -21,13 +22,14 @@
 			<items>Signature Encrypt</items>
 			<user>service</user>
 			<passwordCallbackClass>PWCallbackService</passwordCallbackClass>
-			<signaturePropFile>security.properties</signaturePropFile>
+			<signaturePropFile>keystore.properties</signaturePropFile>
 			<signatureKeyIdentifier>DirectReference</signatureKeyIdentifier>
 			<encryptionKeyIdentifier>SKIKeyIdentifier</encryptionKeyIdentifier>
 			<encryptionUser>useReqSigCert</encryptionUser>
+			<encryptionPropFile>truststore.properties</encryptionPropFile>
 		</action>
 	</parameter>
-	-->
+	
 	<operation name="chatLogin">
 		<messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver"/>
 	</operation>
