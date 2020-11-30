@@ -18,22 +18,21 @@ public class SecureServiceClient {
   // funzione per l'avvio del thread sopra
   private static void startListener(final ChatAPI chat) {
     // Funzione Labda per la lettura continua dei messaggi
-    Runnable msgPrinter =
-    	() -> {
-        // messaggio letto
-        String msg = "";
-        // utente con cui chattiamo
-        String peer = chat.getPeer();
-        // ciclo infinito per la lettura dei messaggi
-	      while (true) {
-          // ricezione del messaggio
-          msg = chat.ricevi();
-          // se il messaggio non è vuoto o nullo lo stampo
-	        if (!("".equals(msg) || msg == null)) {
-	          System.out.println(peer + " : " + msg);
-	        }
-	      }
-      };
+    Runnable msgPrinter = () -> {
+      // messaggio letto
+      String msg = "";
+      // utente con cui chattiamo
+      String peer = chat.getPeer();
+      // ciclo infinito per la lettura dei messaggi
+      while (true) {
+        // ricezione del messaggio
+        msg = chat.ricevi();
+        // se il messaggio non è vuoto o nullo lo stampo
+        if (!("".equals(msg) || msg == null)) {
+          System.out.println(peer + " : " + msg);
+        }
+      }
+    };
     // assegno la lambda al thread
     listener = new Thread(msgPrinter);
     // e lo avvio
@@ -44,7 +43,7 @@ public class SecureServiceClient {
   private static String help() {
     // compongo il banner
     String text = "\n\nBenvenuto in SOAsec-Chat!\n";
-    text += "Eccoti le azioni possibili :\n"; 
+    text += "Eccoti le azioni possibili :\n";
     text += "(digitare il codice corrisponente all'azione)\n\n";
     text += "CODICE\tAZIONE\n";
     text += ":h\tmostra questo banner\n";
@@ -60,10 +59,10 @@ public class SecureServiceClient {
   }
 
   // funzione di decodifica comando utente
-  private static int decode(String res){
+  private static int decode(String res) {
     int ret = 0;
     switch (res) {
-      case "":   // Stringa vuota
+      case "": // Stringa vuota
         ret = 0;
         break;
       case ":c": // Comando per cominciare la chat
@@ -75,7 +74,7 @@ public class SecureServiceClient {
       case ":e": // Comando per uscire dal programma
         ret = 3;
         break;
-      default:   // Stringa non riconosciuta
+      default: // Stringa non riconosciuta
         ret = -1;
         break;
     }
@@ -97,7 +96,7 @@ public class SecureServiceClient {
     String res = "";
     int parse = 0;
 
-    while(parse < 1){
+    while (parse < 1) {
       res = help();
       parse = decode(res);
       if (parse == 2) {
@@ -107,7 +106,7 @@ public class SecureServiceClient {
 
     if (parse == 1) {
       String lista = "";
-      
+
       do {
         lista = chat.listaUtenti();
         System.out.println(lista);
@@ -118,17 +117,26 @@ public class SecureServiceClient {
         }
       } while ("Ancora nessun utente connesso ...".equals(lista));
 
-      System.out.println("Con quale utente vuoi chattare?");
-      peer = keyboard.next();
+      Boolean firstTime = true;
 
-      chat.connectTo(peer);
+      do {
+        if (firstTime) {
+          System.out.println("Con quale utente vuoi chattare?");
+        } else {
+          System.out.println("Inserisci un utente tra questi, per favore:\n\n" + lista + "\n");
+        }
+        peer = keyboard.next();
+      } while (!lista.contains(peer) || "".equals(peer));
 
-      startListener(chat);
-      String msg = "";
-      while (!":quit".equals(msg)) {
-        msg = keyboard.next();
-        if (!("".equals(msg) || ":quit".equals(msg))) {
-          chat.invia(msg);
+      if (chat.connectTo(peer)) {
+
+        startListener(chat);
+        String msg = "";
+        while (!":quit".equals(msg)) {
+          msg = keyboard.next();
+          if (!("".equals(msg) || ":quit".equals(msg))) {
+            chat.invia(msg);
+          }
         }
       }
     }

@@ -10,5 +10,4 @@ resetTomcat &&
 resetTomcat &&
 ./4-createStub.sh && 
 ./5-compileClient.sh &&
-resetTomcat &&
-./6-runclient.sh
+resetTomcat

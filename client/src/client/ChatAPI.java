@@ -1,14 +1,12 @@
 package client;
 
-// Utils
-import java.util.Properties;
-import java.util.Scanner;
+import java.rmi.RemoteException;
 
 // Apache
 import org.apache.axis2.client.ServiceClient;
 import org.apache.axis2.context.ConfigurationContext;
 import org.apache.axis2.context.ConfigurationContextFactory;
-import org.apache.axis2.description.PolicyInclude;
+/*import org.apache.axis2.description.PolicyInclude;
 import org.apache.neethi.Policy;
 import org.apache.rampart.policy.model.CryptoConfig;
 import org.apache.rampart.policy.model.RampartConfig;
@@ -30,176 +28,205 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.xpath.*;
 import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
+import org.xml.sax.SAXException;*/
 
 // W3C
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
+//import org.w3c.dom.Document;
+//import org.w3c.dom.Element;
+//import org.w3c.dom.Node;
+//import org.w3c.dom.NodeList;
 
 public class ChatAPI {
   // Costanti
   private static final String cfg = "/home/soasec/SOAsec-Chat/client/src/axis-repo/conf/axis2.xml";
   // Variabili
   private SecureServiceStub stub;
-  private String username;
+  private String me;
   private String peer;
 
-  ChatAPI(String user){
+  ChatAPI(String user) {
     try {
-      username = user;
+      me = user;
       // ATTENZIONE TUTTI I PERCORSI SONO STATICI, SU UN'ALTRA MACCHINA NON GIRA!!!
       // Reading the xml configuration file
-      DocumentBuilderFactory f = DocumentBuilderFactory.newInstance();
-      DocumentBuilder b = f.newDocumentBuilder();
-      Document doc = b.parse(new File(cfg));
-
-      //Changing the parameters
-      XPath xPath = XPathFactory.newInstance().newXPath();
-      String expr = "/axisconfig/parameter[@name='OutflowSecurity']/action/user";
-      Node userNode = (Node) xPath.compile(expr).evaluate(doc, XPathConstants.NODE);
-      userNode.setTextContent(username);
-
-      //Setting write options
-      Transformer tf = TransformerFactory.newInstance().newTransformer();
-      tf.setOutputProperty(OutputKeys.INDENT, "yes");
-      tf.setOutputProperty(OutputKeys.METHOD, "xml");
-      tf.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
-
-      //Writing changes to the document
-      DOMSource domSource = new DOMSource(doc);
-      StreamResult sr = new StreamResult(new File(cfg));
-      tf.transform(domSource, sr);
-
+      /*
+       * DocumentBuilderFactory f = DocumentBuilderFactory.newInstance();
+       * DocumentBuilder b = f.newDocumentBuilder(); Document doc = b.parse(new
+       * File(cfg));
+       * 
+       * //Changing the parameters XPath xPath =
+       * XPathFactory.newInstance().newXPath(); String expr =
+       * "/axisconfig/parameter[@name='OutflowSecurity']/action/user"; Node userNode =
+       * (Node) xPath.compile(expr).evaluate(doc, XPathConstants.NODE);
+       * userNode.setTextContent(me);
+       * 
+       * //Setting write options Transformer tf =
+       * TransformerFactory.newInstance().newTransformer();
+       * tf.setOutputProperty(OutputKeys.INDENT, "yes");
+       * tf.setOutputProperty(OutputKeys.METHOD, "xml");
+       * tf.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
+       * 
+       * //Writing changes to the document DOMSource domSource = new DOMSource(doc);
+       * StreamResult sr = new StreamResult(new File(cfg)); tf.transform(domSource,
+       * sr);
+       */
       // To be able to load the client configuration from axis2.xml
       ConfigurationContext ctx = ConfigurationContextFactory.createConfigurationContextFromFileSystem("axis-repo", cfg);
       stub = new SecureServiceStub(ctx, "http://localhost:8080/axis2/services/SecureService");
       ServiceClient sc = stub._getServiceClient();
       sc.engageModule("rampart");
-      stub.chatLogin(username);
+      stub.doLogin(me);
     } catch (Exception e) {
-      System.out.println("E' successo qualcosa, non lo so");
-	    e.printStackTrace();
+      e.printStackTrace();
     }
   }
 
-  private String toMe(String msg) {
+  @Override
+  public void finalize() {
     try {
-      return stub.sendMsg(msg, username);
-    } catch (Exception e) {
-      System.out.println("toMe(String msg) error\n" + e.toString());
-      return "error";
+      stub.doLogout(me);
+    } catch (RemoteException | SecureServiceClassNotFoundExceptionException | SecureServiceIOExceptionException
+        | SecureServiceIllegalBlockSizeExceptionException | SecureServiceInvalidKeyExceptionException
+        | SecureServiceBadPaddingExceptionException e) {
+      e.printStackTrace();
     }
   }
 
-  public String getPeer(){
-    return peer;
+  public void invia(String msg) {
+    invia(msg, peer);
   }
 
-  public String invia(String msg, String peer) {
+  private void invia(String msg, String user) {
     try {
-      return stub.sendMsg(msg, peer);
+      stub.sendMsg(msg, user);
     } catch (Exception e) {
-      System.out.println("invia(String msg) error");
-      return "error";
-    }
-  }
-
-  public String invia(String msg) {
-    try {
-      return stub.sendMsg(msg, peer);
-    } catch (Exception e) {
-      System.out.println("invia(String msg) error");
-      return "error";
+      e.printStackTrace();
     }
   }
 
   public String ricevi() {
     try {
-      return stub.reciveMsg(username);
+      return stub.reciveMsg(me);
     } catch (Exception e) {
-      System.out.println("ricevi() error");
-      return "error";
+      e.printStackTrace();
+      return "";
     }
   }
 
-  public String listaUtenti() {
-    toMe(":listUser");
-    String res = ricevi();
-    if ("".equals(res)){
+  public String getUser() {
+    return me;
+  }
+
+  public String getPeer() {
+    return peer;
+  }
+
+  public void setPeer(String user) {
+    peer = user;
+  }
+
+  public String listaUtenti() throws SecureServiceClassNotFoundExceptionException, SecureServiceIOExceptionException,
+      SecureServiceIllegalBlockSizeExceptionException, SecureServiceInvalidKeyExceptionException,
+      SecureServiceBadPaddingExceptionException {
+    String res;
+    try {
+      res = stub.userList();
+    } catch (RemoteException | SecureServiceNullPointerExceptionException e) {
+      e.printStackTrace();
+      res = "";
+    }
+    if (getUser().equals(res) || "".equals(res)) {
       res = "Ancora nessun utente connesso ...";
     }
     return res;
   }
 
-  public boolean connectTo(String utente) {
+  public void request(String user) throws SecureServiceClassNotFoundExceptionException,
+      SecureServiceIOExceptionException, SecureServiceSecureService_UserNotFoundExceptionException {
     try {
-    peer = utente;
-    toMe(":openConversation " + utente);
-    System.out.println("Mi sto connettendo a " + utente + " ...");
-    String res = ricevi();
-    // devi aggiungere un timeout
-    boolean keep = true;
-    boolean ret = true;
-    String text = "";
-    while (keep) {
-      while ("".equals(res)){
-	res = ricevi();
-      }
-      String[] info = res.split(" ");
-      if (info[0] == "<open>"){
-	// apri convo
-	if (info[1] == utente) {
-	  text = "Connesso con ";
-	  text += utente;
-	  System.out.println(text);
-	} else {
-	  // siamo VIP
-	  text = "Ricevuta richiesta da " + info[1] + "\n";
-	  text += "Continuare tentetaivo con [ A ] " + utente + " o Connetersi con [ B ]" + info[1] + " ?\n";
-	  text += "[A / B] ?\n";
-	  System.out.println(text);
-	  // fare input
-	  Scanner keyboard = new Scanner(System.in);
-	  String answer = keyboard.next();
-	  answer = answer.toLowerCase();
-	  while ((!"a".equals(answer.charAt(0))) || (!"b".equals(answer.charAt(0)))) {
-	    text = "Scegliere tra le due opzioni [A / B]\n";
-	    text += "[ A ] " + utente + "\n";
-	    text += "[ B ] " + info[1] + "\n";
-	    System.out.println(text);
-	    answer = keyboard.next();
-	    answer = answer.toLowerCase();
-	  }
-	  if ("b".equals(answer.charAt(0))) {
-	    keep = false;
-	    invia("<close> " + username);
-	    peer = info[1];
-	    invia("<open> " + username);
-	    text = "Connesso con " + peer;
-	  } else {
-	    String tmp = peer;
-	    peer = info[1];
-	    invia("<close> " + username);
-	    peer = tmp;
-	    text = "Attendo risposta da " + peer;
-	    System.out.println(text);
-	  }
-	}
-      } else if (info[0] == "<close>"){
-	// no convo
-	text = "Connessione con " + utente + " rifiutata";
-	System.out.println(text);
-	ret = false;
-	keep = false;
-      } else {
-	// che cazz succ
-      }
+      stub.request(me, user);
+    } catch (RemoteException | SecureServiceExceptionException e) {
+      e.printStackTrace();
     }
-    return ret;
-    } catch (Exception e) {
+  }
+
+  public boolean accept(String user) {
+    try {
+      return stub.accept(me, user);
+    } catch (RemoteException | SecureServiceClassNotFoundExceptionException | SecureServiceIOExceptionException
+        | SecureServiceIllegalBlockSizeExceptionException | SecureServiceInvalidKeyExceptionException
+        | SecureServiceBadPaddingExceptionException e) {
+      e.printStackTrace();
       return false;
     }
+  }
+
+  public boolean deny(String user) {
+    try {
+      return stub.deny(me, user);
+    } catch (RemoteException | SecureServiceClassNotFoundExceptionException | SecureServiceIOExceptionException | SecureServiceIllegalBlockSizeExceptionException | SecureServiceInvalidKeyExceptionException | SecureServiceBadPaddingExceptionException e) {
+      e.printStackTrace();
+      return false;
+    }
+  }
+
+  public String[] checkForRequests() {
+    try {
+      return stub.checkForRequests(me);
+    } catch (RemoteException | SecureServiceClassNotFoundExceptionException | SecureServiceIOExceptionException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+      return new String[0];
+    }
+  }
+
+  public boolean checkForRequest(String user) {
+    boolean res = false;
+    String[] requests = checkForRequests();
+    if (requests != null) {
+      for (String _user : requests) {
+        res = res || _user.equals(user);
+      }
+    }
+    return res;
+  }
+
+  public boolean requestStatus(String myFriend) throws Exception {
+    return stub.status(me, myFriend);
+  }
+
+  public boolean connectTo(String user) throws SecureServiceClassNotFoundExceptionException,
+      SecureServiceIOExceptionException, SecureServiceSecureService_UserNotFoundExceptionException {
+    boolean ret = false;
+    if (checkForRequest(user)) {
+      accept(user);
+      return ret = true;
+    } else {
+      request(user);
+      boolean keep = true;
+      do {
+        try {
+          if (checkForRequest(user)) {
+            accept(user);
+            return ret = true;
+          } else {
+            ret = requestStatus(user);
+          }
+          keep = false;
+        } catch (Exception e) {
+          if (!"in attesa di risposta dall'utente".equals(e.getMessage())) {
+            e.printStackTrace();
+            keep = false;
+            ret = false;
+          }
+        }
+      } while (keep);
+    }
+    if (ret) {
+      System.out.println("[i] connesso con " + user);
+    } else {
+      System.out.println("[x] connessione con " + user + "rifiutata");
+    }
+    return ret;
   }
 }
