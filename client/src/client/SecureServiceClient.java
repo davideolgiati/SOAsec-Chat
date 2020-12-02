@@ -1,6 +1,5 @@
 package client;
 
-import java.rmi.RemoteException;
 import java.util.*;
 
 public class SecureServiceClient {
@@ -13,6 +12,8 @@ public class SecureServiceClient {
   // thread la ricezione dei nuovi messaggi
   private static Thread listener;
   private static int millis;
+  private static boolean close = false;
+  private static boolean keep = true;
   // inizializzo la tastiera
   private static Scanner keyboard = new Scanner(System.in);
 
@@ -25,7 +26,7 @@ public class SecureServiceClient {
       // utente con cui chattiamo
       String peer = chat.getPeer();
       // ciclo infinito per la lettura dei messaggi
-      while (true) {
+      while (!close) {
         // ricezione del messaggio
         try {
           msg = chat.ricevi();
@@ -34,12 +35,18 @@ public class SecureServiceClient {
         }
         // se il messaggio non è vuoto o nullo lo stampo
         if (!("".equals(msg) || msg == null)) {
-          System.out.println(peer + " : " + msg);
+          if (":e".equals(msg)) {
+            keep = false;
+            keyboard.close();
+            keyboard = null;
+            System.out.println("\n" + peer + " ha chiuso la conversazione\n");
+          } else {
+            System.out.println(peer + " : " + msg);
+          }
         }
         try {
           Thread.sleep(100);
         } catch (InterruptedException ex) {
-          // TODO Auto-generated catch block
           ex.printStackTrace();
         }
       }
@@ -59,7 +66,7 @@ public class SecureServiceClient {
     text += "CODICE\tAZIONE\n";
     text += ":h\tmostra questo banner\n";
     text += ":c\tinizia a chattare\n";
-    text += ":e\tesci\n\n>\t";
+    text += ":e\tesci (valido anche durante la chat)\n\n>\t";
 
     System.out.print(text);
 
@@ -140,17 +147,24 @@ public class SecureServiceClient {
       } while (!lista.contains(peer) || "".equals(peer) || username.equals(peer));
 
       if (chat.connectTo(peer)) {
-
         startListener(chat);
+
         String msg = "";
-        while (!":quit".equals(msg)) {
+        while (keep) {
           msg = keyboard.nextLine();
-          if (!("".equals(msg) || ":quit".equals(msg))) {
+
+          if (!("".equals(msg))) { 
             chat.invia(msg);
+            if (":e".equals(msg)) {
+              keep = false;
+            }
           }
         }
+        close = true;
+        System.out.println("System : Ciao ciao!");
       }
     }
-    keyboard.close();
+    if (keyboard != null)
+      keyboard.close();
   }
 }

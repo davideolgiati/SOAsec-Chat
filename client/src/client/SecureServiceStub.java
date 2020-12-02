@@ -329,7 +329,7 @@
                      * Auto generated method signature
                      * 
                      * @see client.SecureService#doLogout
-                     * @param doLogout21
+                     * @param doLogout22
                     
                      * @throws client.SecureServiceClassNotFoundExceptionException : 
                      * @throws client.SecureServiceIOExceptionException : 
@@ -339,7 +339,7 @@
 
                             public  void doLogout(
 
-                            java.lang.String args022)
+                            java.lang.String args023)
                         
 
                     throws java.rmi.RemoteException
@@ -367,7 +367,7 @@
               org.apache.axiom.soap.SOAPEnvelope env = null;
                     client.SecureServiceStub.DoLogout dummyWrappedType = null;
                                                     env = toEnvelope(getFactory(_operationClient.getOptions().getSoapVersionURI()),
-                                                    args022,
+                                                    args023,
                                                     dummyWrappedType,
                                                     optimizeContent(new javax.xml.namespace.QName("http://ws.apache.org/axis2",
                                                     "doLogout")));
@@ -451,12 +451,12 @@
                 * Auto generated method signature for Asynchronous Invocations
                 * 
                 * @see client.SecureService#startdoLogout
-                    * @param doLogout21
+                    * @param doLogout22
                 
                 */
                 public  void startdoLogout(
 
-                 java.lang.String args022,
+                 java.lang.String args023,
 
                   final client.SecureServiceCallbackHandler callback)
 
@@ -480,7 +480,7 @@
                                     //Style is Doc.
                                     client.SecureServiceStub.DoLogout dummyWrappedType = null;
                                                     env = toEnvelope(getFactory(_operationClient.getOptions().getSoapVersionURI()),
-                                                    args022,
+                                                    args023,
                                                      dummyWrappedType,
                                                     optimizeContent(new javax.xml.namespace.QName("http://ws.apache.org/axis2",
                                                     "doLogout")));
@@ -514,7 +514,7 @@
                      * Auto generated method signature
                      * 
                      * @see client.SecureService#userList
-                     * @param userList24
+                     * @param userList25
                     
                      * @throws client.SecureServiceClassNotFoundExceptionException : 
                      * @throws client.SecureServiceNullPointerExceptionException : 
@@ -525,7 +525,7 @@
 
                             public  java.lang.String userList(
 
-                            )
+                            java.lang.String args026)
                         
 
                     throws java.rmi.RemoteException
@@ -554,6 +554,7 @@
               org.apache.axiom.soap.SOAPEnvelope env = null;
                     client.SecureServiceStub.UserList dummyWrappedType = null;
                                                     env = toEnvelope(getFactory(_operationClient.getOptions().getSoapVersionURI()),
+                                                    args026,
                                                     dummyWrappedType,
                                                     optimizeContent(new javax.xml.namespace.QName("http://ws.apache.org/axis2",
                                                     "userList")));
@@ -652,12 +653,12 @@
                 * Auto generated method signature for Asynchronous Invocations
                 * 
                 * @see client.SecureService#startuserList
-                    * @param userList24
+                    * @param userList25
                 
                 */
                 public  void startuserList(
 
-                 
+                 java.lang.String args026,
 
                   final client.SecureServiceCallbackHandler callback)
 
@@ -681,6 +682,7 @@
                                     //Style is Doc.
                                     client.SecureServiceStub.UserList dummyWrappedType = null;
                                                     env = toEnvelope(getFactory(_operationClient.getOptions().getSoapVersionURI()),
+                                                    args026,
                                                      dummyWrappedType,
                                                     optimizeContent(new javax.xml.namespace.QName("http://ws.apache.org/axis2",
                                                     "userList")));
@@ -812,7 +814,7 @@
                      * Auto generated method signature
                      * 
                      * @see client.SecureService#doLogin
-                     * @param doLogin27
+                     * @param doLogin29
                     
                      * @throws client.SecureServiceClassNotFoundExceptionException : 
                      * @throws client.SecureServiceIOExceptionException : 
@@ -822,7 +824,7 @@
 
                             public  void doLogin(
 
-                            java.lang.String args028)
+                            java.lang.String args030)
                         
 
                     throws java.rmi.RemoteException
@@ -850,7 +852,7 @@
               org.apache.axiom.soap.SOAPEnvelope env = null;
                     client.SecureServiceStub.DoLogin dummyWrappedType = null;
                                                     env = toEnvelope(getFactory(_operationClient.getOptions().getSoapVersionURI()),
-                                                    args028,
+                                                    args030,
                                                     dummyWrappedType,
                                                     optimizeContent(new javax.xml.namespace.QName("http://ws.apache.org/axis2",
                                                     "doLogin")));
@@ -934,12 +936,12 @@
                 * Auto generated method signature for Asynchronous Invocations
                 * 
                 * @see client.SecureService#startdoLogin
-                    * @param doLogin27
+                    * @param doLogin29
                 
                 */
                 public  void startdoLogin(
 
-                 java.lang.String args028,
+                 java.lang.String args030,
 
                   final client.SecureServiceCallbackHandler callback)
 
@@ -963,7 +965,7 @@
                                     //Style is Doc.
                                     client.SecureServiceStub.DoLogin dummyWrappedType = null;
                                                     env = toEnvelope(getFactory(_operationClient.getOptions().getSoapVersionURI()),
-                                                    args028,
+                                                    args030,
                                                      dummyWrappedType,
                                                     optimizeContent(new javax.xml.namespace.QName("http://ws.apache.org/axis2",
                                                     "doLogin")));
@@ -997,7 +999,7 @@
                      * Auto generated method signature
                      * 
                      * @see client.SecureService#deny
-                     * @param deny30
+                     * @param deny32
                     
                      * @throws client.SecureServiceClassNotFoundExceptionException : 
                      * @throws client.SecureServiceIOExceptionException : 
@@ -1007,7 +1009,7 @@
 
                             public  boolean deny(
 
-                            java.lang.String args031,java.lang.String args132)
+                            java.lang.String args033,java.lang.String args134)
                         
 
                     throws java.rmi.RemoteException
@@ -1035,8 +1037,8 @@
               org.apache.axiom.soap.SOAPEnvelope env = null;
                     client.SecureServiceStub.Deny dummyWrappedType = null;
                                                     env = toEnvelope(getFactory(_operationClient.getOptions().getSoapVersionURI()),
-                                                    args031,
-                                                    args132,
+                                                    args033,
+                                                    args134,
                                                     dummyWrappedType,
                                                     optimizeContent(new javax.xml.namespace.QName("http://ws.apache.org/axis2",
                                                     "deny")));
@@ -1131,12 +1133,12 @@
                 * Auto generated method signature for Asynchronous Invocations
                 * 
                 * @see client.SecureService#startdeny
-                    * @param deny30
+                    * @param deny32
                 
                 */
                 public  void startdeny(
 
-                 java.lang.String args031,java.lang.String args132,
+                 java.lang.String args033,java.lang.String args134,
 
                   final client.SecureServiceCallbackHandler callback)
 
@@ -1160,8 +1162,8 @@
                                     //Style is Doc.
                                     client.SecureServiceStub.Deny dummyWrappedType = null;
                                                     env = toEnvelope(getFactory(_operationClient.getOptions().getSoapVersionURI()),
-                                                    args031,
-                                                    args132,
+                                                    args033,
+                                                    args134,
                                                      dummyWrappedType,
                                                     optimizeContent(new javax.xml.namespace.QName("http://ws.apache.org/axis2",
                                                     "deny")));
@@ -1288,7 +1290,7 @@
                      * Auto generated method signature
                      * 
                      * @see client.SecureService#request
-                     * @param request35
+                     * @param request37
                     
                      * @throws client.SecureServiceClassNotFoundExceptionException : 
                      * @throws client.SecureServiceExceptionException : 
@@ -1300,7 +1302,7 @@
 
                             public  void request(
 
-                            java.lang.String args036,java.lang.String args137)
+                            java.lang.String args038,java.lang.String args139)
                         
 
                     throws java.rmi.RemoteException
@@ -1330,8 +1332,8 @@
               org.apache.axiom.soap.SOAPEnvelope env = null;
                     client.SecureServiceStub.Request dummyWrappedType = null;
                                                     env = toEnvelope(getFactory(_operationClient.getOptions().getSoapVersionURI()),
-                                                    args036,
-                                                    args137,
+                                                    args038,
+                                                    args139,
                                                     dummyWrappedType,
                                                     optimizeContent(new javax.xml.namespace.QName("http://ws.apache.org/axis2",
                                                     "request")));
@@ -1423,12 +1425,12 @@
                 * Auto generated method signature for Asynchronous Invocations
                 * 
                 * @see client.SecureService#startrequest
-                    * @param request35
+                    * @param request37
                 
                 */
                 public  void startrequest(
 
-                 java.lang.String args036,java.lang.String args137,
+                 java.lang.String args038,java.lang.String args139,
 
                   final client.SecureServiceCallbackHandler callback)
 
@@ -1452,8 +1454,8 @@
                                     //Style is Doc.
                                     client.SecureServiceStub.Request dummyWrappedType = null;
                                                     env = toEnvelope(getFactory(_operationClient.getOptions().getSoapVersionURI()),
-                                                    args036,
-                                                    args137,
+                                                    args038,
+                                                    args139,
                                                      dummyWrappedType,
                                                     optimizeContent(new javax.xml.namespace.QName("http://ws.apache.org/axis2",
                                                     "request")));
@@ -1487,7 +1489,7 @@
                      * Auto generated method signature
                      * 
                      * @see client.SecureService#sendMsg
-                     * @param sendMsg39
+                     * @param sendMsg41
                     
                      * @throws client.SecureServiceClassNotFoundExceptionException : 
                      * @throws client.SecureServiceIOExceptionException : 
@@ -1497,7 +1499,7 @@
 
                             public  void sendMsg(
 
-                            java.lang.String args040,java.lang.String args141)
+                            java.lang.String args042,java.lang.String args143)
                         
 
                     throws java.rmi.RemoteException
@@ -1525,8 +1527,8 @@
               org.apache.axiom.soap.SOAPEnvelope env = null;
                     client.SecureServiceStub.SendMsg dummyWrappedType = null;
                                                     env = toEnvelope(getFactory(_operationClient.getOptions().getSoapVersionURI()),
-                                                    args040,
-                                                    args141,
+                                                    args042,
+                                                    args143,
                                                     dummyWrappedType,
                                                     optimizeContent(new javax.xml.namespace.QName("http://ws.apache.org/axis2",
                                                     "sendMsg")));
@@ -1610,12 +1612,12 @@
                 * Auto generated method signature for Asynchronous Invocations
                 * 
                 * @see client.SecureService#startsendMsg
-                    * @param sendMsg39
+                    * @param sendMsg41
                 
                 */
                 public  void startsendMsg(
 
-                 java.lang.String args040,java.lang.String args141,
+                 java.lang.String args042,java.lang.String args143,
 
                   final client.SecureServiceCallbackHandler callback)
 
@@ -1639,8 +1641,8 @@
                                     //Style is Doc.
                                     client.SecureServiceStub.SendMsg dummyWrappedType = null;
                                                     env = toEnvelope(getFactory(_operationClient.getOptions().getSoapVersionURI()),
-                                                    args040,
-                                                    args141,
+                                                    args042,
+                                                    args143,
                                                      dummyWrappedType,
                                                     optimizeContent(new javax.xml.namespace.QName("http://ws.apache.org/axis2",
                                                     "sendMsg")));
@@ -1674,7 +1676,7 @@
                      * Auto generated method signature
                      * 
                      * @see client.SecureService#reciveMsg
-                     * @param reciveMsg43
+                     * @param reciveMsg45
                     
                      * @throws client.SecureServiceClassNotFoundExceptionException : 
                      * @throws client.SecureServiceIOExceptionException : 
@@ -1684,7 +1686,7 @@
 
                             public  java.lang.String reciveMsg(
 
-                            java.lang.String args044)
+                            java.lang.String args046)
                         
 
                     throws java.rmi.RemoteException
@@ -1712,7 +1714,7 @@
               org.apache.axiom.soap.SOAPEnvelope env = null;
                     client.SecureServiceStub.ReciveMsg dummyWrappedType = null;
                                                     env = toEnvelope(getFactory(_operationClient.getOptions().getSoapVersionURI()),
-                                                    args044,
+                                                    args046,
                                                     dummyWrappedType,
                                                     optimizeContent(new javax.xml.namespace.QName("http://ws.apache.org/axis2",
                                                     "reciveMsg")));
@@ -1807,12 +1809,12 @@
                 * Auto generated method signature for Asynchronous Invocations
                 * 
                 * @see client.SecureService#startreciveMsg
-                    * @param reciveMsg43
+                    * @param reciveMsg45
                 
                 */
                 public  void startreciveMsg(
 
-                 java.lang.String args044,
+                 java.lang.String args046,
 
                   final client.SecureServiceCallbackHandler callback)
 
@@ -1836,7 +1838,7 @@
                                     //Style is Doc.
                                     client.SecureServiceStub.ReciveMsg dummyWrappedType = null;
                                                     env = toEnvelope(getFactory(_operationClient.getOptions().getSoapVersionURI()),
-                                                    args044,
+                                                    args046,
                                                      dummyWrappedType,
                                                     optimizeContent(new javax.xml.namespace.QName("http://ws.apache.org/axis2",
                                                     "reciveMsg")));
@@ -1963,7 +1965,7 @@
                      * Auto generated method signature
                      * 
                      * @see client.SecureService#checkForRequests
-                     * @param checkForRequests47
+                     * @param checkForRequests49
                     
                      * @throws client.SecureServiceClassNotFoundExceptionException : 
                      * @throws client.SecureServiceIOExceptionException : 
@@ -1973,7 +1975,7 @@
 
                             public  java.lang.String[] checkForRequests(
 
-                            java.lang.String args048)
+                            java.lang.String args050)
                         
 
                     throws java.rmi.RemoteException
@@ -2001,7 +2003,7 @@
               org.apache.axiom.soap.SOAPEnvelope env = null;
                     client.SecureServiceStub.CheckForRequests dummyWrappedType = null;
                                                     env = toEnvelope(getFactory(_operationClient.getOptions().getSoapVersionURI()),
-                                                    args048,
+                                                    args050,
                                                     dummyWrappedType,
                                                     optimizeContent(new javax.xml.namespace.QName("http://ws.apache.org/axis2",
                                                     "checkForRequests")));
@@ -2096,12 +2098,12 @@
                 * Auto generated method signature for Asynchronous Invocations
                 * 
                 * @see client.SecureService#startcheckForRequests
-                    * @param checkForRequests47
+                    * @param checkForRequests49
                 
                 */
                 public  void startcheckForRequests(
 
-                 java.lang.String args048,
+                 java.lang.String args050,
 
                   final client.SecureServiceCallbackHandler callback)
 
@@ -2125,7 +2127,7 @@
                                     //Style is Doc.
                                     client.SecureServiceStub.CheckForRequests dummyWrappedType = null;
                                                     env = toEnvelope(getFactory(_operationClient.getOptions().getSoapVersionURI()),
-                                                    args048,
+                                                    args050,
                                                      dummyWrappedType,
                                                     optimizeContent(new javax.xml.namespace.QName("http://ws.apache.org/axis2",
                                                     "checkForRequests")));
@@ -2252,7 +2254,7 @@
                      * Auto generated method signature
                      * 
                      * @see client.SecureService#accept
-                     * @param accept51
+                     * @param accept53
                     
                      * @throws client.SecureServiceClassNotFoundExceptionException : 
                      * @throws client.SecureServiceIOExceptionException : 
@@ -2262,7 +2264,7 @@
 
                             public  boolean accept(
 
-                            java.lang.String args052,java.lang.String args153)
+                            java.lang.String args054,java.lang.String args155)
                         
 
                     throws java.rmi.RemoteException
@@ -2290,8 +2292,8 @@
               org.apache.axiom.soap.SOAPEnvelope env = null;
                     client.SecureServiceStub.Accept dummyWrappedType = null;
                                                     env = toEnvelope(getFactory(_operationClient.getOptions().getSoapVersionURI()),
-                                                    args052,
-                                                    args153,
+                                                    args054,
+                                                    args155,
                                                     dummyWrappedType,
                                                     optimizeContent(new javax.xml.namespace.QName("http://ws.apache.org/axis2",
                                                     "accept")));
@@ -2386,12 +2388,12 @@
                 * Auto generated method signature for Asynchronous Invocations
                 * 
                 * @see client.SecureService#startaccept
-                    * @param accept51
+                    * @param accept53
                 
                 */
                 public  void startaccept(
 
-                 java.lang.String args052,java.lang.String args153,
+                 java.lang.String args054,java.lang.String args155,
 
                   final client.SecureServiceCallbackHandler callback)
 
@@ -2415,8 +2417,8 @@
                                     //Style is Doc.
                                     client.SecureServiceStub.Accept dummyWrappedType = null;
                                                     env = toEnvelope(getFactory(_operationClient.getOptions().getSoapVersionURI()),
-                                                    args052,
-                                                    args153,
+                                                    args054,
+                                                    args155,
                                                      dummyWrappedType,
                                                     optimizeContent(new javax.xml.namespace.QName("http://ws.apache.org/axis2",
                                                     "accept")));
@@ -2543,7 +2545,7 @@
                      * Auto generated method signature
                      * 
                      * @see client.SecureService#status
-                     * @param status56
+                     * @param status58
                     
                      * @throws client.SecureServiceExceptionException : 
                      */
@@ -2552,7 +2554,7 @@
 
                             public  boolean status(
 
-                            java.lang.String args057,java.lang.String args158)
+                            java.lang.String args059,java.lang.String args160)
                         
 
                     throws java.rmi.RemoteException
@@ -2579,8 +2581,8 @@
               org.apache.axiom.soap.SOAPEnvelope env = null;
                     client.SecureServiceStub.Status dummyWrappedType = null;
                                                     env = toEnvelope(getFactory(_operationClient.getOptions().getSoapVersionURI()),
-                                                    args057,
-                                                    args158,
+                                                    args059,
+                                                    args160,
                                                     dummyWrappedType,
                                                     optimizeContent(new javax.xml.namespace.QName("http://ws.apache.org/axis2",
                                                     "status")));
@@ -2671,12 +2673,12 @@
                 * Auto generated method signature for Asynchronous Invocations
                 * 
                 * @see client.SecureService#startstatus
-                    * @param status56
+                    * @param status58
                 
                 */
                 public  void startstatus(
 
-                 java.lang.String args057,java.lang.String args158,
+                 java.lang.String args059,java.lang.String args160,
 
                   final client.SecureServiceCallbackHandler callback)
 
@@ -2700,8 +2702,8 @@
                                     //Style is Doc.
                                     client.SecureServiceStub.Status dummyWrappedType = null;
                                                     env = toEnvelope(getFactory(_operationClient.getOptions().getSoapVersionURI()),
-                                                    args057,
-                                                    args158,
+                                                    args059,
+                                                    args160,
                                                      dummyWrappedType,
                                                     optimizeContent(new javax.xml.namespace.QName("http://ws.apache.org/axis2",
                                                     "status")));
@@ -11210,6 +11212,48 @@
 
             
 
+                        /**
+                        * field for Args0
+                        */
+
+                        
+                                    protected java.lang.String localArgs0 ;
+                                
+                           /*  This tracker boolean wil be used to detect whether the user called the set method
+                          *   for this attribute. It will be used to determine whether to include this field
+                           *   in the serialized XML
+                           */
+                           protected boolean localArgs0Tracker = false ;
+
+                           public boolean isArgs0Specified(){
+                               return localArgs0Tracker;
+                           }
+
+                           
+
+                           /**
+                           * Auto generated getter method
+                           * @return java.lang.String
+                           */
+                           public  java.lang.String getArgs0(){
+                               return localArgs0;
+                           }
+
+                           
+                        
+                            /**
+                               * Auto generated setter method
+                               * @param param Args0
+                               */
+                               public void setArgs0(java.lang.String param){
+                            localArgs0Tracker = true;
+                                   
+                                            this.localArgs0=param;
+                                    
+
+                               }
+                            
+
      
      
         /**
@@ -11268,7 +11312,25 @@
 
                
                    }
-               
+                if (localArgs0Tracker){
+                                    namespace = "http://ws.apache.org/axis2";
+                                    writeStartElement(null, namespace, "args0", xmlWriter);
+                             
+
+                                          if (localArgs0==null){
+                                              // write the nil attribute
+                                              
+                                                     writeAttribute("xsi","http://www.w3.org/2001/XMLSchema-instance","nil","1",xmlWriter);
+                                                  
+                                          }else{
+
+                                        
+                                                   xmlWriter.writeCharacters(localArgs0);
+                                            
+                                          }
+                                    
+                                   xmlWriter.writeEndElement();
+                             }
                     xmlWriter.writeEndElement();
                
 
@@ -11453,7 +11515,13 @@
                  java.util.ArrayList elementList = new java.util.ArrayList();
                  java.util.ArrayList attribList = new java.util.ArrayList();
 
-                
+                 if (localArgs0Tracker){
+                                      elementList.add(new javax.xml.namespace.QName("http://ws.apache.org/axis2",
+                                                                      "args0"));
+                                 
+                                         elementList.add(localArgs0==null?null:
+                                         org.apache.axis2.databinding.utils.ConverterUtil.convertToString(localArgs0));
+                                    }
 
                 return new org.apache.axis2.databinding.utils.reader.ADBXMLStreamReaderImpl(qName, elementList.toArray(), attribList.toArray());
             
@@ -11528,7 +11596,35 @@
                 
                     
                     reader.next();
-                  
+                
+                                    
+                                    while (!reader.isStartElement() && !reader.isEndElement()) reader.next();
+                                
+                                    if (reader.isStartElement() && new javax.xml.namespace.QName("http://ws.apache.org/axis2","args0").equals(reader.getName())){
+                                
+                                       nillableValue = reader.getAttributeValue("http://www.w3.org/2001/XMLSchema-instance","nil");
+                                       if (!"true".equals(nillableValue) && !"1".equals(nillableValue)){
+                                    
+
+                                    java.lang.String content = reader.getElementText();
+                                    
+                                              object.setArgs0(
+                                                    org.apache.axis2.databinding.utils.ConverterUtil.convertToString(content));
+                                            
+                                       } else {
+                                           
+                                           
+                                           reader.getElementText(); // throw away text nodes if any.
+                                       }
+                                      
+                                        reader.next();
+                                    
+                              }  // End of if for expected property start element
+                                
+                                    else {
+                                        
+                                    }
+                                  
                             while (!reader.isStartElement() && !reader.isEndElement())
                                 reader.next();
                             
@@ -14294,6 +14390,7 @@
                              
                                     
                                 private  org.apache.axiom.soap.SOAPEnvelope toEnvelope(org.apache.axiom.soap.SOAPFactory factory,
+                                    java.lang.String param1,
                                     client.SecureServiceStub.UserList dummyWrappedType,
                                  boolean optimizeContent) throws org.apache.axis2.AxisFault{
 
@@ -14301,6 +14398,8 @@
                                 client.SecureServiceStub.UserList wrappedType = new client.SecureServiceStub.UserList();
 
                                  
+                                              wrappedType.setArgs0(param1);
+                                         
 
                                org.apache.axiom.soap.SOAPEnvelope emptyEnvelope = factory.getDefaultEnvelope();
                                   

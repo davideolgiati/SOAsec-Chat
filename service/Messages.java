@@ -100,14 +100,25 @@ class Messages implements Serializable {
         return (messages.get(user) == null);
     }
 
-    public String listUsers() throws NullPointerException, ClassNotFoundException, IOException {
+    public String listUsers(String user) throws NullPointerException, ClassNotFoundException, IOException {
         loadState();
+        String _res = "";
+        try {
         TreeSet<String> res = new TreeSet<String>();
         for (String _user : messages.keySet()) {
-            res.add(_user);
+            if (! _user.equals(user))
+                res.add(_user);
         }
         String list = res.toString();
-        return list.substring(1, list.length() - 1);
+        if (list.length() > 1){
+            _res = list.substring(1, list.length() - 1);
+        } else {
+            _res = list;
+        }
+        } catch (Exception e) {
+            _res = "";
+        }
+        return _res;
     }
 
     public boolean userExists(String user) throws ClassNotFoundException, IOException {

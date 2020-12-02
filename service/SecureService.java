@@ -53,8 +53,8 @@ public class SecureService {
 		states.remove(user);
 	}
 
-	public String userList() throws NullPointerException, ClassNotFoundException, IOException {
-		return messages.listUsers();
+	public String userList(String user) throws NullPointerException, ClassNotFoundException, IOException {
+		return messages.listUsers(user);
 	}
 
 	public void request(String me, String myFriend)

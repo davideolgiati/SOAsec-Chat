@@ -206,7 +206,7 @@ public class ChatAPI {
   public String listaUtenti() {
     String res;
     try {
-      res = stub.userList();
+      res = stub.userList(getUser());
     } catch (Exception e) {
       e.printStackTrace();
       res = "";
