@@ -1,5 +1,6 @@
 package client;
 
+import java.rmi.RemoteException;
 import java.util.*;
 
 public class SecureServiceClient {
@@ -26,10 +27,20 @@ public class SecureServiceClient {
       // ciclo infinito per la lettura dei messaggi
       while (true) {
         // ricezione del messaggio
-        msg = chat.ricevi();
+        try {
+          msg = chat.ricevi();
+        } catch (Exception e) {
+          msg = "";
+        }
         // se il messaggio non è vuoto o nullo lo stampo
         if (!("".equals(msg) || msg == null)) {
           System.out.println(peer + " : " + msg);
+        }
+        try {
+          Thread.sleep(100);
+        } catch (InterruptedException ex) {
+          // TODO Auto-generated catch block
+          ex.printStackTrace();
         }
       }
     };
@@ -111,8 +122,8 @@ public class SecureServiceClient {
         lista = chat.listaUtenti();
         System.out.println(lista);
         if ("Ancora nessun utente connesso ...".equals(lista)) {
-          System.out.println("Retry in 20s ...");
-          millis = 20 * 1000;
+          System.out.println("Retry in 2s ...");
+          millis = 2 * 1000;
           Thread.sleep(millis);
         }
       } while ("Ancora nessun utente connesso ...".equals(lista));
@@ -126,14 +137,14 @@ public class SecureServiceClient {
           System.out.println("Inserisci un utente tra questi, per favore:\n\n" + lista + "\n");
         }
         peer = keyboard.next();
-      } while (!lista.contains(peer) || "".equals(peer));
+      } while (!lista.contains(peer) || "".equals(peer) || username.equals(peer));
 
       if (chat.connectTo(peer)) {
 
         startListener(chat);
         String msg = "";
         while (!":quit".equals(msg)) {
-          msg = keyboard.next();
+          msg = keyboard.nextLine();
           if (!("".equals(msg) || ":quit".equals(msg))) {
             chat.invia(msg);
           }

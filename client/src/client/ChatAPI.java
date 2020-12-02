@@ -1,6 +1,9 @@
 package client;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.rmi.RemoteException;
+import java.util.Scanner;
 
 // Apache
 import org.apache.axis2.client.ServiceClient;
@@ -44,40 +47,105 @@ public class ChatAPI {
   private String me;
   private String peer;
 
+  private void handleException(SecureServiceClassNotFoundExceptionException e, String metodo) {
+    StringWriter sw = new StringWriter();
+    e.printStackTrace(new PrintWriter(sw));
+    String ex = sw.toString();
+    handleException(metodo
+        + " : ClassNotFoundException, Classe di eccezione relativa alla serializzazione. La classe che si sta tentando di serializzare/deserializzare non appartiene a quelle note",
+        ex);
+  }
+
+  private void handleException(SecureServiceIOExceptionException e, String metodo) {
+    StringWriter sw = new StringWriter();
+    e.printStackTrace(new PrintWriter(sw));
+    String ex = sw.toString();
+    handleException(metodo
+        + " : IOException, Classe di eccezione relativa alla serializzazione. Errore di tipo I/O durante la lettura/scrittura della classe da/sullo storage",
+        ex);
+  }
+
+  private void handleException(RemoteException e, String metodo) {
+        StringWriter sw = new StringWriter();
+    e.printStackTrace(new PrintWriter(sw));
+    String ex = sw.toString();
+    handleException(metodo + " : RemoteException, Classe di eccezione remota generica. Non ho altre informazioni", ex);
+  }
+
+  private void handleException(SecureServiceExceptionException e, String metodo) {
+        StringWriter sw = new StringWriter();
+    e.printStackTrace(new PrintWriter(sw));
+    String ex = sw.toString();
+    handleException(metodo + " : Exception, Eccezione generica lato server. Non ho altre informazioni", ex);
+  }
+
+  private void handleException(SecureServiceSecureService_UserNotFoundExceptionException e, String metodo) {
+    StringWriter sw = new StringWriter();
+    e.printStackTrace(new PrintWriter(sw));
+    String ex = sw.toString();
+    handleException(
+        metodo + " : UserNotFoundException, Classe di eccezione personalizzata. L'utente desiderato non esiste", ex);
+  }
+
+
+  private void handleException(String msg, String trace) {
+    System.out.println(msg);
+    System.out.println("Mostare StackTrace? [s/n]");
+    Scanner keyboard = new Scanner(System.in);
+    char res = keyboard.next().toLowerCase().charAt(0);
+    if (res == '\0' || res == 's') {
+      System.out.println(trace);
+    }
+    keyboard.close();
+    System.exit(1);
+  }
+
   ChatAPI(String user) {
+    me = user;
+    // ATTENZIONE TUTTI I PERCORSI SONO STATICI, SU UN'ALTRA MACCHINA NON GIRA!!!
+    // Reading the xml configuration file
+    /*
+     * DocumentBuilderFactory f = DocumentBuilderFactory.newInstance();
+     * DocumentBuilder b = f.newDocumentBuilder(); Document doc = b.parse(new
+     * File(cfg));
+     * 
+     * //Changing the parameters XPath xPath =
+     * XPathFactory.newInstance().newXPath(); String expr =
+     * "/axisconfig/parameter[@name='OutflowSecurity']/action/user"; Node userNode =
+     * (Node) xPath.compile(expr).evaluate(doc, XPathConstants.NODE);
+     * userNode.setTextContent(me);
+     * 
+     * //Setting write options Transformer tf =
+     * TransformerFactory.newInstance().newTransformer();
+     * tf.setOutputProperty(OutputKeys.INDENT, "yes");
+     * tf.setOutputProperty(OutputKeys.METHOD, "xml");
+     * tf.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
+     * 
+     * //Writing changes to the document DOMSource domSource = new DOMSource(doc);
+     * StreamResult sr = new StreamResult(new File(cfg)); tf.transform(domSource,
+     * sr);
+     */
+    // To be able to load the client configuration from axis2.xml
     try {
-      me = user;
-      // ATTENZIONE TUTTI I PERCORSI SONO STATICI, SU UN'ALTRA MACCHINA NON GIRA!!!
-      // Reading the xml configuration file
-      /*
-       * DocumentBuilderFactory f = DocumentBuilderFactory.newInstance();
-       * DocumentBuilder b = f.newDocumentBuilder(); Document doc = b.parse(new
-       * File(cfg));
-       * 
-       * //Changing the parameters XPath xPath =
-       * XPathFactory.newInstance().newXPath(); String expr =
-       * "/axisconfig/parameter[@name='OutflowSecurity']/action/user"; Node userNode =
-       * (Node) xPath.compile(expr).evaluate(doc, XPathConstants.NODE);
-       * userNode.setTextContent(me);
-       * 
-       * //Setting write options Transformer tf =
-       * TransformerFactory.newInstance().newTransformer();
-       * tf.setOutputProperty(OutputKeys.INDENT, "yes");
-       * tf.setOutputProperty(OutputKeys.METHOD, "xml");
-       * tf.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
-       * 
-       * //Writing changes to the document DOMSource domSource = new DOMSource(doc);
-       * StreamResult sr = new StreamResult(new File(cfg)); tf.transform(domSource,
-       * sr);
-       */
-      // To be able to load the client configuration from axis2.xml
       ConfigurationContext ctx = ConfigurationContextFactory.createConfigurationContextFromFileSystem("axis-repo", cfg);
       stub = new SecureServiceStub(ctx, "http://localhost:8080/axis2/services/SecureService");
       ServiceClient sc = stub._getServiceClient();
       sc.engageModule("rampart");
-      stub.doLogin(me);
     } catch (Exception e) {
       e.printStackTrace();
+      System.exit(1);
+    }
+    try {
+      stub.doLogin(me);
+    } catch (RemoteException e) {
+      StackTraceElement stackTraceElements[] = (new Throwable()).getStackTrace();
+      handleException(e, stackTraceElements[0].getMethodName());
+    } catch (SecureServiceClassNotFoundExceptionException e) {
+      StackTraceElement stackTraceElements[] = (new Throwable()).getStackTrace();
+      handleException(e, stackTraceElements[0].getMethodName());
+    } catch (SecureServiceIOExceptionException e) {
+      StackTraceElement stackTraceElements[] = (new Throwable()).getStackTrace();
+      handleException(e, stackTraceElements[0].getMethodName());
     }
   }
 
@@ -85,10 +153,15 @@ public class ChatAPI {
   public void finalize() {
     try {
       stub.doLogout(me);
-    } catch (RemoteException | SecureServiceClassNotFoundExceptionException | SecureServiceIOExceptionException
-        | SecureServiceIllegalBlockSizeExceptionException | SecureServiceInvalidKeyExceptionException
-        | SecureServiceBadPaddingExceptionException e) {
-      e.printStackTrace();
+    } catch (RemoteException e) {
+      StackTraceElement stackTraceElements[] = (new Throwable()).getStackTrace();
+      handleException(e, stackTraceElements[0].getMethodName());
+    } catch (SecureServiceClassNotFoundExceptionException e) {
+      StackTraceElement stackTraceElements[] = (new Throwable()).getStackTrace();
+      handleException(e, stackTraceElements[0].getMethodName());
+    } catch (SecureServiceIOExceptionException e) {
+      StackTraceElement stackTraceElements[] = (new Throwable()).getStackTrace();
+      handleException(e, stackTraceElements[0].getMethodName());
     }
   }
 
@@ -99,18 +172,23 @@ public class ChatAPI {
   private void invia(String msg, String user) {
     try {
       stub.sendMsg(msg, user);
-    } catch (Exception e) {
-      e.printStackTrace();
+    } catch (RemoteException e) {
+      StackTraceElement stackTraceElements[] = (new Throwable()).getStackTrace();
+      handleException(e, stackTraceElements[0].getMethodName());
+    } catch (SecureServiceClassNotFoundExceptionException e) {
+      StackTraceElement stackTraceElements[] = (new Throwable()).getStackTrace();
+      handleException(e, stackTraceElements[0].getMethodName());
+    } catch (SecureServiceIOExceptionException e) {
+      StackTraceElement stackTraceElements[] = (new Throwable()).getStackTrace();
+      handleException(e, stackTraceElements[0].getMethodName());
     }
   }
 
-  public String ricevi() {
-    try {
-      return stub.reciveMsg(me);
-    } catch (Exception e) {
-      e.printStackTrace();
-      return "";
-    }
+  public String ricevi()
+      throws RemoteException, SecureServiceClassNotFoundExceptionException, SecureServiceIOExceptionException {
+    String res = "";
+    res = stub.reciveMsg(me);
+    return res;
   }
 
   public String getUser() {
@@ -125,13 +203,11 @@ public class ChatAPI {
     peer = user;
   }
 
-  public String listaUtenti() throws SecureServiceClassNotFoundExceptionException, SecureServiceIOExceptionException,
-      SecureServiceIllegalBlockSizeExceptionException, SecureServiceInvalidKeyExceptionException,
-      SecureServiceBadPaddingExceptionException {
+  public String listaUtenti() {
     String res;
     try {
       res = stub.userList();
-    } catch (RemoteException | SecureServiceNullPointerExceptionException e) {
+    } catch (Exception e) {
       e.printStackTrace();
       res = "";
     }
@@ -141,43 +217,76 @@ public class ChatAPI {
     return res;
   }
 
-  public void request(String user) throws SecureServiceClassNotFoundExceptionException,
-      SecureServiceIOExceptionException, SecureServiceSecureService_UserNotFoundExceptionException {
+  public void request(String user) {
     try {
       stub.request(me, user);
-    } catch (RemoteException | SecureServiceExceptionException e) {
-      e.printStackTrace();
+    } catch (RemoteException e) {
+      StackTraceElement stackTraceElements[] = (new Throwable()).getStackTrace();
+      handleException(e, stackTraceElements[0].getMethodName());
+    } catch (SecureServiceClassNotFoundExceptionException e) {
+      StackTraceElement stackTraceElements[] = (new Throwable()).getStackTrace();
+      handleException(e, stackTraceElements[0].getMethodName());
+    } catch (SecureServiceExceptionException e) {
+      StackTraceElement stackTraceElements[] = (new Throwable()).getStackTrace();
+      handleException(e, stackTraceElements[0].getMethodName());
+    } catch (SecureServiceIOExceptionException e) {
+      StackTraceElement stackTraceElements[] = (new Throwable()).getStackTrace();
+      handleException(e, stackTraceElements[0].getMethodName());
+    } catch (SecureServiceSecureService_UserNotFoundExceptionException e) {
+      StackTraceElement stackTraceElements[] = (new Throwable()).getStackTrace();
+      handleException(e, stackTraceElements[0].getMethodName());
     }
   }
 
-  public boolean accept(String user) {
+  public boolean accept(String user1, String user2) {
+    boolean res = false;
     try {
-      return stub.accept(me, user);
-    } catch (RemoteException | SecureServiceClassNotFoundExceptionException | SecureServiceIOExceptionException
-        | SecureServiceIllegalBlockSizeExceptionException | SecureServiceInvalidKeyExceptionException
-        | SecureServiceBadPaddingExceptionException e) {
-      e.printStackTrace();
-      return false;
+      res = stub.accept(user1, user2);
+    } catch (RemoteException e) {
+      StackTraceElement stackTraceElements[] = (new Throwable()).getStackTrace();
+      handleException(e, stackTraceElements[0].getMethodName());
+    } catch (SecureServiceClassNotFoundExceptionException e) {
+      StackTraceElement stackTraceElements[] = (new Throwable()).getStackTrace();
+      handleException(e, stackTraceElements[0].getMethodName());
+    } catch (SecureServiceIOExceptionException e) {
+      StackTraceElement stackTraceElements[] = (new Throwable()).getStackTrace();
+      handleException(e, stackTraceElements[0].getMethodName());
     }
+    return res;
   }
 
   public boolean deny(String user) {
+    boolean res = false;
     try {
-      return stub.deny(me, user);
-    } catch (RemoteException | SecureServiceClassNotFoundExceptionException | SecureServiceIOExceptionException | SecureServiceIllegalBlockSizeExceptionException | SecureServiceInvalidKeyExceptionException | SecureServiceBadPaddingExceptionException e) {
-      e.printStackTrace();
-      return false;
+      res = stub.deny(me, user);
+    } catch (RemoteException e) {
+      StackTraceElement stackTraceElements[] = (new Throwable()).getStackTrace();
+      handleException(e, stackTraceElements[0].getMethodName());
+    } catch (SecureServiceClassNotFoundExceptionException e) {
+      StackTraceElement stackTraceElements[] = (new Throwable()).getStackTrace();
+      handleException(e, stackTraceElements[0].getMethodName());
+    } catch (SecureServiceIOExceptionException e) {
+      StackTraceElement stackTraceElements[] = (new Throwable()).getStackTrace();
+      handleException(e, stackTraceElements[0].getMethodName());
     }
+    return res;
   }
 
   public String[] checkForRequests() {
+    String[] res = {};
     try {
-      return stub.checkForRequests(me);
-    } catch (RemoteException | SecureServiceClassNotFoundExceptionException | SecureServiceIOExceptionException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-      return new String[0];
+      res = stub.checkForRequests(me);
+    } catch (RemoteException e) {
+      StackTraceElement stackTraceElements[] = (new Throwable()).getStackTrace();
+      handleException(e, stackTraceElements[0].getMethodName());
+    } catch (SecureServiceClassNotFoundExceptionException e) {
+      StackTraceElement stackTraceElements[] = (new Throwable()).getStackTrace();
+      handleException(e, stackTraceElements[0].getMethodName());
+    } catch (SecureServiceIOExceptionException e) {
+      StackTraceElement stackTraceElements[] = (new Throwable()).getStackTrace();
+      handleException(e, stackTraceElements[0].getMethodName());
     }
+    return res;
   }
 
   public boolean checkForRequest(String user) {
@@ -185,30 +294,36 @@ public class ChatAPI {
     String[] requests = checkForRequests();
     if (requests != null) {
       for (String _user : requests) {
-        res = res || _user.equals(user);
+        if (_user.equals(user)) {
+          res = true;
+        } else {
+          deny(_user);
+        }
       }
     }
     return res;
   }
 
-  public boolean requestStatus(String myFriend) throws Exception {
+  public boolean requestStatus(String myFriend) throws RemoteException, SecureServiceExceptionException {
     return stub.status(me, myFriend);
   }
 
-  public boolean connectTo(String user) throws SecureServiceClassNotFoundExceptionException,
-      SecureServiceIOExceptionException, SecureServiceSecureService_UserNotFoundExceptionException {
+  public boolean connectTo(String user) {
     boolean ret = false;
+    boolean first = true;
     if (checkForRequest(user)) {
-      accept(user);
-      return ret = true;
+      //request(user);
+      accept(me, user);
+      ret = true;
     } else {
       request(user);
       boolean keep = true;
       do {
         try {
           if (checkForRequest(user)) {
-            accept(user);
-            return ret = true;
+            accept(me, user);
+            accept(user, me);
+            ret = true;
           } else {
             ret = requestStatus(user);
           }
@@ -218,12 +333,29 @@ public class ChatAPI {
             e.printStackTrace();
             keep = false;
             ret = false;
+          } else {
+            if (first) {
+              System.out.println(e.getMessage());
+              first = false;
+            } else {
+              System.out.print('.');
+            }
+            try {
+              Thread.sleep(1000);
+            } catch (InterruptedException ex) {
+              // TODO Auto-generated catch block
+              ex.printStackTrace();
+            }
           }
         }
       } while (keep);
     }
+    if (! first) {
+      System.out.print('\n');
+    }
     if (ret) {
       System.out.println("[i] connesso con " + user);
+      peer = user;
     } else {
       System.out.println("[x] connessione con " + user + "rifiutata");
     }

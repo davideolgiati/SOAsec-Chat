@@ -45,22 +45,6 @@
 
         
            /**
-            * auto generated Axis2 call back method for userList method
-            * override this method for handling normal response from userList operation
-            */
-           public void receiveResultuserList(
-                    java.lang.String result
-                        ) {
-           }
-
-          /**
-           * auto generated Axis2 Error handler
-           * override this method for handling error response from userList operation
-           */
-            public void receiveErroruserList(java.lang.Exception e) {
-            }
-                
-           /**
             * auto generated Axis2 call back method for doLogout method
             * override this method for handling normal response from doLogout operation
             */
@@ -76,95 +60,19 @@
             }
                 
            /**
-            * auto generated Axis2 call back method for busy method
-            * override this method for handling normal response from busy operation
+            * auto generated Axis2 call back method for userList method
+            * override this method for handling normal response from userList operation
             */
-           public void receiveResultbusy(
-                    ) {
-           }
-
-          /**
-           * auto generated Axis2 Error handler
-           * override this method for handling error response from busy operation
-           */
-            public void receiveErrorbusy(java.lang.Exception e) {
-            }
-                
-           /**
-            * auto generated Axis2 call back method for ready method
-            * override this method for handling normal response from ready operation
-            */
-           public void receiveResultready(
-                    ) {
-           }
-
-          /**
-           * auto generated Axis2 Error handler
-           * override this method for handling error response from ready operation
-           */
-            public void receiveErrorready(java.lang.Exception e) {
-            }
-                
-           /**
-            * auto generated Axis2 call back method for sendMsg method
-            * override this method for handling normal response from sendMsg operation
-            */
-           public void receiveResultsendMsg(
-                    ) {
-           }
-
-          /**
-           * auto generated Axis2 Error handler
-           * override this method for handling error response from sendMsg operation
-           */
-            public void receiveErrorsendMsg(java.lang.Exception e) {
-            }
-                
-           /**
-            * auto generated Axis2 call back method for checkForRequests method
-            * override this method for handling normal response from checkForRequests operation
-            */
-           public void receiveResultcheckForRequests(
-                    java.lang.String[] result
+           public void receiveResultuserList(
+                    java.lang.String result
                         ) {
            }
 
           /**
            * auto generated Axis2 Error handler
-           * override this method for handling error response from checkForRequests operation
+           * override this method for handling error response from userList operation
            */
-            public void receiveErrorcheckForRequests(java.lang.Exception e) {
-            }
-                
-           /**
-            * auto generated Axis2 call back method for reset method
-            * override this method for handling normal response from reset operation
-            */
-           public void receiveResultreset(
-                    ) {
-           }
-
-          /**
-           * auto generated Axis2 Error handler
-           * override this method for handling error response from reset operation
-           */
-            public void receiveErrorreset(java.lang.Exception e) {
-            }
-                
-           /**
-            * auto generated Axis2 call back method for status method
-            * override this method for handling normal response from status operation
-            */
-           public void receiveResultstatus(
-                    boolean result
-                        ) {
-           }
-
-          /**
-           * auto generated Axis2 Error handler
-           * override this method for handling error response from status operation
-           */
-            public void receiveErrorstatus(java.lang.Exception e) {
+            public void receiveErroruserList(java.lang.Exception e) {
             }
                 
            /**
@@ -214,18 +122,18 @@
             }
                 
            /**
-            * auto generated Axis2 call back method for isReady method
-            * override this method for handling normal response from isReady operation
+            * auto generated Axis2 call back method for sendMsg method
+            * override this method for handling normal response from sendMsg operation
             */
-           public void receiveResultisReady(
+           public void receiveResultsendMsg(
                     ) {
            }
 
           /**
            * auto generated Axis2 Error handler
-           * override this method for handling error response from isReady operation
+           * override this method for handling error response from sendMsg operation
            */
-            public void receiveErrorisReady(java.lang.Exception e) {
+            public void receiveErrorsendMsg(java.lang.Exception e) {
             }
                 
            /**
@@ -245,6 +153,22 @@
             }
                 
            /**
+            * auto generated Axis2 call back method for checkForRequests method
+            * override this method for handling normal response from checkForRequests operation
+            */
+           public void receiveResultcheckForRequests(
+                    java.lang.String[] result
+                        ) {
+           }
+
+          /**
+           * auto generated Axis2 Error handler
+           * override this method for handling error response from checkForRequests operation
+           */
+            public void receiveErrorcheckForRequests(java.lang.Exception e) {
+            }
+                
+           /**
             * auto generated Axis2 call back method for accept method
             * override this method for handling normal response from accept operation
             */
@@ -258,6 +182,22 @@
            * override this method for handling error response from accept operation
            */
             public void receiveErroraccept(java.lang.Exception e) {
+            }
+                
+           /**
+            * auto generated Axis2 call back method for status method
+            * override this method for handling normal response from status operation
+            */
+           public void receiveResultstatus(
+                    boolean result
+                        ) {
+           }
+
+          /**
+           * auto generated Axis2 Error handler
+           * override this method for handling error response from status operation
+           */
+            public void receiveErrorstatus(java.lang.Exception e) {
             }
                 
 

@@ -1,11 +1,5 @@
 import java.io.*;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
 import java.util.List;
-
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
 
 public class SecureService {
 
@@ -35,36 +29,31 @@ public class SecureService {
 	private Requests requests;
 	private Messages messages;
 
-	public SecureService() throws IOException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException,
-			IllegalBlockSizeException {
+	public SecureService() throws IOException {
 		states = new States();
 		requests = new Requests();
 		messages = new Messages();
 	}
 
-	public void sendMsg(String message, String user) throws ClassNotFoundException, IOException, InvalidKeyException,
-			IllegalBlockSizeException, BadPaddingException {
-		messages.put(user, message);
+	public void sendMsg(String message, String user) throws ClassNotFoundException, IOException {
+		messages._put(user, message);
 	}
 
-	public String reciveMsg(String user) throws ClassNotFoundException, IOException, InvalidKeyException,
-			IllegalBlockSizeException, BadPaddingException {
-		return messages.get(user);
+	public String reciveMsg(String user) throws ClassNotFoundException, IOException {
+		return messages._get(user);
 	}
 
-	public void doLogin(String user) throws ClassNotFoundException, IOException, InvalidKeyException,
-			IllegalBlockSizeException, BadPaddingException {
+	public void doLogin(String user) throws ClassNotFoundException, IOException {
 		messages.addUser(user);
 		states.ready(user);
 	}
 
-	public void doLogout(String user) throws ClassNotFoundException, IOException, InvalidKeyException,
-			IllegalBlockSizeException, BadPaddingException {
+	public void doLogout(String user) throws ClassNotFoundException, IOException {
 		messages.deleteUser(user);
 		states.remove(user);
 	}
 
-	public String userList() throws NullPointerException, ClassNotFoundException, IOException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
+	public String userList() throws NullPointerException, ClassNotFoundException, IOException {
 		return messages.listUsers();
 	}
 
@@ -85,13 +74,11 @@ public class SecureService {
 		}
 	}
 
-	public boolean accept(String me, String myFriend) throws ClassNotFoundException, IOException, InvalidKeyException,
-			IllegalBlockSizeException, BadPaddingException {
+	public boolean accept(String me, String myFriend) throws ClassNotFoundException, IOException {
 		return requests.accept(me, myFriend);
 	}
 
-	public boolean deny(String me, String myFriend) throws ClassNotFoundException, IOException, InvalidKeyException,
-			IllegalBlockSizeException, BadPaddingException {
+	public boolean deny(String me, String myFriend) throws ClassNotFoundException, IOException {
 		states.ready(me);
 		states.ready(myFriend);
 		return requests.deny(me, myFriend);

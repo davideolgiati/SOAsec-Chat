@@ -28,6 +28,9 @@
 	<operation name="doLogin">
 		<messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver"/>
 	</operation>
+	<operation name="doLogout">
+		<messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver"/>
+	</operation>
 	<operation name="sendMsg">
 		<messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver"/>
 	</operation>
@@ -47,21 +50,6 @@
 		<messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver"/>
 	</operation>
 	<operation name="checkForRequests">
-		<messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver"/>
-	</operation>
-	<operation name="busy">
-		<messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver"/>
-	</operation>
-	<operation name="ready">
-		<messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver"/>
-	</operation>
-	<operation name="isReady">
-		<messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver"/>
-	</operation>
-	<operation name="reset">
-		<messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver"/>
-	</operation>
-	<operation name="doLogout">
 		<messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver"/>
 	</operation>
 	<operation name="status">
