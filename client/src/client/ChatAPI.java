@@ -9,17 +9,22 @@ import java.util.Scanner;
 import org.apache.axis2.client.ServiceClient;
 import org.apache.axis2.context.ConfigurationContext;
 import org.apache.axis2.context.ConfigurationContextFactory;
-/*import org.apache.axis2.description.PolicyInclude;
+import org.apache.axis2.description.PolicyInclude;
 import org.apache.neethi.Policy;
+import org.apache.neethi.PolicyEngine;
 import org.apache.rampart.policy.model.CryptoConfig;
 import org.apache.rampart.policy.model.RampartConfig;
 import org.apache.axiom.om.OMElement;
+import org.apache.axiom.om.impl.builder.StAXOMBuilder;
+import org.apache.axis2.client.Options;
+import org.apache.rampart.RampartMessageData;
 
 // IO
 import java.io.File;
 import java.io.InputStream;
 
 // XML
+import javax.xml.stream.XMLStreamException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -31,13 +36,13 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.xpath.*;
 import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;*/
+import org.xml.sax.SAXException;
 
 // W3C
-//import org.w3c.dom.Document;
-//import org.w3c.dom.Element;
-//import org.w3c.dom.Node;
-//import org.w3c.dom.NodeList;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 public class ChatAPI {
   // Costanti
@@ -101,35 +106,41 @@ public class ChatAPI {
   }
 
   ChatAPI(String user) {
-    me = user;
-    // ATTENZIONE TUTTI I PERCORSI SONO STATICI, SU UN'ALTRA MACCHINA NON GIRA!!!
-    // Reading the xml configuration file
-    /*
-     * DocumentBuilderFactory f = DocumentBuilderFactory.newInstance();
-     * DocumentBuilder b = f.newDocumentBuilder(); Document doc = b.parse(new
-     * File(cfg));
-     * 
-     * //Changing the parameters XPath xPath =
-     * XPathFactory.newInstance().newXPath(); String expr =
-     * "/axisconfig/parameter[@name='OutflowSecurity']/action/user"; Node userNode =
-     * (Node) xPath.compile(expr).evaluate(doc, XPathConstants.NODE);
-     * userNode.setTextContent(me);
-     * 
-     * //Setting write options Transformer tf =
-     * TransformerFactory.newInstance().newTransformer();
-     * tf.setOutputProperty(OutputKeys.INDENT, "yes");
-     * tf.setOutputProperty(OutputKeys.METHOD, "xml");
-     * tf.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
-     * 
-     * //Writing changes to the document DOMSource domSource = new DOMSource(doc);
-     * StreamResult sr = new StreamResult(new File(cfg)); tf.transform(domSource,
-     * sr);
-     */
-    // To be able to load the client configuration from axis2.xml
     try {
+      me = user;
+      // ATTENZIONE TUTTI I PERCORSI SONO STATICI, SU UN'ALTRA MACCHINA NON GIRA!!!
+
+      // Reading the xml configuration file
+      DocumentBuilderFactory f = DocumentBuilderFactory.newInstance();
+      DocumentBuilder b = f.newDocumentBuilder();
+      Document doc = b.parse(new File(cfg));
+
+      //Changing the parameters
+      XPath xPath = XPathFactory.newInstance().newXPath();
+      String expr = "/axisconfig/parameter[@name='OutflowSecurity']/action/user";
+      Node userNode = (Node) xPath.compile(expr).evaluate(doc, XPathConstants.NODE);
+      userNode.setTextContent(me);
+
+      //Setting write options
+      Transformer tf = TransformerFactory.newInstance().newTransformer();
+      tf.setOutputProperty(OutputKeys.INDENT, "yes");
+      tf.setOutputProperty(OutputKeys.METHOD, "xml");
+      tf.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
+
+      //Writing changes to the document
+      DOMSource domSource = new DOMSource(doc);
+      StreamResult sr = new StreamResult(new File(cfg));
+      tf.transform(domSource, sr);
+
+	    // To be able to load the client configuration from axis2.xml
       ConfigurationContext ctx = ConfigurationContextFactory.createConfigurationContextFromFileSystem("axis-repo", cfg);
-      stub = new SecureServiceStub(ctx, "http://localhost:8080/axis2/services/SecureService");
+      stub = new SecureServiceStub(ctx, "https://localhost:8443/axis2/services/SecureService");
       ServiceClient sc = stub._getServiceClient();
+
+      //Loading policy
+      Options options = sc.getOptions();
+      options.setProperty(RampartMessageData.KEY_RAMPART_POLICY, loadPolicy("https-policy.xml"));
+
       sc.engageModule("rampart");
     } catch (Exception e) {
       e.printStackTrace();
@@ -148,6 +159,14 @@ public class ChatAPI {
       handleException(e, stackTraceElements[0].getMethodName());
     }
   }
+
+  // Load policy file from classpath.
+  private static Policy loadPolicy(String name) throws XMLStreamException {
+    InputStream resource = ChatAPI.class.getResourceAsStream(name);
+    StAXOMBuilder builder = new StAXOMBuilder(resource);
+    return PolicyEngine.getPolicy(builder.getDocumentElement());
+  }
+
 
   @Override
   public void finalize() {

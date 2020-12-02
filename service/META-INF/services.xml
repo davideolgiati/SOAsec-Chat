@@ -4,12 +4,16 @@
 	</description>
 	
 	<parameter name="ServiceClass" locked="false">SecureService</parameter>
-	<!--
+	<!-- Engaging rampart -->
+	<module ref="rampart"/>
+
+	<!-- FULL SECURITY -->
 	<parameter name="InflowSecurity">
 		<action>
 			<items>UsernameToken Signature Encrypt</items>
 			<passwordCallbackClass>PWCallbackService</passwordCallbackClass>
-			<signaturePropFile>security.properties</signaturePropFile>
+			<signaturePropFile>truststore.properties</signaturePropFile>
+			<decryptionPropFile>keystore.properties</decryptionPropFile>
 		</action>
 	</parameter>
 
@@ -18,13 +22,14 @@
 			<items>Signature Encrypt</items>
 			<user>service</user>
 			<passwordCallbackClass>PWCallbackService</passwordCallbackClass>
-			<signaturePropFile>security.properties</signaturePropFile>
+			<signaturePropFile>keystore.properties</signaturePropFile>
 			<signatureKeyIdentifier>DirectReference</signatureKeyIdentifier>
 			<encryptionKeyIdentifier>SKIKeyIdentifier</encryptionKeyIdentifier>
 			<encryptionUser>useReqSigCert</encryptionUser>
+			<encryptionPropFile>truststore.properties</encryptionPropFile>
 		</action>
 	</parameter>
-	-->
+
 	<operation name="doLogin">
 		<messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver"/>
 	</operation>
@@ -55,4 +60,30 @@
 	<operation name="status">
 		<messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver"/>
 	</operation>
+
+	<!-- Policy Https -->
+	<wsp:Policy xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" >
+		<sp:TransportBinding>
+			<wsp:Policy>
+				<sp:AlgorithmSuite>
+					<wsp:Policy>
+						<wsp:ExactlyOne>
+							<sp:Basic256Rsa15 />
+							<sp:TripleDesRsa15 />
+						</wsp:ExactlyOne>
+					</wsp:Policy>
+				</sp:AlgorithmSuite>
+				<sp:TransportToken>
+					<wsp:Policy>
+						<sp:HttpsToken RequireClientCertificate="false" />
+					</wsp:Policy>
+				</sp:TransportToken>
+			</wsp:Policy>
+		</sp:TransportBinding>
+
+		<ramp:RampartConfig xmlns:ramp="http://ws.apache.org/rampart/policy">
+			<ramp:passwordCallbackClass>PWCallbackService</ramp:passwordCallbackClass>
+		</ramp:RampartConfig>
+
+	</wsp:Policy>
 </service>
