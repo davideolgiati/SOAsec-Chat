@@ -123,6 +123,10 @@ class Messages implements Serializable {
 
     public boolean userExists(String user) throws ClassNotFoundException, IOException {
         loadState();
-        return messages.keySet().contains(user);
+        if (messages.keySet() == null) {
+            return false;
+        } else {
+            return messages.keySet().contains(user);
+        }
     }
 }

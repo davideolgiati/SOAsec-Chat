@@ -219,6 +219,10 @@
               faultExceptionClassNameMap.put(new org.apache.axis2.client.FaultMapKey(new javax.xml.namespace.QName("http://ws.apache.org/axis2","SecureServiceIOException"), "doLogout"),"client.SecureServiceIOExceptionException");
               faultMessageMap.put(new org.apache.axis2.client.FaultMapKey(new javax.xml.namespace.QName("http://ws.apache.org/axis2","SecureServiceIOException"), "doLogout"),"client.SecureServiceStub$SecureServiceIOException");
            
+              faultExceptionNameMap.put(new org.apache.axis2.client.FaultMapKey(new javax.xml.namespace.QName("http://ws.apache.org/axis2","SecureServiceSecureService_UserNotFoundException"), "doLogout"),"client.SecureServiceSecureService_UserNotFoundExceptionException");
+              faultExceptionClassNameMap.put(new org.apache.axis2.client.FaultMapKey(new javax.xml.namespace.QName("http://ws.apache.org/axis2","SecureServiceSecureService_UserNotFoundException"), "doLogout"),"client.SecureServiceSecureService_UserNotFoundExceptionException");
+              faultMessageMap.put(new org.apache.axis2.client.FaultMapKey(new javax.xml.namespace.QName("http://ws.apache.org/axis2","SecureServiceSecureService_UserNotFoundException"), "doLogout"),"client.SecureServiceStub$SecureServiceSecureService_UserNotFoundException");
+           
               faultExceptionNameMap.put(new org.apache.axis2.client.FaultMapKey(new javax.xml.namespace.QName("http://ws.apache.org/axis2","SecureServiceClassNotFoundException"), "userList"),"client.SecureServiceClassNotFoundExceptionException");
               faultExceptionClassNameMap.put(new org.apache.axis2.client.FaultMapKey(new javax.xml.namespace.QName("http://ws.apache.org/axis2","SecureServiceClassNotFoundException"), "userList"),"client.SecureServiceClassNotFoundExceptionException");
               faultMessageMap.put(new org.apache.axis2.client.FaultMapKey(new javax.xml.namespace.QName("http://ws.apache.org/axis2","SecureServiceClassNotFoundException"), "userList"),"client.SecureServiceStub$SecureServiceClassNotFoundException");
@@ -247,6 +251,10 @@
               faultExceptionClassNameMap.put(new org.apache.axis2.client.FaultMapKey(new javax.xml.namespace.QName("http://ws.apache.org/axis2","SecureServiceIOException"), "deny"),"client.SecureServiceIOExceptionException");
               faultMessageMap.put(new org.apache.axis2.client.FaultMapKey(new javax.xml.namespace.QName("http://ws.apache.org/axis2","SecureServiceIOException"), "deny"),"client.SecureServiceStub$SecureServiceIOException");
            
+              faultExceptionNameMap.put(new org.apache.axis2.client.FaultMapKey(new javax.xml.namespace.QName("http://ws.apache.org/axis2","SecureServiceSecureService_UserNotFoundException"), "deny"),"client.SecureServiceSecureService_UserNotFoundExceptionException");
+              faultExceptionClassNameMap.put(new org.apache.axis2.client.FaultMapKey(new javax.xml.namespace.QName("http://ws.apache.org/axis2","SecureServiceSecureService_UserNotFoundException"), "deny"),"client.SecureServiceSecureService_UserNotFoundExceptionException");
+              faultMessageMap.put(new org.apache.axis2.client.FaultMapKey(new javax.xml.namespace.QName("http://ws.apache.org/axis2","SecureServiceSecureService_UserNotFoundException"), "deny"),"client.SecureServiceStub$SecureServiceSecureService_UserNotFoundException");
+           
               faultExceptionNameMap.put(new org.apache.axis2.client.FaultMapKey(new javax.xml.namespace.QName("http://ws.apache.org/axis2","SecureServiceClassNotFoundException"), "request"),"client.SecureServiceClassNotFoundExceptionException");
               faultExceptionClassNameMap.put(new org.apache.axis2.client.FaultMapKey(new javax.xml.namespace.QName("http://ws.apache.org/axis2","SecureServiceClassNotFoundException"), "request"),"client.SecureServiceClassNotFoundExceptionException");
               faultMessageMap.put(new org.apache.axis2.client.FaultMapKey(new javax.xml.namespace.QName("http://ws.apache.org/axis2","SecureServiceClassNotFoundException"), "request"),"client.SecureServiceStub$SecureServiceClassNotFoundException");
@@ -271,6 +279,10 @@
               faultExceptionClassNameMap.put(new org.apache.axis2.client.FaultMapKey(new javax.xml.namespace.QName("http://ws.apache.org/axis2","SecureServiceIOException"), "sendMsg"),"client.SecureServiceIOExceptionException");
               faultMessageMap.put(new org.apache.axis2.client.FaultMapKey(new javax.xml.namespace.QName("http://ws.apache.org/axis2","SecureServiceIOException"), "sendMsg"),"client.SecureServiceStub$SecureServiceIOException");
            
+              faultExceptionNameMap.put(new org.apache.axis2.client.FaultMapKey(new javax.xml.namespace.QName("http://ws.apache.org/axis2","SecureServiceSecureService_UserNotFoundException"), "sendMsg"),"client.SecureServiceSecureService_UserNotFoundExceptionException");
+              faultExceptionClassNameMap.put(new org.apache.axis2.client.FaultMapKey(new javax.xml.namespace.QName("http://ws.apache.org/axis2","SecureServiceSecureService_UserNotFoundException"), "sendMsg"),"client.SecureServiceSecureService_UserNotFoundExceptionException");
+              faultMessageMap.put(new org.apache.axis2.client.FaultMapKey(new javax.xml.namespace.QName("http://ws.apache.org/axis2","SecureServiceSecureService_UserNotFoundException"), "sendMsg"),"client.SecureServiceStub$SecureServiceSecureService_UserNotFoundException");
+           
               faultExceptionNameMap.put(new org.apache.axis2.client.FaultMapKey(new javax.xml.namespace.QName("http://ws.apache.org/axis2","SecureServiceClassNotFoundException"), "reciveMsg"),"client.SecureServiceClassNotFoundExceptionException");
               faultExceptionClassNameMap.put(new org.apache.axis2.client.FaultMapKey(new javax.xml.namespace.QName("http://ws.apache.org/axis2","SecureServiceClassNotFoundException"), "reciveMsg"),"client.SecureServiceClassNotFoundExceptionException");
               faultMessageMap.put(new org.apache.axis2.client.FaultMapKey(new javax.xml.namespace.QName("http://ws.apache.org/axis2","SecureServiceClassNotFoundException"), "reciveMsg"),"client.SecureServiceStub$SecureServiceClassNotFoundException");
@@ -278,6 +290,10 @@
               faultExceptionNameMap.put(new org.apache.axis2.client.FaultMapKey(new javax.xml.namespace.QName("http://ws.apache.org/axis2","SecureServiceIOException"), "reciveMsg"),"client.SecureServiceIOExceptionException");
               faultExceptionClassNameMap.put(new org.apache.axis2.client.FaultMapKey(new javax.xml.namespace.QName("http://ws.apache.org/axis2","SecureServiceIOException"), "reciveMsg"),"client.SecureServiceIOExceptionException");
               faultMessageMap.put(new org.apache.axis2.client.FaultMapKey(new javax.xml.namespace.QName("http://ws.apache.org/axis2","SecureServiceIOException"), "reciveMsg"),"client.SecureServiceStub$SecureServiceIOException");
+           
+              faultExceptionNameMap.put(new org.apache.axis2.client.FaultMapKey(new javax.xml.namespace.QName("http://ws.apache.org/axis2","SecureServiceSecureService_UserNotFoundException"), "reciveMsg"),"client.SecureServiceSecureService_UserNotFoundExceptionException");
+              faultExceptionClassNameMap.put(new org.apache.axis2.client.FaultMapKey(new javax.xml.namespace.QName("http://ws.apache.org/axis2","SecureServiceSecureService_UserNotFoundException"), "reciveMsg"),"client.SecureServiceSecureService_UserNotFoundExceptionException");
+              faultMessageMap.put(new org.apache.axis2.client.FaultMapKey(new javax.xml.namespace.QName("http://ws.apache.org/axis2","SecureServiceSecureService_UserNotFoundException"), "reciveMsg"),"client.SecureServiceStub$SecureServiceSecureService_UserNotFoundException");
            
               faultExceptionNameMap.put(new org.apache.axis2.client.FaultMapKey(new javax.xml.namespace.QName("http://ws.apache.org/axis2","SecureServiceClassNotFoundException"), "checkForRequests"),"client.SecureServiceClassNotFoundExceptionException");
               faultExceptionClassNameMap.put(new org.apache.axis2.client.FaultMapKey(new javax.xml.namespace.QName("http://ws.apache.org/axis2","SecureServiceClassNotFoundException"), "checkForRequests"),"client.SecureServiceClassNotFoundExceptionException");
@@ -287,6 +303,10 @@
               faultExceptionClassNameMap.put(new org.apache.axis2.client.FaultMapKey(new javax.xml.namespace.QName("http://ws.apache.org/axis2","SecureServiceIOException"), "checkForRequests"),"client.SecureServiceIOExceptionException");
               faultMessageMap.put(new org.apache.axis2.client.FaultMapKey(new javax.xml.namespace.QName("http://ws.apache.org/axis2","SecureServiceIOException"), "checkForRequests"),"client.SecureServiceStub$SecureServiceIOException");
            
+              faultExceptionNameMap.put(new org.apache.axis2.client.FaultMapKey(new javax.xml.namespace.QName("http://ws.apache.org/axis2","SecureServiceSecureService_UserNotFoundException"), "checkForRequests"),"client.SecureServiceSecureService_UserNotFoundExceptionException");
+              faultExceptionClassNameMap.put(new org.apache.axis2.client.FaultMapKey(new javax.xml.namespace.QName("http://ws.apache.org/axis2","SecureServiceSecureService_UserNotFoundException"), "checkForRequests"),"client.SecureServiceSecureService_UserNotFoundExceptionException");
+              faultMessageMap.put(new org.apache.axis2.client.FaultMapKey(new javax.xml.namespace.QName("http://ws.apache.org/axis2","SecureServiceSecureService_UserNotFoundException"), "checkForRequests"),"client.SecureServiceStub$SecureServiceSecureService_UserNotFoundException");
+           
               faultExceptionNameMap.put(new org.apache.axis2.client.FaultMapKey(new javax.xml.namespace.QName("http://ws.apache.org/axis2","SecureServiceClassNotFoundException"), "accept"),"client.SecureServiceClassNotFoundExceptionException");
               faultExceptionClassNameMap.put(new org.apache.axis2.client.FaultMapKey(new javax.xml.namespace.QName("http://ws.apache.org/axis2","SecureServiceClassNotFoundException"), "accept"),"client.SecureServiceClassNotFoundExceptionException");
               faultMessageMap.put(new org.apache.axis2.client.FaultMapKey(new javax.xml.namespace.QName("http://ws.apache.org/axis2","SecureServiceClassNotFoundException"), "accept"),"client.SecureServiceStub$SecureServiceClassNotFoundException");
@@ -295,9 +315,25 @@
               faultExceptionClassNameMap.put(new org.apache.axis2.client.FaultMapKey(new javax.xml.namespace.QName("http://ws.apache.org/axis2","SecureServiceIOException"), "accept"),"client.SecureServiceIOExceptionException");
               faultMessageMap.put(new org.apache.axis2.client.FaultMapKey(new javax.xml.namespace.QName("http://ws.apache.org/axis2","SecureServiceIOException"), "accept"),"client.SecureServiceStub$SecureServiceIOException");
            
+              faultExceptionNameMap.put(new org.apache.axis2.client.FaultMapKey(new javax.xml.namespace.QName("http://ws.apache.org/axis2","SecureServiceSecureService_UserNotFoundException"), "accept"),"client.SecureServiceSecureService_UserNotFoundExceptionException");
+              faultExceptionClassNameMap.put(new org.apache.axis2.client.FaultMapKey(new javax.xml.namespace.QName("http://ws.apache.org/axis2","SecureServiceSecureService_UserNotFoundException"), "accept"),"client.SecureServiceSecureService_UserNotFoundExceptionException");
+              faultMessageMap.put(new org.apache.axis2.client.FaultMapKey(new javax.xml.namespace.QName("http://ws.apache.org/axis2","SecureServiceSecureService_UserNotFoundException"), "accept"),"client.SecureServiceStub$SecureServiceSecureService_UserNotFoundException");
+           
+              faultExceptionNameMap.put(new org.apache.axis2.client.FaultMapKey(new javax.xml.namespace.QName("http://ws.apache.org/axis2","SecureServiceClassNotFoundException"), "status"),"client.SecureServiceClassNotFoundExceptionException");
+              faultExceptionClassNameMap.put(new org.apache.axis2.client.FaultMapKey(new javax.xml.namespace.QName("http://ws.apache.org/axis2","SecureServiceClassNotFoundException"), "status"),"client.SecureServiceClassNotFoundExceptionException");
+              faultMessageMap.put(new org.apache.axis2.client.FaultMapKey(new javax.xml.namespace.QName("http://ws.apache.org/axis2","SecureServiceClassNotFoundException"), "status"),"client.SecureServiceStub$SecureServiceClassNotFoundException");
+           
               faultExceptionNameMap.put(new org.apache.axis2.client.FaultMapKey(new javax.xml.namespace.QName("http://ws.apache.org/axis2","SecureServiceException"), "status"),"client.SecureServiceExceptionException");
               faultExceptionClassNameMap.put(new org.apache.axis2.client.FaultMapKey(new javax.xml.namespace.QName("http://ws.apache.org/axis2","SecureServiceException"), "status"),"client.SecureServiceExceptionException");
               faultMessageMap.put(new org.apache.axis2.client.FaultMapKey(new javax.xml.namespace.QName("http://ws.apache.org/axis2","SecureServiceException"), "status"),"client.SecureServiceStub$SecureServiceException");
+           
+              faultExceptionNameMap.put(new org.apache.axis2.client.FaultMapKey(new javax.xml.namespace.QName("http://ws.apache.org/axis2","SecureServiceIOException"), "status"),"client.SecureServiceIOExceptionException");
+              faultExceptionClassNameMap.put(new org.apache.axis2.client.FaultMapKey(new javax.xml.namespace.QName("http://ws.apache.org/axis2","SecureServiceIOException"), "status"),"client.SecureServiceIOExceptionException");
+              faultMessageMap.put(new org.apache.axis2.client.FaultMapKey(new javax.xml.namespace.QName("http://ws.apache.org/axis2","SecureServiceIOException"), "status"),"client.SecureServiceStub$SecureServiceIOException");
+           
+              faultExceptionNameMap.put(new org.apache.axis2.client.FaultMapKey(new javax.xml.namespace.QName("http://ws.apache.org/axis2","SecureServiceSecureService_UserNotFoundException"), "status"),"client.SecureServiceSecureService_UserNotFoundExceptionException");
+              faultExceptionClassNameMap.put(new org.apache.axis2.client.FaultMapKey(new javax.xml.namespace.QName("http://ws.apache.org/axis2","SecureServiceSecureService_UserNotFoundException"), "status"),"client.SecureServiceSecureService_UserNotFoundExceptionException");
+              faultMessageMap.put(new org.apache.axis2.client.FaultMapKey(new javax.xml.namespace.QName("http://ws.apache.org/axis2","SecureServiceSecureService_UserNotFoundException"), "status"),"client.SecureServiceStub$SecureServiceSecureService_UserNotFoundException");
            
 
 
@@ -375,6 +411,7 @@
                     
                      * @throws client.SecureServiceClassNotFoundExceptionException : 
                      * @throws client.SecureServiceIOExceptionException : 
+                     * @throws client.SecureServiceSecureService_UserNotFoundExceptionException : 
                      */
 
                     
@@ -388,7 +425,8 @@
                     
                     
                         ,client.SecureServiceClassNotFoundExceptionException
-                        ,client.SecureServiceIOExceptionException{
+                        ,client.SecureServiceIOExceptionException
+                        ,client.SecureServiceSecureService_UserNotFoundExceptionException{
               org.apache.axis2.context.MessageContext _messageContext = null;
               try{
                org.apache.axis2.client.OperationClient _operationClient = _serviceClient.createClient(_operations[0].getName());
@@ -453,6 +491,10 @@
                         
                         if (ex instanceof client.SecureServiceIOExceptionException){
                           throw (client.SecureServiceIOExceptionException)ex;
+                        }
+                        
+                        if (ex instanceof client.SecureServiceSecureService_UserNotFoundExceptionException){
+                          throw (client.SecureServiceSecureService_UserNotFoundExceptionException)ex;
                         }
                         
 
@@ -1045,6 +1087,7 @@
                     
                      * @throws client.SecureServiceClassNotFoundExceptionException : 
                      * @throws client.SecureServiceIOExceptionException : 
+                     * @throws client.SecureServiceSecureService_UserNotFoundExceptionException : 
                      */
 
                     
@@ -1058,7 +1101,8 @@
                     
                     
                         ,client.SecureServiceClassNotFoundExceptionException
-                        ,client.SecureServiceIOExceptionException{
+                        ,client.SecureServiceIOExceptionException
+                        ,client.SecureServiceSecureService_UserNotFoundExceptionException{
               org.apache.axis2.context.MessageContext _messageContext = null;
               try{
                org.apache.axis2.client.OperationClient _operationClient = _serviceClient.createClient(_operations[3].getName());
@@ -1135,6 +1179,10 @@
                         
                         if (ex instanceof client.SecureServiceIOExceptionException){
                           throw (client.SecureServiceIOExceptionException)ex;
+                        }
+                        
+                        if (ex instanceof client.SecureServiceSecureService_UserNotFoundExceptionException){
+                          throw (client.SecureServiceSecureService_UserNotFoundExceptionException)ex;
                         }
                         
 
@@ -1263,6 +1311,11 @@
 										            
 													if (ex instanceof client.SecureServiceIOExceptionException){
 														callback.receiveErrordeny((client.SecureServiceIOExceptionException)ex);
+											            return;
+										            }
+										            
+													if (ex instanceof client.SecureServiceSecureService_UserNotFoundExceptionException){
+														callback.receiveErrordeny((client.SecureServiceSecureService_UserNotFoundExceptionException)ex);
 											            return;
 										            }
 										            
@@ -1535,6 +1588,7 @@
                     
                      * @throws client.SecureServiceClassNotFoundExceptionException : 
                      * @throws client.SecureServiceIOExceptionException : 
+                     * @throws client.SecureServiceSecureService_UserNotFoundExceptionException : 
                      */
 
                     
@@ -1548,7 +1602,8 @@
                     
                     
                         ,client.SecureServiceClassNotFoundExceptionException
-                        ,client.SecureServiceIOExceptionException{
+                        ,client.SecureServiceIOExceptionException
+                        ,client.SecureServiceSecureService_UserNotFoundExceptionException{
               org.apache.axis2.context.MessageContext _messageContext = null;
               try{
                org.apache.axis2.client.OperationClient _operationClient = _serviceClient.createClient(_operations[5].getName());
@@ -1614,6 +1669,10 @@
                         
                         if (ex instanceof client.SecureServiceIOExceptionException){
                           throw (client.SecureServiceIOExceptionException)ex;
+                        }
+                        
+                        if (ex instanceof client.SecureServiceSecureService_UserNotFoundExceptionException){
+                          throw (client.SecureServiceSecureService_UserNotFoundExceptionException)ex;
                         }
                         
 
@@ -1722,6 +1781,7 @@
                     
                      * @throws client.SecureServiceClassNotFoundExceptionException : 
                      * @throws client.SecureServiceIOExceptionException : 
+                     * @throws client.SecureServiceSecureService_UserNotFoundExceptionException : 
                      */
 
                     
@@ -1735,7 +1795,8 @@
                     
                     
                         ,client.SecureServiceClassNotFoundExceptionException
-                        ,client.SecureServiceIOExceptionException{
+                        ,client.SecureServiceIOExceptionException
+                        ,client.SecureServiceSecureService_UserNotFoundExceptionException{
               org.apache.axis2.context.MessageContext _messageContext = null;
               try{
                org.apache.axis2.client.OperationClient _operationClient = _serviceClient.createClient(_operations[6].getName());
@@ -1811,6 +1872,10 @@
                         
                         if (ex instanceof client.SecureServiceIOExceptionException){
                           throw (client.SecureServiceIOExceptionException)ex;
+                        }
+                        
+                        if (ex instanceof client.SecureServiceSecureService_UserNotFoundExceptionException){
+                          throw (client.SecureServiceSecureService_UserNotFoundExceptionException)ex;
                         }
                         
 
@@ -1941,6 +2006,11 @@
 											            return;
 										            }
 										            
+													if (ex instanceof client.SecureServiceSecureService_UserNotFoundExceptionException){
+														callback.receiveErrorreciveMsg((client.SecureServiceSecureService_UserNotFoundExceptionException)ex);
+											            return;
+										            }
+										            
 					
 										            callback.receiveErrorreciveMsg(new java.rmi.RemoteException(ex.getMessage(), ex));
                                             } catch(java.lang.ClassCastException e){
@@ -2011,6 +2081,7 @@
                     
                      * @throws client.SecureServiceClassNotFoundExceptionException : 
                      * @throws client.SecureServiceIOExceptionException : 
+                     * @throws client.SecureServiceSecureService_UserNotFoundExceptionException : 
                      */
 
                     
@@ -2024,7 +2095,8 @@
                     
                     
                         ,client.SecureServiceClassNotFoundExceptionException
-                        ,client.SecureServiceIOExceptionException{
+                        ,client.SecureServiceIOExceptionException
+                        ,client.SecureServiceSecureService_UserNotFoundExceptionException{
               org.apache.axis2.context.MessageContext _messageContext = null;
               try{
                org.apache.axis2.client.OperationClient _operationClient = _serviceClient.createClient(_operations[7].getName());
@@ -2100,6 +2172,10 @@
                         
                         if (ex instanceof client.SecureServiceIOExceptionException){
                           throw (client.SecureServiceIOExceptionException)ex;
+                        }
+                        
+                        if (ex instanceof client.SecureServiceSecureService_UserNotFoundExceptionException){
+                          throw (client.SecureServiceSecureService_UserNotFoundExceptionException)ex;
                         }
                         
 
@@ -2230,6 +2306,11 @@
 											            return;
 										            }
 										            
+													if (ex instanceof client.SecureServiceSecureService_UserNotFoundExceptionException){
+														callback.receiveErrorcheckForRequests((client.SecureServiceSecureService_UserNotFoundExceptionException)ex);
+											            return;
+										            }
+										            
 					
 										            callback.receiveErrorcheckForRequests(new java.rmi.RemoteException(ex.getMessage(), ex));
                                             } catch(java.lang.ClassCastException e){
@@ -2300,6 +2381,7 @@
                     
                      * @throws client.SecureServiceClassNotFoundExceptionException : 
                      * @throws client.SecureServiceIOExceptionException : 
+                     * @throws client.SecureServiceSecureService_UserNotFoundExceptionException : 
                      */
 
                     
@@ -2313,7 +2395,8 @@
                     
                     
                         ,client.SecureServiceClassNotFoundExceptionException
-                        ,client.SecureServiceIOExceptionException{
+                        ,client.SecureServiceIOExceptionException
+                        ,client.SecureServiceSecureService_UserNotFoundExceptionException{
               org.apache.axis2.context.MessageContext _messageContext = null;
               try{
                org.apache.axis2.client.OperationClient _operationClient = _serviceClient.createClient(_operations[8].getName());
@@ -2390,6 +2473,10 @@
                         
                         if (ex instanceof client.SecureServiceIOExceptionException){
                           throw (client.SecureServiceIOExceptionException)ex;
+                        }
+                        
+                        if (ex instanceof client.SecureServiceSecureService_UserNotFoundExceptionException){
+                          throw (client.SecureServiceSecureService_UserNotFoundExceptionException)ex;
                         }
                         
 
@@ -2521,6 +2608,11 @@
 											            return;
 										            }
 										            
+													if (ex instanceof client.SecureServiceSecureService_UserNotFoundExceptionException){
+														callback.receiveErroraccept((client.SecureServiceSecureService_UserNotFoundExceptionException)ex);
+											            return;
+										            }
+										            
 					
 										            callback.receiveErroraccept(new java.rmi.RemoteException(ex.getMessage(), ex));
                                             } catch(java.lang.ClassCastException e){
@@ -2589,7 +2681,10 @@
                      * @see client.SecureService#status
                      * @param status58
                     
+                     * @throws client.SecureServiceClassNotFoundExceptionException : 
                      * @throws client.SecureServiceExceptionException : 
+                     * @throws client.SecureServiceIOExceptionException : 
+                     * @throws client.SecureServiceSecureService_UserNotFoundExceptionException : 
                      */
 
                     
@@ -2602,7 +2697,10 @@
                     throws java.rmi.RemoteException
                     
                     
-                        ,client.SecureServiceExceptionException{
+                        ,client.SecureServiceClassNotFoundExceptionException
+                        ,client.SecureServiceExceptionException
+                        ,client.SecureServiceIOExceptionException
+                        ,client.SecureServiceSecureService_UserNotFoundExceptionException{
               org.apache.axis2.context.MessageContext _messageContext = null;
               try{
                org.apache.axis2.client.OperationClient _operationClient = _serviceClient.createClient(_operations[9].getName());
@@ -2673,8 +2771,20 @@
                                    new java.lang.Class[]{messageClass});
                         m.invoke(ex,new java.lang.Object[]{messageObject});
                         
+                        if (ex instanceof client.SecureServiceClassNotFoundExceptionException){
+                          throw (client.SecureServiceClassNotFoundExceptionException)ex;
+                        }
+                        
                         if (ex instanceof client.SecureServiceExceptionException){
                           throw (client.SecureServiceExceptionException)ex;
+                        }
+                        
+                        if (ex instanceof client.SecureServiceIOExceptionException){
+                          throw (client.SecureServiceIOExceptionException)ex;
+                        }
+                        
+                        if (ex instanceof client.SecureServiceSecureService_UserNotFoundExceptionException){
+                          throw (client.SecureServiceSecureService_UserNotFoundExceptionException)ex;
                         }
                         
 
@@ -2796,8 +2906,23 @@
 															new java.lang.Class[]{messageClass});
 													m.invoke(ex,new java.lang.Object[]{messageObject});
 													
+													if (ex instanceof client.SecureServiceClassNotFoundExceptionException){
+														callback.receiveErrorstatus((client.SecureServiceClassNotFoundExceptionException)ex);
+											            return;
+										            }
+										            
 													if (ex instanceof client.SecureServiceExceptionException){
 														callback.receiveErrorstatus((client.SecureServiceExceptionException)ex);
+											            return;
+										            }
+										            
+													if (ex instanceof client.SecureServiceIOExceptionException){
+														callback.receiveErrorstatus((client.SecureServiceIOExceptionException)ex);
+											            return;
+										            }
+										            
+													if (ex instanceof client.SecureServiceSecureService_UserNotFoundExceptionException){
+														callback.receiveErrorstatus((client.SecureServiceSecureService_UserNotFoundExceptionException)ex);
 											            return;
 										            }
 										            
@@ -3361,48 +3486,6 @@
                 */
             
 
-                        /**
-                        * field for Details
-                        */
-
-                        
-                                    protected java.lang.String localDetails ;
-                                
-                           /*  This tracker boolean wil be used to detect whether the user called the set method
-                          *   for this attribute. It will be used to determine whether to include this field
-                           *   in the serialized XML
-                           */
-                           protected boolean localDetailsTracker = false ;
-
-                           public boolean isDetailsSpecified(){
-                               return localDetailsTracker;
-                           }
-
-                           
-
-                           /**
-                           * Auto generated getter method
-                           * @return java.lang.String
-                           */
-                           public  java.lang.String getDetails(){
-                               return localDetails;
-                           }
-
-                           
-                        
-                            /**
-                               * Auto generated setter method
-                               * @param param Details
-                               */
-                               public void setDetails(java.lang.String param){
-                            localDetailsTracker = true;
-                                   
-                                            this.localDetails=param;
-                                    
-
-                               }
-                            
-
      
      
         /**
@@ -3461,25 +3544,7 @@
 
                
                    }
-                if (localDetailsTracker){
-                                    namespace = "http://ws.apache.org/axis2/xsd";
-                                    writeStartElement(null, namespace, "details", xmlWriter);
-                             
-
-                                          if (localDetails==null){
-                                              // write the nil attribute
-                                              
-                                                     writeAttribute("xsi","http://www.w3.org/2001/XMLSchema-instance","nil","1",xmlWriter);
-                                                  
-                                          }else{
-
-                                        
-                                                   xmlWriter.writeCharacters(localDetails);
-                                            
-                                          }
-                                    
-                                   xmlWriter.writeEndElement();
-                             }
+               
                     xmlWriter.writeEndElement();
                
 
@@ -3664,13 +3729,7 @@
                  java.util.ArrayList elementList = new java.util.ArrayList();
                  java.util.ArrayList attribList = new java.util.ArrayList();
 
-                 if (localDetailsTracker){
-                                      elementList.add(new javax.xml.namespace.QName("http://ws.apache.org/axis2/xsd",
-                                                                      "details"));
-                                 
-                                         elementList.add(localDetails==null?null:
-                                         org.apache.axis2.databinding.utils.ConverterUtil.convertToString(localDetails));
-                                    }
+                
 
                 return new org.apache.axis2.databinding.utils.reader.ADBXMLStreamReaderImpl(qName, elementList.toArray(), attribList.toArray());
             
@@ -3745,35 +3804,7 @@
                 
                     
                     reader.next();
-                
-                                    
-                                    while (!reader.isStartElement() && !reader.isEndElement()) reader.next();
-                                
-                                    if (reader.isStartElement() && new javax.xml.namespace.QName("http://ws.apache.org/axis2/xsd","details").equals(reader.getName())){
-                                
-                                       nillableValue = reader.getAttributeValue("http://www.w3.org/2001/XMLSchema-instance","nil");
-                                       if (!"true".equals(nillableValue) && !"1".equals(nillableValue)){
-                                    
-
-                                    java.lang.String content = reader.getElementText();
-                                    
-                                              object.setDetails(
-                                                    org.apache.axis2.databinding.utils.ConverterUtil.convertToString(content));
-                                            
-                                       } else {
-                                           
-                                           
-                                           reader.getElementText(); // throw away text nodes if any.
-                                       }
-                                      
-                                        reader.next();
-                                    
-                              }  // End of if for expected property start element
-                                
-                                    else {
-                                        
-                                    }
-                                  
+                  
                             while (!reader.isStartElement() && !reader.isEndElement())
                                 reader.next();
                             
@@ -14157,6 +14188,20 @@
 
             }
         
+            private  org.apache.axiom.om.OMElement  toOM(client.SecureServiceStub.SecureServiceSecureService_UserNotFoundException param, boolean optimizeContent)
+            throws org.apache.axis2.AxisFault {
+
+            
+                        try{
+                             return param.getOMElement(client.SecureServiceStub.SecureServiceSecureService_UserNotFoundException.MY_QNAME,
+                                          org.apache.axiom.om.OMAbstractFactory.getOMFactory());
+                        } catch(org.apache.axis2.databinding.ADBException e){
+                            throw org.apache.axis2.AxisFault.makeFault(e);
+                        }
+                    
+
+            }
+        
             private  org.apache.axiom.om.OMElement  toOM(client.SecureServiceStub.UserList param, boolean optimizeContent)
             throws org.apache.axis2.AxisFault {
 
@@ -14261,20 +14306,6 @@
             
                         try{
                              return param.getOMElement(client.SecureServiceStub.SecureServiceException.MY_QNAME,
-                                          org.apache.axiom.om.OMAbstractFactory.getOMFactory());
-                        } catch(org.apache.axis2.databinding.ADBException e){
-                            throw org.apache.axis2.AxisFault.makeFault(e);
-                        }
-                    
-
-            }
-        
-            private  org.apache.axiom.om.OMElement  toOM(client.SecureServiceStub.SecureServiceSecureService_UserNotFoundException param, boolean optimizeContent)
-            throws org.apache.axis2.AxisFault {
-
-            
-                        try{
-                             return param.getOMElement(client.SecureServiceStub.SecureServiceSecureService_UserNotFoundException.MY_QNAME,
                                           org.apache.axiom.om.OMAbstractFactory.getOMFactory());
                         } catch(org.apache.axis2.databinding.ADBException e){
                             throw org.apache.axis2.AxisFault.makeFault(e);
@@ -14826,6 +14857,13 @@
 
                 }
            
+                if (client.SecureServiceStub.SecureServiceSecureService_UserNotFoundException.class.equals(type)){
+                
+                           return client.SecureServiceStub.SecureServiceSecureService_UserNotFoundException.Factory.parse(param.getXMLStreamReaderWithoutCaching());
+                    
+
+                }
+           
                 if (client.SecureServiceStub.UserList.class.equals(type)){
                 
                            return client.SecureServiceStub.UserList.Factory.parse(param.getXMLStreamReaderWithoutCaching());
@@ -14910,6 +14948,13 @@
 
                 }
            
+                if (client.SecureServiceStub.SecureServiceSecureService_UserNotFoundException.class.equals(type)){
+                
+                           return client.SecureServiceStub.SecureServiceSecureService_UserNotFoundException.Factory.parse(param.getXMLStreamReaderWithoutCaching());
+                    
+
+                }
+           
                 if (client.SecureServiceStub.Request.class.equals(type)){
                 
                            return client.SecureServiceStub.Request.Factory.parse(param.getXMLStreamReaderWithoutCaching());
@@ -14966,6 +15011,13 @@
 
                 }
            
+                if (client.SecureServiceStub.SecureServiceSecureService_UserNotFoundException.class.equals(type)){
+                
+                           return client.SecureServiceStub.SecureServiceSecureService_UserNotFoundException.Factory.parse(param.getXMLStreamReaderWithoutCaching());
+                    
+
+                }
+           
                 if (client.SecureServiceStub.ReciveMsg.class.equals(type)){
                 
                            return client.SecureServiceStub.ReciveMsg.Factory.parse(param.getXMLStreamReaderWithoutCaching());
@@ -14990,6 +15042,13 @@
                 if (client.SecureServiceStub.SecureServiceIOException.class.equals(type)){
                 
                            return client.SecureServiceStub.SecureServiceIOException.Factory.parse(param.getXMLStreamReaderWithoutCaching());
+                    
+
+                }
+           
+                if (client.SecureServiceStub.SecureServiceSecureService_UserNotFoundException.class.equals(type)){
+                
+                           return client.SecureServiceStub.SecureServiceSecureService_UserNotFoundException.Factory.parse(param.getXMLStreamReaderWithoutCaching());
                     
 
                 }
@@ -15022,6 +15081,13 @@
 
                 }
            
+                if (client.SecureServiceStub.SecureServiceSecureService_UserNotFoundException.class.equals(type)){
+                
+                           return client.SecureServiceStub.SecureServiceSecureService_UserNotFoundException.Factory.parse(param.getXMLStreamReaderWithoutCaching());
+                    
+
+                }
+           
                 if (client.SecureServiceStub.Accept.class.equals(type)){
                 
                            return client.SecureServiceStub.Accept.Factory.parse(param.getXMLStreamReaderWithoutCaching());
@@ -15050,6 +15116,13 @@
 
                 }
            
+                if (client.SecureServiceStub.SecureServiceSecureService_UserNotFoundException.class.equals(type)){
+                
+                           return client.SecureServiceStub.SecureServiceSecureService_UserNotFoundException.Factory.parse(param.getXMLStreamReaderWithoutCaching());
+                    
+
+                }
+           
                 if (client.SecureServiceStub.Status.class.equals(type)){
                 
                            return client.SecureServiceStub.Status.Factory.parse(param.getXMLStreamReaderWithoutCaching());
@@ -15064,9 +15137,30 @@
 
                 }
            
+                if (client.SecureServiceStub.SecureServiceClassNotFoundException.class.equals(type)){
+                
+                           return client.SecureServiceStub.SecureServiceClassNotFoundException.Factory.parse(param.getXMLStreamReaderWithoutCaching());
+                    
+
+                }
+           
                 if (client.SecureServiceStub.SecureServiceException.class.equals(type)){
                 
                            return client.SecureServiceStub.SecureServiceException.Factory.parse(param.getXMLStreamReaderWithoutCaching());
+                    
+
+                }
+           
+                if (client.SecureServiceStub.SecureServiceIOException.class.equals(type)){
+                
+                           return client.SecureServiceStub.SecureServiceIOException.Factory.parse(param.getXMLStreamReaderWithoutCaching());
+                    
+
+                }
+           
+                if (client.SecureServiceStub.SecureServiceSecureService_UserNotFoundException.class.equals(type)){
+                
+                           return client.SecureServiceStub.SecureServiceSecureService_UserNotFoundException.Factory.parse(param.getXMLStreamReaderWithoutCaching());
                     
 
                 }

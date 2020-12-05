@@ -26,7 +26,8 @@ import java.util.List;
  *  - esigenze di debug (motivazione debole)
  */
 public class SecureService {
-	/* Eccezioni
+	/*
+	 * Eccezioni
 	 *
 	 * UserNotFoundException è un eccezione personalizzata utile, lato client, per
 	 * rilevare errori riguardo la presenza (assenza) dell'utente desiderato sul
@@ -47,29 +48,32 @@ public class SecureService {
 		}
 	}
 
-	/* Variabili
+	/*
+	 * Variabili
 	 * 
-	 * Le variabili della classe sono 3 e sono tutte dichiarate con modifier private.
-	 * Queste tre classi rappresentano gli ingranaggi che permettono al server di funzionare 
-	 * bene e in modo chiaro.
-	 * La scelta di dividere la logica in tre classi distinte deriva dalla volontà di separare
-	 * diversi ambiti di competenza.
+	 * Le variabili della classe sono 3 e sono tutte dichiarate con modifier
+	 * private. Queste tre classi rappresentano gli ingranaggi che permettono al
+	 * server di funzionare bene e in modo chiaro. La scelta di dividere la logica
+	 * in tre classi distinte deriva dalla volontà di separare diversi ambiti di
+	 * competenza.
 	 * 
-	 * Rimando alle classi in sè la spiegazione del loro ambito e del loro funzionamento:
+	 * Rimando alle classi in sè la spiegazione del loro ambito e del loro
+	 * funzionamento:
 	 * 
-	 * States:   service/Statse.java
-	 * Requests: service/Requests.java
-	 * Messages: service/Messages.java
+	 * States: service/Statse.java Requests: service/Requests.java Messages:
+	 * service/Messages.java
 	 */
 	private States states;
 	private Requests requests;
 	private Messages messages;
 
-	/* Costruttore
+	/*
+	 * Costruttore
 	 *
-	 * Il costruttore è molto banale, vengono inizializzate le tre classi viste sopra.
-	 * La particolarità di questo metodo è che se avviene un errore in inizializzatione
-	 * in una delle tre classi (IOException) questo non viene gestito ma demandato al client.
+	 * Il costruttore è molto banale, vengono inizializzate le tre classi viste
+	 * sopra. La particolarità di questo metodo è che se avviene un errore in
+	 * inizializzatione in una delle tre classi (IOException) questo non viene
+	 * gestito ma demandato al client.
 	 */
 	public SecureService() throws IOException {
 		states = new States();
@@ -77,14 +81,14 @@ public class SecureService {
 		messages = new Messages();
 	}
 
-	/* Metodi Wrapper
+	/*
+	 * Metodi Wrapper
 	 *
 	 * privi di commenti in quanto non aggiungono nulla alla computazione rispetto a
-	 * quanto succede nei loro
-	 * metodi "principali"
-     */
-	public void sendMsg(String message, String user) throws ClassNotFoundException, IOException,
-			SecureService.UserNotFoundException {
+	 * quanto succede nei loro metodi "principali"
+	 */
+	public void sendMsg(String message, String user)
+			throws ClassNotFoundException, IOException, SecureService.UserNotFoundException {
 		if (!messages.userExists(user)) {
 			throw new UserNotFoundException(user);
 		} else {
@@ -92,12 +96,12 @@ public class SecureService {
 		}
 	}
 
-	public String reciveMsg(String user) throws ClassNotFoundException, IOException,
-			SecureService.UserNotFoundException {
+	public String reciveMsg(String user)
+			throws ClassNotFoundException, IOException, SecureService.UserNotFoundException {
 		if (!messages.userExists(user)) {
 			throw new UserNotFoundException(user);
 		} else {
-		return messages._get(user);
+			return messages._get(user);
 		}
 	}
 
@@ -105,57 +109,63 @@ public class SecureService {
 		return messages.listUsers(user);
 	}
 
-	public boolean status(String me, String myFriend) throws Exception {
-				if (!messages.userExists(me)) {
+	public boolean status(String me, String myFriend)
+			throws ClassNotFoundException, IOException, SecureService.UserNotFoundException, Exception {
+		if (!messages.userExists(me)) {
 			throw new UserNotFoundException(me);
 		} else if (!messages.userExists(myFriend)) {
 			throw new UserNotFoundException(myFriend);
 		} else {
-		return requests.status(me, myFriend);
+			return requests.status(me, myFriend);
 		}
 	}
 
-	public boolean accept(String me, String myFriend) throws ClassNotFoundException, IOException {
-				if (!messages.userExists(me)) {
+	public boolean accept(String me, String myFriend)
+			throws ClassNotFoundException, IOException, SecureService.UserNotFoundException {
+		if (!messages.userExists(me)) {
 			throw new UserNotFoundException(me);
 		} else if (!messages.userExists(myFriend)) {
 			throw new UserNotFoundException(myFriend);
 		} else {
-		return requests.accept(me, myFriend);
+			return requests.accept(me, myFriend);
 		}
 	}
 
 	public void doLogin(String user) throws ClassNotFoundException, IOException {
-				if (!messages.userExists(me)) {
-			throw new UserNotFoundException(me);
-		} else if (!messages.userExists(myFriend)) {
-			throw new UserNotFoundException(myFriend);
-		} else {
 		messages.addUser(user);
 		states.ready(user);
+	}
+
+	public void doLogout(String user) throws ClassNotFoundException, IOException, SecureService.UserNotFoundException {
+		if (!messages.userExists(user)) {
+			throw new UserNotFoundException(user);
+		} else {
+			messages.deleteUser(user);
+			states.remove(user);
 		}
 	}
 
-	public void doLogout(String user) throws ClassNotFoundException, IOException {
-				if (!messages.userExists(me)) {
+	public boolean deny(String me, String myFriend)
+			throws ClassNotFoundException, IOException, SecureService.UserNotFoundException {
+		if (!messages.userExists(me)) {
 			throw new UserNotFoundException(me);
 		} else if (!messages.userExists(myFriend)) {
 			throw new UserNotFoundException(myFriend);
 		} else {
-		messages.deleteUser(user);
-		states.remove(user);
+			states.ready(me);
+			states.ready(myFriend);
+			return requests.deny(me, myFriend);
 		}
 	}
 
-	public boolean deny(String me, String myFriend) throws ClassNotFoundException, IOException {
-		states.ready(me);
-		states.ready(myFriend);
-		return requests.deny(me, myFriend);
-	}
-
-	public String[] checkForRequests(String me) throws ClassNotFoundException, IOException {
-		List<String> req = requests.checkForRequests(me);
-		return req.toArray(new String[req.size()]);
+	public String[] checkForRequests(String me)
+			throws ClassNotFoundException, IOException, SecureService.UserNotFoundException {
+		if (!messages.userExists(me)) {
+			throw new UserNotFoundException(me);
+		} else {
+			List<String> req = requests.checkForRequests(me);
+			return req.toArray(new String[req.size()]);
+		}
 	}
 
 	public void request(String me, String myFriend)
