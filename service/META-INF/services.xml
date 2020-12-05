@@ -4,8 +4,6 @@
 	</description>
 	
 	<parameter name="ServiceClass" locked="false">SecureService</parameter>
-	<!-- Engaging rampart -->
-	<module ref="rampart"/>
 
 	<!-- FULL SECURITY -->
 	<parameter name="InflowSecurity">
@@ -80,10 +78,5 @@
 				</sp:TransportToken>
 			</wsp:Policy>
 		</sp:TransportBinding>
-
-		<ramp:RampartConfig xmlns:ramp="http://ws.apache.org/rampart/policy">
-			<ramp:passwordCallbackClass>PWCallbackService</ramp:passwordCallbackClass>
-		</ramp:RampartConfig>
-
 	</wsp:Policy>
 </service>
