@@ -17,9 +17,4 @@
 			</sp:TransportToken>
 		</wsp:Policy>
 	</sp:TransportBinding>
-
-	<ramp:RampartConfig xmlns:ramp="http://ws.apache.org/rampart/policy">
-		<ramp:passwordCallbackClass>PWCallbackService</ramp:passwordCallbackClass>
-	</ramp:RampartConfig>
-
 </wsp:Policy>
