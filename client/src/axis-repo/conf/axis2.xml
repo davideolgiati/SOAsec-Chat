@@ -7,7 +7,7 @@
 <parameter name="OutflowSecurity">
 	<action>
 		<items>UsernameToken Signature Encrypt</items>
-		<user>client1</user>
+		<user>client2</user>
 		<passwordCallbackClass>client.PWCallbackClient</passwordCallbackClass>
 		<signaturePropFile>axis-repo/conf/keystore.properties</signaturePropFile>
 		<signatureKeyIdentifier>DirectReference</signatureKeyIdentifier>

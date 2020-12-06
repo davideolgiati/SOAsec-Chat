@@ -2,13 +2,9 @@
 
 ### Funzionamento:
 
-Un client che vuole utilizzare la chat deve effettuare il login per poter usufruire del servizio. Ciò è implementato attraverso un metodo apposito a cui si applicano protocolli di simple authentication (con cui effettivamente avviene il login) e timestamp (per evitare replay attack).
-Per semplicità non è possibile registrarsi, il server conosce già quali sono gli utenti autorizzati.
+All'avvio del programma viene richiesto all'utente di autenticarsi, le credenziali valide disponibili sono "client1" e "client2" rispettivamente con password "password1" e "password2". Per semplicità non è possibile creare nuovi utenti.
+Una volta che l'utente ha eseguito il login, il programma stampa a video un banner contenente i principali comandi che possono essere eseguiti; digitando ":c" vengono listati gli altri utenti online e viene chiesto con quale di essi si vuole iniziare una conversazione. Per terminare poi la conversazione è possibile digitare ":e" (il client vittima di tale azione si accorgerà dell'accaduto solo quando proverà ad inviare un messaggio).
 
-Una volta che l'utente è loggato, esso viene contrassegnato come online e può visualizzare gli altri utenti online, in modo da poterne scegliere uno ed iniziare una conversazione.
-La conversazione tra due utenti si basa sull'utilizzo di encryption e signature.
+##### Politiche di sicurezza
 
-##### WS-POLICY
-
-Una possibile implementazione di ws-policy in questo scenario riguarderebbe la ripartizione temporale delle azioni attuabili dall'utente. Un esempio molto banale potrebbe essere la scelta della chiave di sessione per il canale tra i due client. In questo scenario avremo un client "master", che prende le decisioni, e uno "slave", che le subisce. Per semplicità diamo a chi comincia la chat il ruolo di master. Il client master potrà scegliere e comunicare la chiave di sessione mentre lo slave potrà solo recepirla.
-Un secondo scenario possibile è relativo alla chiusura della chat. In caso che la chat venga chiusa da una delle due parti, la parte ancora attiva sarà impossibilitata a compiere qualsiasi azione che non sia richiedere l'ultimo messaggio disponibile (una volta richiesto il quale l'istanza della canale tra i due attori sul server sarà cancellata)
+Tutti i metodi evocati durante l'utilizzo della chat utilizzano le features di WS-Security di UsernameToken Authentication, Signature ed Encryption. Inoltre tramite l'utilizzo di WS-Policy si richiede obbligatoriamente il protocollo HTTPS.

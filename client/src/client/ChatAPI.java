@@ -107,8 +107,6 @@ public class ChatAPI {
   ChatAPI(String user) {
     try {
       me = user;
-      // ATTENZIONE TUTTI I PERCORSI SONO STATICI, SU UN'ALTRA MACCHINA NON GIRA!!!
-
       // Reading the xml configuration file
       DocumentBuilderFactory f = DocumentBuilderFactory.newInstance();
       DocumentBuilder b = f.newDocumentBuilder();
