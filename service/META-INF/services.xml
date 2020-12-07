@@ -1,6 +1,6 @@
 <service name="SecureService">
 	<description>
-		Secure Service
+		Simple chat written in Java that uses the SOAP protocol.
 	</description>
 	
 	<parameter name="ServiceClass" locked="false">SecureService</parameter>
