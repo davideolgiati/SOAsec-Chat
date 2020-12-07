@@ -52,21 +52,12 @@ public class ChatAPI {
   private String me;
   private String peer;
 
-  private void handleException(SecureServiceClassNotFoundExceptionException e, String metodo) {
+  private void handleException(SecureServiceStorageErrorException e, String metodo) {
     StringWriter sw = new StringWriter();
     e.printStackTrace(new PrintWriter(sw));
     String ex = sw.toString();
-    handleException(metodo
-        + " : ClassNotFoundException, Classe di eccezione relativa alla serializzazione. La classe che si sta tentando di serializzare/deserializzare non appartiene a quelle note",
-        ex);
-  }
-
-  private void handleException(SecureServiceIOExceptionException e, String metodo) {
-    StringWriter sw = new StringWriter();
-    e.printStackTrace(new PrintWriter(sw));
-    String ex = sw.toString();
-    handleException(metodo
-        + " : IOException, Classe di eccezione relativa alla serializzazione. Errore di tipo I/O durante la lettura/scrittura della classe da/sullo storage",
+    handleException(
+        metodo + " : StorageError, errore in fase di serializzazione/deserializzazione lato server.\n" + e.getMessage(),
         ex);
   }
 
@@ -75,21 +66,6 @@ public class ChatAPI {
     e.printStackTrace(new PrintWriter(sw));
     String ex = sw.toString();
     handleException(metodo + " : RemoteException, Classe di eccezione remota generica. Non ho altre informazioni", ex);
-  }
-
-  private void handleException(SecureServiceExceptionException e, String metodo) {
-    StringWriter sw = new StringWriter();
-    e.printStackTrace(new PrintWriter(sw));
-    String ex = sw.toString();
-    handleException(metodo + " : Exception, Eccezione generica lato server. Non ho altre informazioni", ex);
-  }
-
-  private void handleException(SecureServiceSecureService_UserNotFoundExceptionException e, String metodo) {
-    StringWriter sw = new StringWriter();
-    e.printStackTrace(new PrintWriter(sw));
-    String ex = sw.toString();
-    handleException(
-        metodo + " : UserNotFoundException, Classe di eccezione personalizzata. L'utente desiderato non esiste", ex);
   }
 
   private void handleException(String msg, String trace) {
@@ -105,6 +81,7 @@ public class ChatAPI {
   }
 
   ChatAPI(String user) {
+
     try {
       me = user;
       // ATTENZIONE TUTTI I PERCORSI SONO STATICI, SU UN'ALTRA MACCHINA NON GIRA!!!
@@ -145,15 +122,13 @@ public class ChatAPI {
       e.printStackTrace();
       System.exit(1);
     }
+
     try {
       stub.doLogin(me);
     } catch (RemoteException e) {
       StackTraceElement stackTraceElements[] = (new Throwable()).getStackTrace();
       handleException(e, stackTraceElements[0].getMethodName());
-    } catch (SecureServiceClassNotFoundExceptionException e) {
-      StackTraceElement stackTraceElements[] = (new Throwable()).getStackTrace();
-      handleException(e, stackTraceElements[0].getMethodName());
-    } catch (SecureServiceIOExceptionException e) {
+    } catch (SecureServiceStorageErrorException e) {
       StackTraceElement stackTraceElements[] = (new Throwable()).getStackTrace();
       handleException(e, stackTraceElements[0].getMethodName());
     }
@@ -173,15 +148,12 @@ public class ChatAPI {
     } catch (RemoteException e) {
       StackTraceElement stackTraceElements[] = (new Throwable()).getStackTrace();
       handleException(e, stackTraceElements[0].getMethodName());
-    } catch (SecureServiceClassNotFoundExceptionException e) {
+    } catch (SecureServiceStorageErrorException e) {
       StackTraceElement stackTraceElements[] = (new Throwable()).getStackTrace();
       handleException(e, stackTraceElements[0].getMethodName());
-    } catch (SecureServiceIOExceptionException e) {
-      StackTraceElement stackTraceElements[] = (new Throwable()).getStackTrace();
-      handleException(e, stackTraceElements[0].getMethodName());
-    } catch (SecureServiceSecureService_UserNotFoundExceptionException e) {
-      StackTraceElement stackTraceElements[] = (new Throwable()).getStackTrace();
-      handleException(e, stackTraceElements[0].getMethodName());
+    } catch (SecureServiceUserNotFoundException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
     }
   }
 
@@ -195,20 +167,17 @@ public class ChatAPI {
     } catch (RemoteException e) {
       StackTraceElement stackTraceElements[] = (new Throwable()).getStackTrace();
       handleException(e, stackTraceElements[0].getMethodName());
-    } catch (SecureServiceClassNotFoundExceptionException e) {
+    } catch (SecureServiceStorageErrorException e) {
       StackTraceElement stackTraceElements[] = (new Throwable()).getStackTrace();
       handleException(e, stackTraceElements[0].getMethodName());
-    } catch (SecureServiceIOExceptionException e) {
-      StackTraceElement stackTraceElements[] = (new Throwable()).getStackTrace();
-      handleException(e, stackTraceElements[0].getMethodName());
-    } catch (SecureServiceSecureService_UserNotFoundExceptionException e) {
-      StackTraceElement stackTraceElements[] = (new Throwable()).getStackTrace();
-      handleException(e, stackTraceElements[0].getMethodName());
+    } catch (SecureServiceUserNotFoundException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
     }
   }
 
   public String ricevi()
-      throws RemoteException, SecureServiceClassNotFoundExceptionException, SecureServiceIOExceptionException, SecureServiceSecureService_UserNotFoundExceptionException {
+      throws RemoteException, SecureServiceStorageErrorException, SecureServiceUserNotFoundException {
     String res = "";
     res = stub.reciveMsg(me);
     return res;
@@ -231,7 +200,7 @@ public class ChatAPI {
     try {
       res = stub.userList(getUser());
     } catch (Exception e) {
-      e.printStackTrace();
+      // HERE HERE HERE
       res = "";
     }
     if (getUser().equals(res) || "".equals(res)) {
@@ -246,18 +215,15 @@ public class ChatAPI {
     } catch (RemoteException e) {
       StackTraceElement stackTraceElements[] = (new Throwable()).getStackTrace();
       handleException(e, stackTraceElements[0].getMethodName());
-    } catch (SecureServiceClassNotFoundExceptionException e) {
+    } catch (SecureServiceUserBusyException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } catch (SecureServiceStorageErrorException e) {
       StackTraceElement stackTraceElements[] = (new Throwable()).getStackTrace();
       handleException(e, stackTraceElements[0].getMethodName());
-    } catch (SecureServiceExceptionException e) {
-      StackTraceElement stackTraceElements[] = (new Throwable()).getStackTrace();
-      handleException(e, stackTraceElements[0].getMethodName());
-    } catch (SecureServiceIOExceptionException e) {
-      StackTraceElement stackTraceElements[] = (new Throwable()).getStackTrace();
-      handleException(e, stackTraceElements[0].getMethodName());
-    } catch (SecureServiceSecureService_UserNotFoundExceptionException e) {
-      StackTraceElement stackTraceElements[] = (new Throwable()).getStackTrace();
-      handleException(e, stackTraceElements[0].getMethodName());
+    } catch (SecureServiceUserNotFoundException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
     }
   }
 
@@ -268,15 +234,12 @@ public class ChatAPI {
     } catch (RemoteException e) {
       StackTraceElement stackTraceElements[] = (new Throwable()).getStackTrace();
       handleException(e, stackTraceElements[0].getMethodName());
-    } catch (SecureServiceClassNotFoundExceptionException e) {
+    } catch (SecureServiceStorageErrorException e) {
       StackTraceElement stackTraceElements[] = (new Throwable()).getStackTrace();
       handleException(e, stackTraceElements[0].getMethodName());
-    } catch (SecureServiceIOExceptionException e) {
-      StackTraceElement stackTraceElements[] = (new Throwable()).getStackTrace();
-      handleException(e, stackTraceElements[0].getMethodName());
-    } catch (SecureServiceSecureService_UserNotFoundExceptionException e) {
-      StackTraceElement stackTraceElements[] = (new Throwable()).getStackTrace();
-      handleException(e, stackTraceElements[0].getMethodName());
+    } catch (SecureServiceUserNotFoundException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
     }
     return res;
   }
@@ -288,15 +251,12 @@ public class ChatAPI {
     } catch (RemoteException e) {
       StackTraceElement stackTraceElements[] = (new Throwable()).getStackTrace();
       handleException(e, stackTraceElements[0].getMethodName());
-    } catch (SecureServiceClassNotFoundExceptionException e) {
+    } catch (SecureServiceStorageErrorException e) {
       StackTraceElement stackTraceElements[] = (new Throwable()).getStackTrace();
       handleException(e, stackTraceElements[0].getMethodName());
-    } catch (SecureServiceIOExceptionException e) {
-      StackTraceElement stackTraceElements[] = (new Throwable()).getStackTrace();
-      handleException(e, stackTraceElements[0].getMethodName());
-    } catch (SecureServiceSecureService_UserNotFoundExceptionException e) {
-      StackTraceElement stackTraceElements[] = (new Throwable()).getStackTrace();
-      handleException(e, stackTraceElements[0].getMethodName());
+    } catch (SecureServiceUserNotFoundException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
     }
     return res;
   }
@@ -308,15 +268,12 @@ public class ChatAPI {
     } catch (RemoteException e) {
       StackTraceElement stackTraceElements[] = (new Throwable()).getStackTrace();
       handleException(e, stackTraceElements[0].getMethodName());
-    } catch (SecureServiceClassNotFoundExceptionException e) {
+    } catch (SecureServiceStorageErrorException e) {
       StackTraceElement stackTraceElements[] = (new Throwable()).getStackTrace();
       handleException(e, stackTraceElements[0].getMethodName());
-    } catch (SecureServiceIOExceptionException e) {
-      StackTraceElement stackTraceElements[] = (new Throwable()).getStackTrace();
-      handleException(e, stackTraceElements[0].getMethodName());
-    } catch (SecureServiceSecureService_UserNotFoundExceptionException e) {
-      StackTraceElement stackTraceElements[] = (new Throwable()).getStackTrace();
-      handleException(e, stackTraceElements[0].getMethodName());
+    } catch (SecureServiceUserNotFoundException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
     }
     return res;
   }
@@ -336,8 +293,8 @@ public class ChatAPI {
     return res;
   }
 
-  public boolean requestStatus(String myFriend) 
-      throws RemoteException, SecureServiceExceptionException, SecureServiceSecureService_UserNotFoundExceptionException, SecureServiceClassNotFoundExceptionException, SecureServiceIOExceptionException{
+  public boolean requestStatus(String myFriend) throws RemoteException, SecureServiceNoResponseException,
+      SecureServiceStorageErrorException, SecureServiceUserNotFoundException {
     return stub.status(me, myFriend);
   }
 
@@ -360,25 +317,28 @@ public class ChatAPI {
             ret = requestStatus(user);
           }
           keep = false;
-        } catch (Exception e) {
-          if (!"in attesa di risposta dall'utente".equals(e.getMessage())) {
-            e.printStackTrace();
-            keep = false;
-            ret = false;
+        } catch (SecureServiceNoResponseException e) {
+          if (first) {
+            System.out.print("In attesa di " + user + " .");
+            first = false;
           } else {
-            if (first) {
-              System.out.println(e.getMessage());
-              first = false;
-            } else {
-              System.out.print('.');
-            }
-            try {
-              Thread.sleep(1000);
-            } catch (InterruptedException ex) {
-              // TODO Auto-generated catch block
-              ex.printStackTrace();
-            }
+            System.out.print('.');
           }
+          try {
+            Thread.sleep(1000);
+          } catch (InterruptedException ex) {
+            // TODO Auto-generated catch block
+            ex.printStackTrace();
+          }
+        } catch (RemoteException e) {
+          StackTraceElement stackTraceElements[] = (new Throwable()).getStackTrace();
+          handleException(e, stackTraceElements[0].getMethodName());
+        } catch (SecureServiceStorageErrorException e) {
+          StackTraceElement stackTraceElements[] = (new Throwable()).getStackTrace();
+          handleException(e, stackTraceElements[0].getMethodName());
+        } catch (SecureServiceUserNotFoundException e) {
+          // TODO Auto-generated catch block
+          e.printStackTrace();
         }
       } while (keep);
     }

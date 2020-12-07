@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -15,7 +16,7 @@ public class States implements Serializable {
 
     // Costruttore
 
-    public States() throws IOException {
+    public States() throws StorageError {
         try {
             loadState();
         } catch (Exception e) {
@@ -29,45 +30,55 @@ public class States implements Serializable {
 
     // Gestione della Persistenza
 
-    private void generateState() throws IOException {
+    private void generateState() throws StorageError {
         File file = new File(path);
         if (!file.exists())
-            file.createNewFile();
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                throw new StorageError("States", "IOException");
+            }
     }
 
-    private void saveState() throws IOException {
-        FileOutputStream fileOut = new FileOutputStream(path);
-        ObjectOutputStream out = new ObjectOutputStream(fileOut);
-        out.writeObject(state);
-        out.close();
-        fileOut.close();
+    private void saveState() throws StorageError {
+        try {
+            FileOutputStream fileOut = new FileOutputStream(path);
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            out.writeObject(state);
+            out.close();
+            fileOut.close();
+        } catch (IOException e) {
+            throw new StorageError("States", "IOException");
+        }
     }
 
-    private void loadState() throws IOException, ClassNotFoundException {
-        if (new File(path).exists()) {
-            FileInputStream fileIn = new FileInputStream(path);
-            ObjectInputStream in = new ObjectInputStream(fileIn);
-            state = (Map<String, Boolean>) in.readObject();
+    private void loadState() throws StorageError {
+        try {
+            FileInputStream fileIn = null;
+            ObjectInputStream in = null;
+            fileIn = new FileInputStream(path);
+            in = new ObjectInputStream(fileIn);
+            state = (HashMap<String, Boolean>) in.readObject();
             in.close();
             fileIn.close();
-        } else {
-            state = new HashMap<String, Boolean>();
-            generateState();
-            saveState();
+        } catch (FileNotFoundException e) {
+            throw new StorageError("States", "FileNotFoundException");
+        } catch (IOException e) {
+            throw new StorageError("States", "IOException");
+        } catch (ClassNotFoundException e) {
+            throw new StorageError("States", "ClassNotFoundException");
         }
     }
 
     // Decoratori HashMap
 
-    private void put(String key, Boolean value)
-            throws IOException, ClassNotFoundException {
+    private void put(String key, Boolean value) throws StorageError {
         loadState();
         state.put(key, value);
         saveState();
     }
 
-    private boolean get(String key)
-            throws IOException, ClassNotFoundException {
+    private boolean get(String key) throws StorageError {
         loadState();
         Boolean ret = state.get(key);
         return (ret == null) ? false : ret;
@@ -75,33 +86,23 @@ public class States implements Serializable {
 
     // Metodi Publici
 
-    public void remove(String key)
-            throws IOException, ClassNotFoundException {
+    public void remove(String key) throws StorageError {
         loadState();
         state.remove(key);
         saveState();
     }
 
-    public boolean ready(String user) throws IOException, ClassNotFoundException {
-        try {
-            put(user, true);
-            return get(user);
-        } catch (Exception e) {
-            return false;
-        }
+    public boolean ready(String user) throws StorageError {
+        put(user, true);
+        return get(user);
     }
 
-    public boolean busy(String user) throws IOException, ClassNotFoundException {
-        try {
-            put(user, false);
-            return get(user) == false;
-        } catch (Exception e) {
-            return false;
-        }
+    public boolean busy(String user) throws StorageError {
+        put(user, false);
+        return get(user) == false;
     }
 
-    public boolean isReady(String user)
-            throws IOException, ClassNotFoundException {
+    public boolean isReady(String user) throws StorageError {
         boolean userState = get(user);
         return userState;
     }

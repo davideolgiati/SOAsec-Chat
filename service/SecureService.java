@@ -1,4 +1,3 @@
-import java.io.IOException;
 import java.util.List;
 
 /* SecureService
@@ -27,28 +26,6 @@ import java.util.List;
  */
 public class SecureService {
 	/*
-	 * Eccezioni
-	 *
-	 * UserNotFoundException è un eccezione personalizzata utile, lato client, per
-	 * rilevare errori riguardo la presenza (assenza) dell'utente desiderato sul
-	 * server
-	 * 
-	 * La struttura dell'eccezione è standard. La creazione di un eccezione a se per
-	 * questo tipo di errore è stata una scelta dettata dal desiderio di avere più
-	 * chiarezza nella gestione degli errori
-	 */
-	public class UserNotFoundException extends Exception {
-		private static final long serialVersionUID = 1L;
-
-		public UserNotFoundException(String user) {
-			// Il messaggio si limita al nome utente, scelta di stile e funzinale
-			// abbiamo osservato che in caso di stampa del messaggio l'errore
-			// risulta più chiaro
-			super(user);
-		}
-	}
-
-	/*
 	 * Variabili
 	 * 
 	 * Le variabili della classe sono 3 e sono tutte dichiarate con modifier
@@ -75,7 +52,7 @@ public class SecureService {
 	 * inizializzatione in una delle tre classi (IOException) questo non viene
 	 * gestito ma demandato al client.
 	 */
-	public SecureService() throws IOException {
+	public SecureService() throws StorageError {
 		states = new States();
 		requests = new Requests();
 		messages = new Messages();
@@ -88,57 +65,57 @@ public class SecureService {
 	 * quanto succede nei loro metodi "principali"
 	 */
 	public void sendMsg(String message, String user)
-			throws ClassNotFoundException, IOException, SecureService.UserNotFoundException {
+			throws UserNotFound, StorageError {
 		if (!messages.userExists(user)) {
-			throw new UserNotFoundException(user);
+			throw new UserNotFound(user);
 		} else {
-			messages._put(user, message);
+			messages.put(user, message);
 		}
 	}
 
 	public String reciveMsg(String user)
-			throws ClassNotFoundException, IOException, SecureService.UserNotFoundException {
+			throws UserNotFound, StorageError {
 		if (!messages.userExists(user)) {
-			throw new UserNotFoundException(user);
+			throw new UserNotFound(user);
 		} else {
-			return messages._get(user);
+			return messages.get(user);
 		}
 	}
 
-	public String userList(String user) throws NullPointerException, ClassNotFoundException, IOException {
+	public String userList(String user) throws StorageError {
 		return messages.listUsers(user);
 	}
 
 	public boolean status(String me, String myFriend)
-			throws ClassNotFoundException, IOException, SecureService.UserNotFoundException, Exception {
+			throws StorageError, UserNotFound, NoResponse {
 		if (!messages.userExists(me)) {
-			throw new UserNotFoundException(me);
+			throw new UserNotFound(me);
 		} else if (!messages.userExists(myFriend)) {
-			throw new UserNotFoundException(myFriend);
+			throw new UserNotFound(myFriend);
 		} else {
 			return requests.status(me, myFriend);
 		}
 	}
 
 	public boolean accept(String me, String myFriend)
-			throws ClassNotFoundException, IOException, SecureService.UserNotFoundException {
+			throws UserNotFound, StorageError {
 		if (!messages.userExists(me)) {
-			throw new UserNotFoundException(me);
+			throw new UserNotFound(me);
 		} else if (!messages.userExists(myFriend)) {
-			throw new UserNotFoundException(myFriend);
+			throw new UserNotFound(myFriend);
 		} else {
 			return requests.accept(me, myFriend);
 		}
 	}
 
-	public void doLogin(String user) throws ClassNotFoundException, IOException {
+	public void doLogin(String user) throws StorageError {
 		messages.addUser(user);
 		states.ready(user);
 	}
 
-	public void doLogout(String user) throws ClassNotFoundException, IOException, SecureService.UserNotFoundException {
+	public void doLogout(String user) throws UserNotFound, StorageError {
 		if (!messages.userExists(user)) {
-			throw new UserNotFoundException(user);
+			throw new UserNotFound(user);
 		} else {
 			messages.deleteUser(user);
 			states.remove(user);
@@ -146,11 +123,11 @@ public class SecureService {
 	}
 
 	public boolean deny(String me, String myFriend)
-			throws ClassNotFoundException, IOException, SecureService.UserNotFoundException {
+			throws UserNotFound, StorageError {
 		if (!messages.userExists(me)) {
-			throw new UserNotFoundException(me);
+			throw new UserNotFound(me);
 		} else if (!messages.userExists(myFriend)) {
-			throw new UserNotFoundException(myFriend);
+			throw new UserNotFound(myFriend);
 		} else {
 			states.ready(me);
 			states.ready(myFriend);
@@ -159,9 +136,9 @@ public class SecureService {
 	}
 
 	public String[] checkForRequests(String me)
-			throws ClassNotFoundException, IOException, SecureService.UserNotFoundException {
+			throws UserNotFound, StorageError {
 		if (!messages.userExists(me)) {
-			throw new UserNotFoundException(me);
+			throw new UserNotFound(me);
 		} else {
 			List<String> req = requests.checkForRequests(me);
 			return req.toArray(new String[req.size()]);
@@ -169,18 +146,18 @@ public class SecureService {
 	}
 
 	public void request(String me, String myFriend)
-			throws ClassNotFoundException, IOException, SecureService.UserNotFoundException, Exception {
+			throws UserNotFound, UserBusy, StorageError {
 		if (!messages.userExists(me)) {
-			throw new UserNotFoundException(me);
+			throw new UserNotFound(me);
 		} else if (!messages.userExists(myFriend)) {
-			throw new UserNotFoundException(myFriend);
+			throw new UserNotFound(myFriend);
 		} else {
 			if (states.isReady(myFriend)) {
 				requests.request(me, myFriend);
 				states.busy(me);
 				states.busy(myFriend);
 			} else {
-				throw new Exception("utente occupato");
+				throw new UserBusy(myFriend);
 			}
 		}
 	}
